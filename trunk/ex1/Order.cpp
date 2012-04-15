@@ -16,7 +16,13 @@ Order::Order(const string * drink, const string * first, const string * main, co
 }
 
 Order::Order(){}
-Order::~Order(){}
+
+Order::~Order(){
+	delete _drink;
+	delete _first;
+	delete _main;
+	delete _dessert;
+}
 
 /*
 Getters

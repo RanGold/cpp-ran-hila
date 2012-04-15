@@ -1,17 +1,35 @@
-/*
- * Customer.cpp
- *
- *  Created on: Apr 8, 2012
- *      Author: hila_barzilai
- */
-
 #include "Customer.h"
 
-Customer::Customer() {
-	// TODO Auto-generated constructor stub
+/*
+members
+*/
+int _id;
+string _name;
+Order _order;
 
+//Constructors/Destructors
+Customer::Customer() {}
+
+Customer::Customer(int id, string name){
+	_id = id;
+	_name = name;
 }
 
 Customer::~Customer() {
 	// TODO Auto-generated destructor stub
+}
+
+void setOrder(const Order & order){
+	_order = order;
+}
+const Order & getOrder(){
+	return _order;
+}
+
+int & getId(){
+	return _id;
+}
+
+string & getName(){
+	return _name;
 }

@@ -1,27 +1,31 @@
 /*
- * Order.h
- *
- *  Created on: Apr 8, 2012
- *      Author: hila_barzilai
- */
+* Order.h
+*
+*  Created on: Apr 8, 2012
+*      Author: hila_barzilai
+*/
 
 #ifndef ORDER_H_
 #define ORDER_H_
 
+#include <string> 
+using namespace std;
 class Order {
 public:
-	Order(const String * drink, const String * first, const String * main, const String * dessert);
-	virtual ~Order();
+	Order::Order(const string* drink, const string* first, const string* main, const string* dessert);
+	Order::Order();
+	~Order();
 
-	const String * getDrink();
-	const String * getFirst();
-	const String * getMain();
-	const String * getDessert();
+	const string * getDrink();
+	const string * getFirst();
+	const string * getMain();
+	const string * getDessert();
 
-	void setDrink(String * drink);
-	void setFirst(String * first);
-	void setMain(String * main);
-	void setDessert(String * dessert);
+	void setDrink(string * drink);
+	void setFirst(string * first);
+	void setMain(string * main);
+	void setDessert(string * dessert);
+
 };
 
 #endif /* ORDER_H_ */

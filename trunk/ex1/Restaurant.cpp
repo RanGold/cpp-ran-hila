@@ -1,9 +1,3 @@
-/*
- * Restaurant.cpp
- *
- *  Created on: Apr 8, 2012
- *      Author: hila_barzilai
- */
 
 #include "Restaurant.h"
 

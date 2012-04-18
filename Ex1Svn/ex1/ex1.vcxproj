@@ -69,9 +69,6 @@
     <ClInclude Include="Order.h" />
     <ClInclude Include="Restaurant.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ex1.vcxproj" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

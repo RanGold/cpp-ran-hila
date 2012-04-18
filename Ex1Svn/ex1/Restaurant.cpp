@@ -1,4 +1,3 @@
-
 #include "Restaurant.h"
 
 Restaurant::Restaurant() {
@@ -8,4 +7,8 @@ Restaurant::Restaurant() {
 
 Restaurant::~Restaurant() {
 	// TODO Auto-generated destructor stub
+}
+
+int main(int argc, char* argv[]) {
+	cout << "Hello";
 }

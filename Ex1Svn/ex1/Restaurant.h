@@ -2,6 +2,8 @@
 #define RESTAURANT_H_
 
 #include "Customer.h"
+#include <iostream>
+
 class Restaurant {
 public:
 

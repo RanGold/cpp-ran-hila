@@ -62,7 +62,7 @@ const Order& Customer::getOrder() const {
 	return *_order;
 }
 
-void Customer::setOrder(const Order& order){
+void Customer::setOrder(const Order& order) {
 	delete _order;
 	_order = new Order(order);
 }

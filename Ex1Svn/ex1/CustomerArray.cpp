@@ -53,11 +53,16 @@ void CustomerArray::removeCustomer(const int& id) {
 Customer& CustomerArray::getCustomer(const int& id) const {
 	if (id < 1) {
 		// TODO error message
+		return _customers[0];
 	} else {
 		for (int i = 0; i < _customersAmount; i++) {
 			if (_customers[i].getId() == id) {
-				return (_customers[i]);
+				return _customers[i];
 			}
 		}
+
+		// Id not found - returning first Customer along with an error message
+		// TODO : think of a better solution (there might be no customers)
+		return _customers[0];
 	}
 }

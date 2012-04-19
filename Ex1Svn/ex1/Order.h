@@ -1,19 +1,12 @@
-/*
-* Order.h
-*
-*  Created on: Apr 8, 2012
-*      Author: hila_barzilai
-*/
-
-#ifndef ORDER_H_
-#define ORDER_H_
-
 #include <string> 
 using namespace std;
+
 class Order {
 public:
-	Order::Order(const string* drink, const string* first, const string* main, const string* dessert);
-	Order::Order();
+	Order();
+	Order(const string* drink, const string* first, const string* main, const string* dessert);
+	Order(const Order& order);
+	const Order& operator=(const Order& order);
 	~Order();
 
 	const string * getDrink();
@@ -27,5 +20,3 @@ public:
 	void setDessert(string * dessert);
 
 };
-
-#endif /* ORDER_H_ */

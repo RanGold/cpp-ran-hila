@@ -62,12 +62,14 @@
   <ItemGroup>
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="CustomerArray.cpp" />
+    <ClCompile Include="Dish.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="Restaurant.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />
     <ClInclude Include="CustomerArray.h" />
+    <ClInclude Include="Dish.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="Restaurant.h" />
   </ItemGroup>

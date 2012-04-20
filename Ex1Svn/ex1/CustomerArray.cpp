@@ -4,7 +4,6 @@ int CustomerArray::_arrayResize = 8;
 
 CustomerArray::CustomerArray() {
 	_customers = new Customer[1];
-	_freeId = 1;
 	_customersAmount = 0;
 	_size = 1;
 }
@@ -13,7 +12,7 @@ CustomerArray::~CustomerArray() {
 	delete[] _customers;
 }
 
-int CustomerArray::addCustomer(Customer& customer) {
+void CustomerArray::addCustomer(const Customer& customer) {
 	// Need to resize
 	if (_customersAmount == _size) {
 		Customer* tmp = _customers;
@@ -26,28 +25,8 @@ int CustomerArray::addCustomer(Customer& customer) {
 		_size += _arrayResize;
 	}
 
-	customer.setId(_freeId++);
 	_customers[_customersAmount] = customer;
 	_customersAmount++;
-
-	return (customer.getId());
-}
-
-void CustomerArray::removeCustomer(const int& id) {
-	int i;
-	for (i = 0; i < _customersAmount; i++) {
-		if (_customers[i].getId() == id) {
-			break;
-		}
-	}
-
-	// Implementing left shift on the array because instructor insisted
-	for (int j = i; j < (_customersAmount - 1); j++) {
-		_customers[j] = _customers[j + 1];
-	}
-
-	_customers[_customersAmount].setId(-1);
-	_customersAmount--;
 }
 
 void CustomerArray::removeCustomer(const string& name) {
@@ -63,25 +42,7 @@ void CustomerArray::removeCustomer(const string& name) {
 		_customers[j] = _customers[j + 1];
 	}
 
-	_customers[_customersAmount].setId(-1);
 	_customersAmount--;
-}
-
-Customer& CustomerArray::getCustomer(const int& id) const {
-	if (id < 1) {
-		// TODO error message
-		return _customers[0];
-	} else {
-		for (int i = 0; i < _customersAmount; i++) {
-			if (_customers[i].getId() == id) {
-				return _customers[i];
-			}
-		}
-
-		// Id not found - returning first Customer along with an error message
-		// TODO : think of a better solution (there might be no customers)
-		return _customers[0];
-	}
 }
 
 Customer& CustomerArray::getCustomer(const string& name) const {
@@ -91,19 +52,15 @@ Customer& CustomerArray::getCustomer(const string& name) const {
 		}
 	}
 
-	// Id not found - returning first Customer along with an error message
+	// Name not found - returning first Customer along with an error message
 	// TODO : think of a better solution (there might be no customers)
 	return _customers[0];
 }
 
-void CustomerArray::printArray() const {
+void CustomerArray::print() const {
 	cout<<"Customers and their orders:\n" ;
 	for (int i = 0; i < _customersAmount; i++) {
-		Customer * currentCustomer =  &(_customers[i]);
-		cout<<"ID: " << currentCustomer->getId() << ", Name: " << currentCustomer->getName() <<
-				", Drink: " << currentCustomer->getOrder().getDrink() <<
-				", First course: " << currentCustomer->getOrder().getFirst() <<
-				", Main course: " << currentCustomer->getOrder().getMain() <<
-				", Dessert: " << currentCustomer->getOrder().getDessert() << "\n";
+		_customers[i].print();
+		cout<<"\n";
 	}
 }

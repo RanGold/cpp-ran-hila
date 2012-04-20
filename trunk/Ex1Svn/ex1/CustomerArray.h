@@ -1,4 +1,8 @@
+#ifndef CUSTOMERARRAY_H_
+#define CUSTOMERARRAY_H_
+
 #include "Customer.h"
+#include <iostream>
 
 class CustomerArray {
 public:
@@ -7,7 +11,10 @@ public:
 
 	int addCustomer(Customer& customer);
 	void removeCustomer(const int& id);
+	void removeCustomer(const string& name);
 	Customer& getCustomer(const int& id) const;
+	Customer& getCustomer(const string & name) const;
+	void printArray() const;
 
 private:
 	Customer* _customers;
@@ -16,3 +23,5 @@ private:
 	int _freeId;
 	int _size;
 };
+
+#endif /* CUSTOMERARRAY_H_ */

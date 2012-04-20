@@ -50,6 +50,23 @@ void CustomerArray::removeCustomer(const int& id) {
 	_customersAmount--;
 }
 
+void CustomerArray::removeCustomer(const string& name) {
+	int i;
+	for (i = 0; i < _customersAmount; i++) {
+		if (_customers[i].getName().compare(name) == 0) {
+			break;
+		}
+	}
+
+	// Implementing left shift on the array because instructor insisted
+	for (int j = i; j < (_customersAmount - 1); j++) {
+		_customers[j] = _customers[j + 1];
+	}
+
+	_customers[_customersAmount].setId(-1);
+	_customersAmount--;
+}
+
 Customer& CustomerArray::getCustomer(const int& id) const {
 	if (id < 1) {
 		// TODO error message
@@ -64,5 +81,29 @@ Customer& CustomerArray::getCustomer(const int& id) const {
 		// Id not found - returning first Customer along with an error message
 		// TODO : think of a better solution (there might be no customers)
 		return _customers[0];
+	}
+}
+
+Customer& CustomerArray::getCustomer(const string& name) const {
+	for (int i = 0; i < _customersAmount; i++) {
+		if (_customers[i].getName().compare(name) == 0) {
+			return _customers[i];
+		}
+	}
+
+	// Id not found - returning first Customer along with an error message
+	// TODO : think of a better solution (there might be no customers)
+	return _customers[0];
+}
+
+void CustomerArray::printArray() const {
+	cout<<"Customers and their orders:\n" ;
+	for (int i = 0; i < _customersAmount; i++) {
+		Customer * currentCustomer =  &(_customers[i]);
+		cout<<"ID: " << currentCustomer->getId() << ", Name: " << currentCustomer->getName() <<
+				", Drink: " << currentCustomer->getOrder().getDrink() <<
+				", First course: " << currentCustomer->getOrder().getFirst() <<
+				", Main course: " << currentCustomer->getOrder().getMain() <<
+				", Dessert: " << currentCustomer->getOrder().getDessert() << "\n";
 	}
 }

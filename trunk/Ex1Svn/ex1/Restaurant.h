@@ -1,8 +1,5 @@
-#ifndef RESTAURANT_H_
-#define RESTAURANT_H_
-
-#include "Customer.h"
 #include "CustomerArray.h"
+#include <iostream>
 #include <sstream>
 
 class Restaurant {
@@ -10,17 +7,13 @@ public:
 
 	Restaurant();
 	~Restaurant();
-	int addCustomer(Customer& customer);
-	void removeCustomer(int& customerId);
-	void removeCustomer(string& name);
-	const Order & getCustomerOrder(int & customerId);
-	const Order & getCustomerOrder(string& name);
-	void updateCustomerOrder(int& customerId, const Order & order);
-	void updateCustomerOrder(string& name, const Order & order);
+
+	void addCustomer(const Customer& customer);
+	void removeCustomer(const string& name);
+	const Order& getCustomerOrder(const string& name) const;
+	void updateCustomerOrder(const string& name, const Order& order);
 	void printCustomersAndOrders() const;
 
 private:
-	CustomerArray * _custArray;
+	CustomerArray* _custArray;
 };
-
-#endif /* RESTAURANT_H_ */

@@ -1,3 +1,6 @@
+#ifndef CUSTOMER_H_
+#define CUSTOMER_H_
+
 #include "Order.h"
 
 class Customer {
@@ -21,3 +24,5 @@ private:
 	string* _name;
 	Order* _order;
 };
+
+#endif /* CUSTOMER_H_ */

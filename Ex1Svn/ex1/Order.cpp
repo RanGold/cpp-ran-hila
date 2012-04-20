@@ -1,13 +1,13 @@
 #include "Order.h"
 
-//members
-string* _drink;
-string* _first;
-string* _main;
-string* _dessert;
-
-
 //Constructors/Destructors
+Order::Order(){
+	_drink = new string();
+	_first = new string();
+	_main = new string();
+	_dessert = new string();
+}
+
 Order::Order(const string * drink, const string * first, const string * main, const string * dessert){
 	_drink = (string *) drink;
 	_first = (string *) first;
@@ -15,7 +15,12 @@ Order::Order(const string * drink, const string * first, const string * main, co
 	_dessert = (string *) dessert;
 }
 
-Order::Order(){}
+Order::Order(const Order& order){
+	_drink = new string(order.getDrink());
+	_first = new string(order.getFirst());
+	_main = new string(order.getMain());
+	_dessert = new string(order.getDessert());
+}
 
 Order::~Order(){
 	delete _drink;
@@ -24,37 +29,71 @@ Order::~Order(){
 	delete _dessert;
 }
 
+const Order& Order::operator=(const Order& order) {
+	if (this != &order) {
+		this->setDrink(order.getDrink());
+		this->setFirst(order.getFirst());
+		this->setMain(order.getMain());
+		this->setDessert(order.getDessert());
+	}
+
+	return *this;
+}
 /*
 Getters
 */
-const string* getDrink(){
-	return _drink;
+const string & Order::getDrink() const{
+	return *_drink;
 }
 
-const string* getFirst(){
-	return _first;
+const string & Order::getFirst() const{
+	return *_first;
 }
 
-const string* getMain(){
-	return _main;
+const string & Order::getMain() const{
+	return *_main;
 }
 
-const string* getDessert(){
-	return _dessert;
+const string & Order::getDessert() const{
+	return *_dessert;
 }
 
-void setDrink(string * drink){
-	_drink = drink;
+void Order::setDrink(string* drink){
+	delete _drink;
+	_drink = new string(*drink);
 }
 
-void setFirst(string * first){
-	_first = first;
+void Order::setDrink(const string& drink){
+	delete _drink;
+	_drink = new string(drink);
 }
 
-void setMain(string * main){
-	_main = main;
+void Order::setFirst(string* first){
+	delete _first;
+	_first = new string(*first);
 }
 
-void setDessert(string * dessert){
-	_dessert = dessert;
+void Order::setFirst(const string& first){
+	delete _first;
+	_first = new string(first);
+}
+
+void Order::setMain(string* main){
+	delete _main;
+	_main = new string(*main);
+}
+
+void Order::setMain(const string& main){
+	delete _main;
+	_main = new string(main);
+}
+
+void Order::setDessert(string* dessert){
+	delete _dessert;
+	_dessert = new string(*dessert);
+}
+
+void Order::setDessert(const string& dessert){
+	delete _main;
+	_main = new string(dessert);
 }

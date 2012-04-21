@@ -13,7 +13,7 @@ public:
 	void CustomerArray::print() const;
 
 private:
-	Customer* _customers;
+	Customer** _customers;
 	static int _arrayResize;
 	int _customersAmount;
 	int _size;

@@ -9,9 +9,9 @@ public:
 	~Restaurant();
 
 	void addCustomer(const Customer& customer);
-	void removeCustomer(const string& name);
+	bool removeCustomer(const string& name);
 	const Order& getCustomerOrder(const string& name) const;
-	void updateCustomerOrder(const string& name, const Order& order);
+	bool updateCustomerOrder(const string& name, const Order& order);
 	void printCustomersAndOrders() const;
 
 private:

@@ -5,7 +5,7 @@ Order::Order(){
 	_drink = new Dish(Drink, "");
 	_first = new Dish(First, "");
 	_main = new Dish(Main, "");
-	_dessert = new Dish(Dessert, "");;
+	_dessert = new Dish(Dessert, "");
 }
 
 Order::Order(const string& drink, const string& first, const string& main, const string& desert) {
@@ -80,11 +80,9 @@ void Order::setDessert(const string& dessert){
 }
 
 void Order::print() const {
+	cout << "Order:" << endl;
 	getDrink().print();
-	cout<<", ";
 	getFirst().print();
-	cout<<", ";
 	getMain().print();
-	cout<<", ";
 	getDessert().print();
 }

@@ -12,47 +12,57 @@ void Restaurant::addCustomer(const Customer& customer) {
 	_custArray->addCustomer(customer);
 }
 
-void Restaurant::removeCustomer(const string& name) {
-	_custArray->removeCustomer(name);
+bool Restaurant::removeCustomer(const string& name) {
+	return _custArray->removeCustomer(name);
 }
 
 const Order& Restaurant::getCustomerOrder(const string& name) const {
-	return _custArray->getCustomer(name).getOrder();
+	return _custArray->getCustomer(name)->getOrder();
 }
 
-void Restaurant::updateCustomerOrder(const string& name, const Order& order){
-	_custArray->getCustomer(name).setOrder(order);
+bool Restaurant::updateCustomerOrder(const string& name, const Order& order){
+	Customer* customer = _custArray->getCustomer(name);
+	if (customer != NULL) {
+		customer->setOrder(order);
+	}
+
+	return (customer != NULL);
 }
 
 void Restaurant::printCustomersAndOrders() const{
 	_custArray->print();
 }
 
+void printHelp() {
+	cout<<"1 Add Customer" << endl;
+	cout<<"2 Remove Customer by Name" << endl;
+	cout<<"3 Update Customer Order by Name" << endl;
+	cout<<"4 Get Customer Order by Name" << endl;
+	cout<<"5 Print Customer and Matching Orders" << endl;
+	cout<<"6 Exit" << endl;
+}
+
 int main(int argc, char* argv[]) {
 
-	Restaurant * restaurant =  new Restaurant();
+	Restaurant restaurant = *(new Restaurant());
 	bool finish = false;
 	int choice;
 	string input;
-	while(!finish) {
-		cout<<"Enter your choice or type 0 for help\n";
+	printHelp();
+
+	while(!finish) {	
+		cout << "Enter your choice or type 0 for help" << endl;
 		getline(cin, input);
 
 		stringstream myStream(input);
 		if (!(myStream >> choice)){
-			cout<<"Error: invalid selection.\n";
+			cout<<"Error: invalid selection." << endl;
 			continue;
 		}
-		// TODO delete string got by input?
 		switch(choice) {
 
 		case 0:{
-			cout<<"1 Add Customer\n";
-			cout<<"2 Remove Customer by Name \n";
-			cout<<"3 Update Customer Order by Name\n";
-			cout<<"4 Get Customer Order by Name\n";
-			cout<<"5 Print Customer and Matching Orders\n";
-			cout<<"6 Exit \n";
+			printHelp();
 			break;
 		}
 		case 1: {
@@ -60,55 +70,58 @@ int main(int argc, char* argv[]) {
 			cout<<"Enter customer's name: ";
 			getline(cin, name);
 			Customer* customer = new Customer(name);
-			restaurant->addCustomer(*customer);
-			cout << "Customer " << name << " was created.\n";
+			restaurant.addCustomer(*customer);
+			delete customer;
+			cout << "Customer " << name << " was created." << endl;
 			break;
 		}
 		case 2: {
 			string name;
 			cout<<"Enter customer's name: ";
 			getline(cin, name);
-			restaurant->removeCustomer(name);
-			cout << "Customer with name " << name << " was deleted.\n";
+			if (restaurant.removeCustomer(name)) {
+				cout << "Customer with name " << name << " was deleted." << endl;
+			}
 			break;
 		}
 		case 3:{
 			cout<<"Enter customer's name: ";
 			string name;
 			getline(cin, name);
-			cout<<"Enter drink:\n";
+			cout<<"You can press enter (leave empty string) if you don't want the specific dish." << endl;
+			cout<<"Enter drink:" << endl;
 			string drink;
 			getline(cin, drink);
-			cout<<"Enter first course:\n";
+			cout<<"Enter first course:" << endl;
 			string first;
 			getline(cin, first);
-			cout<<"Enter main course:\n";
+			cout<<"Enter main course:" << endl;
 			string main;
 			getline(cin, main);
-			cout<<"Enter dessert:\n";
+			cout<<"Enter dessert:" << endl;
 			string dessert;
 			getline(cin, dessert);
-			Order * order = new Order(drink, first, main, dessert);
-			restaurant->updateCustomerOrder(name, *order);
-			cout << "Customer's order was updated.\n";
+			Order* order = new Order(drink, first, main, dessert);
+			if (restaurant.updateCustomerOrder(name, *order)) {
+				cout << "Customer's order was updated." << endl;
+			}
+			delete order;
 			break;
 		}
 		case 4:{
 			cout<<"Enter customer's name: ";
 			string name;
 			getline(cin, name);
-			Order order = restaurant->getCustomerOrder(name);
-			cout << "Customer's order is: \n";
+			Order order = restaurant.getCustomerOrder(name);
 			order.print();
-			cout << "\n";
 			break;
 		}
 		case 5:{
-			restaurant->printCustomersAndOrders();
+			restaurant.printCustomersAndOrders();
 			break;
 		}
 		case 6:{
-			cout<<"Program exit.\n";
+			cout<<"Program exit." << endl;
 			finish = true;
 			break;
 		}
@@ -118,5 +131,6 @@ int main(int argc, char* argv[]) {
 		}
 		}
 	}
+
 	return 0;
 }

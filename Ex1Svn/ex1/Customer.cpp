@@ -50,6 +50,6 @@ void Customer::setOrder(const Order& order) {
 }
 
 void Customer::print() const {
-	cout<<"Name: " << getName() << ", ";
+	cout<<"Name: " << getName() << endl;
 	getOrder().print();
 }

@@ -21,9 +21,12 @@ public:
 	const string& getName() const;
 	void setName(const string& name);
 
+	const bool& isEmpty() const;
+
 	void print() const;
 
 private:
 	DishType _dishType;
 	string* _name;
+	bool _isEmpty;
 };

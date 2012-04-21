@@ -60,23 +60,19 @@ const Dish& Order::getDessert() const{
 }
 
 void Order::setDrink(const string& drink) {
-	delete _drink;
-	_drink = new Dish(Drink, drink);
+	_drink->setName(drink);
 }
 
 void Order::setFirst(const string& first){
-	delete _first;
-	_first = new Dish(First, first);
+	_first->setName(first);
 }
 
 void Order::setMain(const string& main){
-	delete _main;
-	_main = new Dish(Main, main);
+	_main->setName(main);
 }
 
 void Order::setDessert(const string& dessert){
-	delete _main;
-	_main = new Dish(Dessert, dessert);
+	_dessert->setName(dessert);
 }
 
 void Order::print() const {

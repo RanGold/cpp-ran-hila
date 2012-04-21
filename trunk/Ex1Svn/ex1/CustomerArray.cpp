@@ -3,9 +3,9 @@
 int CustomerArray::_arrayResize = 8;
 
 CustomerArray::CustomerArray() {
-	_customers = new Customer*[1];
+	_customers = new Customer*[_arrayResize];
 	_customersAmount = 0;
-	_size = 1;
+	_size = _arrayResize;
 }
 
 CustomerArray::~CustomerArray() {

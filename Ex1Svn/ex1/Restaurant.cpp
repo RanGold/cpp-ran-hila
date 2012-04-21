@@ -44,7 +44,7 @@ void printHelp() {
 
 int main(int argc, char* argv[]) {
 
-	Restaurant restaurant = *(new Restaurant());
+	Restaurant& restaurant = *(new Restaurant());
 	bool finish = false;
 	int choice;
 	string input;
@@ -69,9 +69,9 @@ int main(int argc, char* argv[]) {
 			string name;
 			cout<<"Enter customer's name: ";
 			getline(cin, name);
-			Customer* customer = new Customer(name);
-			restaurant.addCustomer(*customer);
-			delete customer;
+			Customer& customer = *(new Customer(name));
+			restaurant.addCustomer(customer);
+			delete &customer;
 			cout << "Customer " << name << " was created." << endl;
 			break;
 		}
@@ -101,11 +101,11 @@ int main(int argc, char* argv[]) {
 			cout<<"Enter dessert:" << endl;
 			string dessert;
 			getline(cin, dessert);
-			Order* order = new Order(drink, first, main, dessert);
-			if (restaurant.updateCustomerOrder(name, *order)) {
+			Order& order = *(new Order(drink, first, main, dessert));
+			if (restaurant.updateCustomerOrder(name, order)) {
 				cout << "Customer's order was updated." << endl;
 			}
-			delete order;
+			delete &order;
 			break;
 		}
 		case 4:{
@@ -132,5 +132,6 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
+	delete &restaurant;
 	return 0;
 }

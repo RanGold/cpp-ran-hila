@@ -46,19 +46,19 @@ void Dish::print() const {
 	if (!_isEmpty) {
 		switch (getDishType()) {
 		case Drink:
-			cout<<"Drink: ";
+			cout << "Drink: ";
 			break;
 		case First:
-			cout<<"First course: ";
+			cout << "First course: ";
 			break;
 		case Main:
-			cout<<"Main course: ";
+			cout << "Main course: ";
 			break;
 		case Dessert:
-			cout<<"Dessert: ";
+			cout << "Dessert: ";
 			break;
 		}
 
-		cout<<getName()<<endl;
+		cout << getName() << endl;
 	}
 }

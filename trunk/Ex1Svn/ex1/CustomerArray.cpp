@@ -29,7 +29,7 @@ void CustomerArray::addCustomer(const Customer& customer) {
 	_customersAmount++;
 }
 
-void CustomerArray::removeCustomer(const string& name) {
+bool CustomerArray::removeCustomer(const string& name) {
 	int i;
 	for (i = 0; i < _customersAmount; i++) {
 		if (_customers[i].getName().compare(name) == 0) {
@@ -37,30 +37,37 @@ void CustomerArray::removeCustomer(const string& name) {
 		}
 	}
 
-	// Implementing left shift on the array because instructor insisted
-	for (int j = i; j < (_customersAmount - 1); j++) {
-		_customers[j] = _customers[j + 1];
+	// Customer not found
+	if (i == _customersAmount) {
+		cout<< "Customer " << name << " not found." << endl;
+	}
+	else {
+		// Implementing left shift on the array because instructor insisted
+		for (int j = i; j < (_customersAmount - 1); j++) {
+			_customers[j] = _customers[j + 1];
+		}
+
+		_customersAmount--;
 	}
 
-	_customersAmount--;
+	return !(i == _customersAmount);
 }
 
-Customer& CustomerArray::getCustomer(const string& name) const {
+Customer* CustomerArray::getCustomer(const string& name) const {
 	for (int i = 0; i < _customersAmount; i++) {
 		if (_customers[i].getName().compare(name) == 0) {
-			return _customers[i];
+			return _customers + i;
 		}
 	}
 
-	// Name not found - returning first Customer along with an error message
-	// TODO : think of a better solution (there might be no customers)
-	return _customers[0];
+	// Name not found - returning NULL along with an error message
+	cout<< "Customer " << name << " not found." << endl;
+	return NULL;
 }
 
 void CustomerArray::print() const {
 	cout<<"Customers and their orders:\n" ;
 	for (int i = 0; i < _customersAmount; i++) {
 		_customers[i].print();
-		cout<<"\n";
 	}
 }

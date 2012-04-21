@@ -8,8 +8,8 @@ public:
 	~CustomerArray();
 
 	void addCustomer(const Customer& customer);
-	void removeCustomer(const string& name);
-	Customer& getCustomer(const string &name) const;
+	bool removeCustomer(const string& name);
+	Customer* getCustomer(const string &name) const;
 	void CustomerArray::print() const;
 
 private:

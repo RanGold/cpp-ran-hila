@@ -13,7 +13,9 @@ class Dish {
 public:
 	Dish();
 	Dish(const Dish& dish);
+	Dish(const DishType& dishType);
 	Dish(const DishType& dishType, const string& name);
+	const Dish& operator=(const Dish& dish);
 	~Dish();
 
 	const DishType& getDishType() const;

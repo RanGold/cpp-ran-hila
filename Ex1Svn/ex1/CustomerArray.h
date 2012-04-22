@@ -7,7 +7,7 @@ public:
 	CustomerArray();
 	~CustomerArray();
 
-	void addCustomer(const Customer& customer);
+	void addCustomer(Customer& customer);
 	bool removeCustomer(const string& name);
 	Customer* getCustomer(const string &name) const;
 	void CustomerArray::print() const;

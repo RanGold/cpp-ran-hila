@@ -2,10 +2,10 @@
 
 //Constructors/Destructors
 Order::Order(){
-	_drink = new Dish(Drink, "");
-	_first = new Dish(First, "");
-	_main = new Dish(Main, "");
-	_dessert = new Dish(Dessert, "");
+	_drink = new Dish(Drink);
+	_first = new Dish(First);
+	_main = new Dish(Main);
+	_dessert = new Dish(Dessert);
 }
 
 Order::Order(const string& drink, const string& first, const string& main, const string& desert) {
@@ -22,13 +22,6 @@ Order::Order(const Order& order){
 	_dessert = new Dish(order.getDessert());
 }
 
-Order::~Order(){
-	delete _drink;
-	delete _first;
-	delete _main;
-	delete _dessert;
-}
-
 const Order& Order::operator=(const Order& order) {
 	if (this != &order) {
 		this->setDrink(order.getDrink().getName());
@@ -38,6 +31,13 @@ const Order& Order::operator=(const Order& order) {
 	}
 
 	return *this;
+}
+
+Order::~Order(){
+	delete _drink;
+	delete _first;
+	delete _main;
+	delete _dessert;
 }
 
 /*

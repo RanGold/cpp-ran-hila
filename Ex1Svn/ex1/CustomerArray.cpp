@@ -9,16 +9,14 @@ CustomerArray::CustomerArray() {
 }
 
 CustomerArray::~CustomerArray() {
-	int i;
-	for (i = 0; i < _customersAmount; i++) {
-		if (_customers[i] != NULL) {
-			delete _customers[i];
-		}
+	for (int i = 0; i < _customersAmount; i++) {
+		delete _customers[i];
 	}
+
 	delete[] _customers;
 }
 
-void CustomerArray::addCustomer(const Customer& customer) {
+void CustomerArray::addCustomer(Customer& customer) {
 	// Need to resize
 	if (_customersAmount == _size) {
 		Customer** tmp = _customers;
@@ -30,7 +28,7 @@ void CustomerArray::addCustomer(const Customer& customer) {
 		_size += _arrayResize;
 	}
 
-	_customers[_customersAmount] = (Customer *) &customer;
+	_customers[_customersAmount] = &customer;
 	_customersAmount++;
 }
 
@@ -44,7 +42,8 @@ bool CustomerArray::removeCustomer(const string& name) {
 	}
 
 	// Customer not found
-	if (i == _customersAmount) {
+	bool custFound = !(i == _customersAmount);
+	if (!custFound) {
 		cout<< "Customer " << name << " not found." << endl;
 	}
 	else {
@@ -56,7 +55,7 @@ bool CustomerArray::removeCustomer(const string& name) {
 		_customersAmount--;
 	}
 
-	return !(i != 0 && i == _customersAmount);
+	return custFound;
 }
 
 Customer* CustomerArray::getCustomer(const string& name) const {

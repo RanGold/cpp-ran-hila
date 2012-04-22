@@ -40,16 +40,16 @@ void Customer::setName(const string& name) {
 	_name = new string(name);
 }
 
-const Order& Customer::getOrder() const {
+Order& Customer::getOrder() const {
 	return *_order;
 }
 
-void Customer::setOrder(const Order& order) {
+void Customer::setOrder(Order& order) {
 	delete _order;
-	_order = new Order(order);
+	_order = &order;
 }
 
 void Customer::print() const {
-	cout<<"Name: " << getName() << endl;
+	cout << "Name: " << getName() << endl;
 	getOrder().print();
 }

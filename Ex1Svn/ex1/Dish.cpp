@@ -11,9 +11,25 @@ Dish::Dish(const Dish& dish) {
 	_isEmpty = dish.getName().length() == 0;
 }
 
+Dish::Dish(const DishType& dishType) {
+	_dishType = dishType;
+	_name = new string();
+	_isEmpty = true;
+}
+
 Dish::Dish(const DishType& dishType, const string& name) {
 	_dishType = dishType;
 	_name = new string(name);
+	_isEmpty = name.length() == 0;
+}
+
+const Dish& Dish::operator=(const Dish& dish) {
+	if (this != &dish) {
+		this->setDishType(dish.getDishType());
+		this->setName(dish.getName());
+	}
+
+	return *this;
 }
 
 Dish::~Dish() {

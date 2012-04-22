@@ -8,7 +8,7 @@ Restaurant::~Restaurant() {
 	delete _custArray;
 }
 
-void Restaurant::addCustomer(const Customer& customer) {
+void Restaurant::addCustomer(Customer& customer) {
 	_custArray->addCustomer(customer);
 }
 
@@ -20,7 +20,7 @@ const Order& Restaurant::getCustomerOrder(const string& name) const {
 	return _custArray->getCustomer(name)->getOrder();
 }
 
-bool Restaurant::updateCustomerOrder(const string& name, const Order& order){
+bool Restaurant::updateCustomerOrder(const string& name, Order& order){
 	Customer* customer = _custArray->getCustomer(name);
 	if (customer != NULL) {
 		customer->setOrder(order);
@@ -44,7 +44,7 @@ void printHelp() {
 
 int main(int argc, char* argv[]) {
 
-	Restaurant restaurant = *(new Restaurant());
+	Restaurant& restaurant = *(new Restaurant());
 	bool finish = false;
 	int choice;
 	string input;
@@ -69,8 +69,7 @@ int main(int argc, char* argv[]) {
 			string name;
 			cout<<"Enter customer's name: ";
 			getline(cin, name);
-			Customer* customer = new Customer(name); // we shouldn't delete customer because otherwise the customers array would be an array with pointers pointing to null.
-			restaurant.addCustomer(*customer);
+			restaurant.addCustomer(*(new Customer(name)));
 			cout << "Customer " << name << " was created." << endl;
 			break;
 		}
@@ -100,11 +99,9 @@ int main(int argc, char* argv[]) {
 			cout<<"Enter dessert:" << endl;
 			string dessert;
 			getline(cin, dessert);
-			Order* order = new Order(drink, first, main, dessert);
-			if (restaurant.updateCustomerOrder(name, *order)) {
+			if (restaurant.updateCustomerOrder(name, *(new Order(drink, first, main, dessert)))) {
 				cout << "Customer's order was updated." << endl;
 			}
-			delete order;
 			break;
 		}
 		case 4:{
@@ -130,5 +127,6 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
+	delete &restaurant;
 	return 0;
 }

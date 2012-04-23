@@ -1,27 +1,30 @@
 #include "Restaurant.h"
 
 Restaurant::Restaurant() {
-	_custArray = new CustomerArray();
 }
 
 Restaurant::~Restaurant() {
-	delete _custArray;
 }
 
 void Restaurant::addCustomer(Customer& customer) {
-	_custArray->addCustomer(customer);
+	_custArray.addCustomer(customer);
 }
 
 bool Restaurant::removeCustomer(const string& name) {
-	return _custArray->removeCustomer(name);
+	return _custArray.removeCustomer(name);
 }
 
-const Order& Restaurant::getCustomerOrder(const string& name) const {
-	return _custArray->getCustomer(name)->getOrder();
+Order* Restaurant::getCustomerOrder(const string& name) const {
+	Customer* customer = _custArray.getCustomer(name);
+	if (customer != NULL) {
+		return &(customer->getOrder());
+	}
+
+	return NULL;
 }
 
 bool Restaurant::updateCustomerOrder(const string& name, Order& order){
-	Customer* customer = _custArray->getCustomer(name);
+	Customer* customer = _custArray.getCustomer(name);
 	if (customer != NULL) {
 		customer->setOrder(order);
 	}
@@ -30,7 +33,7 @@ bool Restaurant::updateCustomerOrder(const string& name, Order& order){
 }
 
 void Restaurant::printCustomersAndOrders() const{
-	_custArray->print();
+	_custArray.print();
 }
 
 void printHelp() {
@@ -43,8 +46,7 @@ void printHelp() {
 }
 
 int main(int argc, char* argv[]) {
-
-	Restaurant& restaurant = *(new Restaurant());
+	Restaurant restaurant;
 	bool finish = false;
 	int choice;
 	string input;
@@ -99,16 +101,26 @@ int main(int argc, char* argv[]) {
 			cout<<"Enter dessert:" << endl;
 			string dessert;
 			getline(cin, dessert);
-			if (restaurant.updateCustomerOrder(name, *(new Order(drink, first, main, dessert)))) {
+			Order *order = restaurant.getCustomerOrder(name);
+			if (order != NULL) {
+				order->setDrink(drink);
+				order->setFirst(first);
+				order->setMain(main);
+				order->setDessert(dessert);
 				cout << "Customer's order was updated." << endl;
 			}
+
 			break;
 		}
 		case 4:{
 			cout<<"Enter customer's name: ";
 			string name;
 			getline(cin, name);
-			restaurant.getCustomerOrder(name).print();
+			Order *order = restaurant.getCustomerOrder(name);
+			if (order != NULL) {
+				order->print();
+			}
+
 			break;
 		}
 		case 5:{
@@ -127,6 +139,5 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	delete &restaurant;
 	return 0;
 }

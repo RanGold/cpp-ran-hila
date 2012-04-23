@@ -1,25 +1,19 @@
 #include "Order.h"
 
 //Constructors/Destructors
-Order::Order(){
-	_drink = new Dish(Drink);
-	_first = new Dish(First);
-	_main = new Dish(Main);
-	_dessert = new Dish(Dessert);
+Order::Order() 
+	: _drink(Drink), _first(First), _main(Main), _dessert(Dessert)
+{
 }
 
-Order::Order(const string& drink, const string& first, const string& main, const string& desert) {
-	_drink = new Dish(Drink, drink);
-	_first = new Dish(First, first);
-	_main = new Dish(Main, main);
-	_dessert = new Dish(Dessert, desert);
+Order::Order(const string& drink, const string& first, const string& main, const string& desert) 
+	: _drink(Drink, drink), _first(First, first), _main(Main, main), _dessert(Dessert, desert)
+{
 }
 
-Order::Order(const Order& order){
-	_drink = new Dish(order.getDrink());
-	_first = new Dish(order.getFirst());
-	_main = new Dish(order.getMain());
-	_dessert = new Dish(order.getDessert());
+Order::Order(const Order& order) 
+	: _drink(order.getDrink()), _first(order.getFirst()), _main(order.getMain()), _dessert(order.getDessert())
+{
 }
 
 const Order& Order::operator=(const Order& order) {
@@ -33,46 +27,42 @@ const Order& Order::operator=(const Order& order) {
 	return *this;
 }
 
-Order::~Order(){
-	delete _drink;
-	delete _first;
-	delete _main;
-	delete _dessert;
+Order::~Order() {
 }
 
 /*
 Getters/Setters
 */
 const Dish& Order::getDrink() const{
-	return *_drink;
+	return _drink;
 }
 
 const Dish& Order::getFirst() const{
-	return *_first;
+	return _first;
 }
 
 const Dish& Order::getMain() const{
-	return *_main;
+	return _main;
 }
 
 const Dish& Order::getDessert() const{
-	return *_dessert;
+	return _dessert;
 }
 
 void Order::setDrink(const string& drink) {
-	_drink->setName(drink);
+	_drink.setName(drink);
 }
 
 void Order::setFirst(const string& first){
-	_first->setName(first);
+	_first.setName(first);
 }
 
 void Order::setMain(const string& main){
-	_main->setName(main);
+	_main.setName(main);
 }
 
 void Order::setDessert(const string& dessert){
-	_dessert->setName(dessert);
+	_dessert.setName(dessert);
 }
 
 void Order::print() const {

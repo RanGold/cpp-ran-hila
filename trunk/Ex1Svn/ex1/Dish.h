@@ -29,6 +29,6 @@ public:
 
 private:
 	DishType _dishType;
-	string* _name;
+	string _name;
 	bool _isEmpty;
 };

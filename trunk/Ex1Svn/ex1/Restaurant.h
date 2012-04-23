@@ -10,10 +10,10 @@ public:
 
 	void addCustomer(Customer& customer);
 	bool removeCustomer(const string& name);
-	const Order& getCustomerOrder(const string& name) const;
+	Order* getCustomerOrder(const string& name) const;
 	bool updateCustomerOrder(const string& name, Order& order);
 	void printCustomersAndOrders() const;
 
 private:
-	CustomerArray* _custArray;
+	CustomerArray _custArray;
 };

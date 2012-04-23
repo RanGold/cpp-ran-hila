@@ -23,8 +23,8 @@ public:
 	void Order::print() const;
 
 private:
-	Dish* _drink;
-	Dish* _first;
-	Dish* _main;
-	Dish* _dessert;
+	Dish _drink;
+	Dish _first;
+	Dish _main;
+	Dish _dessert;
 };

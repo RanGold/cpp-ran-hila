@@ -17,6 +17,6 @@ public:
 	void Customer::print() const;
 
 private:
-	string* _name;
-	Order* _order;
+	string _name;
+	Order _order;
 };

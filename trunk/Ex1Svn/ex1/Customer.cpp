@@ -40,7 +40,7 @@ Order& Customer::getOrder() const {
 	return (Order&)_order;
 }
 
-void Customer::setOrder(Order& order) {
+void Customer::setOrder(const Order& order) {
 	_order = order;
 }
 

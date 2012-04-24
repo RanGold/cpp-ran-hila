@@ -12,7 +12,7 @@ public:
 	const string& getName() const;
 	void setName(const string& name);
 	Order& getOrder() const;
-	void setOrder(Order& order);
+	void setOrder(const Order& order);
 
 	void Customer::print() const;
 

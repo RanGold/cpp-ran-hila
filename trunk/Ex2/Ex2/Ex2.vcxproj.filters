@@ -38,5 +38,8 @@
     <ClCompile Include="ExtendedMeeting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Day.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

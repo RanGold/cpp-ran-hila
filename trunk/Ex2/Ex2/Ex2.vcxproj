@@ -67,6 +67,7 @@
     <ClInclude Include="Meeting.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Day.cpp" />
     <ClCompile Include="ExtendedMeeting.cpp" />
     <ClCompile Include="Meeting.cpp" />
   </ItemGroup>

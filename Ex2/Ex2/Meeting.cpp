@@ -1,8 +1,11 @@
 #include "Meeting.h"
+#include <math.h>
 
 void Meeting::printTime(const float& time) {
 	cout << (int)(floor(time)) << ":" << (int)(floor((time - floor(time)) * 100));
 }
+
+float Meeting::epsilon = 0.0001;
 
 Meeting::Meeting(){}
 
@@ -28,6 +31,14 @@ const Meeting& Meeting::operator=(const Meeting& meeting){
 	}
 
 	return *this;
+}
+
+const bool& Meeting::operator==(const Meeting& meeting) {
+	float startDelta = _startTime - meeting.getStartTime();
+	float endDelta = _endTime - meeting.getEndTime();
+	return (abs(startDelta) <= Meeting.epsilon &&
+		abs(endDelta) <= Meeting.epsilon &&
+		_subject.compare(meeting.getSubject()) == 0);
 }
 
 Meeting::~Meeting(){}

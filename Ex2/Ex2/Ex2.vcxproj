@@ -60,6 +60,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Day.h" />
+    <ClInclude Include="Diary.h" />
+    <ClInclude Include="ExtendedDiary.h" />
+    <ClInclude Include="ExtendedMeeting.h" />
+    <ClInclude Include="Meeting.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ExtendedMeeting.cpp" />
+    <ClCompile Include="Meeting.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

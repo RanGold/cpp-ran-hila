@@ -2,7 +2,7 @@
 #include <math.h>
 
 void Meeting::printTime(const float& time) {
-	cout << (int)(floor(time)) << ":" << (int)(floor((time - floor(time)) * 100));
+	cout << (int)(floor(time)) << ":" << (int)(floor((time - floor(time)) * 60));
 }
 
 float Meeting::epsilon = 0.0001;
@@ -20,7 +20,6 @@ const Meeting& Meeting::operator=(const Meeting& meeting){
 		_startTime = meeting.getStartTime();
 		_endTime = meeting.getEndTime();
 		_subject = meeting.getSubject();
-		_id = meeting.getId();
 	}
 
 	return *this;
@@ -67,7 +66,11 @@ bool Meeting::doesOverlap(const Meeting& meeting) const{
 }
 
 void Meeting::print() const{
-	cout << "ID: " << _id << "Start time: " << _startTime << ", End time: " << _endTime << ", Subject: " << _subject << endl;
+	cout << "ID: " << _id << "Start time: ";
+	printTime(_startTime);
+	cout << ", End time: ";
+	printTime(_endTime);
+	cout << ", Subject: " << _subject << endl;
 }
 
 bool Meeting::isExtended() const {

@@ -3,7 +3,7 @@
 ExtendedMeeting::ExtendedMeeting() {
 }
 
-ExtendedMeeting::ExtendedMeeting(const float& startTime, const float& endTime, const string& subject, const list <string> participants)
+ExtendedMeeting::ExtendedMeeting(const float& startTime, const float& endTime, const string& subject, const list <string>& participants)
 	: Meeting(startTime, endTime, subject), _participants(participants) {}
 
 ExtendedMeeting::ExtendedMeeting(const ExtendedMeeting& meeting)
@@ -30,28 +30,29 @@ const void ExtendedMeeting::setParticipants(const list <string> participants) {
 }
 
 bool ExtendedMeeting::doesOverlap(const Meeting& meeting) const {
-	if (!this->isExtended()) {
-		cout << "Cannot check overlapping between incompatibale meetings types" << endl;
-		return true;
-	}
-
 	if (!Meeting::doesOverlap(meeting)) {
 		return false;
 	}
 	
-	// Comparing participants
-	// TODO : verify no copy constructor is called (assign)
-	const list <string>& otherParticipants = ((ExtendedMeeting*)&meeting)->getParticipants();
-	list <string>::const_iterator iter1, iter2;
-	for (iter1 = _participants.begin(); iter1 != _participants.end(); iter1++) {
-		for (iter2 = otherParticipants.begin(); iter2 != otherParticipants.end(); iter2++) {
-			if ((*iter1).compare(*iter2) == 0) {
-				return true;
+	// For non extended meeting if they overlap in time they are considered overlapping, otherwise we compare the participants
+	if (!meeting.isExtended()) {
+		return true;
+	}
+	else {
+		// Comparing participants
+		// TODO : verify no copy constructor is called (assign)
+		const list <string>& otherParticipants = ((ExtendedMeeting*)&meeting)->getParticipants();
+		list <string>::const_iterator iter1, iter2;
+		for (iter1 = _participants.begin(); iter1 != _participants.end(); iter1++) {
+			for (iter2 = otherParticipants.begin(); iter2 != otherParticipants.end(); iter2++) {
+				if ((*iter1).compare(*iter2) == 0) {
+					return true;
+				}
 			}
 		}
-	}
 
-	return false;
+		return false;
+	}
 }
 
 void ExtendedMeeting::print() const {

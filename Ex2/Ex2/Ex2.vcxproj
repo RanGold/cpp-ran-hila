@@ -68,8 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Day.cpp" />
+    <ClCompile Include="Diary.cpp" />
+    <ClCompile Include="ExtendedDiary.cpp" />
     <ClCompile Include="ExtendedMeeting.cpp" />
     <ClCompile Include="Meeting.cpp" />
+    <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

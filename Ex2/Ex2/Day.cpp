@@ -35,6 +35,7 @@ bool Day::addMeeting(Meeting& meeting) {
 
 	for (iter = _meetings.begin(); iter != _meetings.end( ); iter++) {
 		if ((*iter).doesOverlap(meeting)) {
+			cout << "The meeting overlaps an exisitng meeting" << endl;
 			return false;
 		}
 	}
@@ -46,7 +47,6 @@ bool Day::addMeeting(Meeting& meeting) {
 
 bool Day::deleteMeeting(const int& id) {
 	vector <Meeting>::const_iterator iter;
-
 	for (iter = _meetings.begin(); iter != _meetings.end(); iter++) {
 		if (iter->getId() == id) {
 			break;
@@ -62,6 +62,10 @@ bool Day::deleteMeeting(const int& id) {
 	}
 }
 
+void Day::cleanDay() {
+	_meetings.clear();
+}
+
 const Meeting* Day::findMeeting(const float& startTime) const {
 	for (int i = 0; i < _meetings.size(); i++) {
 		if (Meeting::compareTimes(_meetings[i].getStartTime(), startTime)) {
@@ -70,6 +74,14 @@ const Meeting* Day::findMeeting(const float& startTime) const {
 	}
 
 	return NULL;
+}
+
+const Meeting* Day::findMeeting(const int& id) const {
+	for (int i = 0; i < _meetings.size(); i++) {
+		if (_meetings[i].getId() == id) {
+			return &(_meetings[i]);
+		}
+	}
 }
 
 const void Day::print() const {

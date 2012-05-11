@@ -34,19 +34,31 @@ bool Diary::deleteMeeting(const WeekDay& weekDay, const int& id) {
 	return _days[weekDay]->deleteMeeting(id);
 }
 
+const Meeting* Diary::findMeeting(const WeekDay& weekday, const int& id) const {
+	return _days[weekday]->findMeeting(id);
+}
+
 const Meeting* Diary::findMeeting(const WeekDay& weekday, const float& startTime) const {
 	return _days[weekday]->findMeeting(startTime);
-
 }
 
 bool Diary::copyMeeting(const WeekDay& weekDay, const Meeting& meeting) {
 	Meeting& newMeeting = *(new Meeting(meeting));
 	return _days[weekDay]->addMeeting(newMeeting);
 }
+void Diary::cleanDiary() {
+	for (int i = 0; i < 7; i++) {
+		_days[i]->cleanDay();
+	}
+}
 
 void Diary::print() const {
 	cout << "Diary: " << endl;
 	for (int i = 0; i < 7; i++){
-		_days[i]->print();
+		printDay((WeekDay)i);
 	}
+}
+
+void Diary::printDay(const WeekDay& weekDay) const {
+	_days[weekDay]->print();
 }

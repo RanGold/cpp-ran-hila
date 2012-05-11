@@ -15,13 +15,22 @@ bool ExtendedDiary::addMeeting(const WeekDay& weekDay, const float& startTime, c
 	return Diary::addMeeting(weekDay, startTime, endTime, subject, participants);
 }
 
-bool ExtendedDiary::copyMeeting(const WeekDay& weekDay, const Meeting& meeting) {
+bool ExtendedDiary::copyMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, const Meeting& meeting) {
 	if (!meeting.isExtended()){
 		return false;
 	}
 
 	ExtendedMeeting& extendedMeeting = (ExtendedMeeting&) meeting;
 	ExtendedMeeting& newMeeting = *(new ExtendedMeeting(extendedMeeting));
+
+	if (startTime != -1){
+		newMeeting.setStartTime(startTime);
+	}
+
+	if (endTime != -1){
+		newMeeting.setEndTime(endTime);
+	}
+
 	return _days[weekDay]->addMeeting(newMeeting);
 }
 

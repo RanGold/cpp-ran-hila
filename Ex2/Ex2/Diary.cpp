@@ -42,10 +42,28 @@ const Meeting* Diary::findMeeting(const WeekDay& weekday, const float& startTime
 	return _days[weekday]->findMeeting(startTime);
 }
 
-bool Diary::copyMeeting(const WeekDay& weekDay, const Meeting& meeting) {
-	Meeting& newMeeting = *(new Meeting(meeting));
-	return _days[weekDay]->addMeeting(newMeeting);
+bool Diary::copyMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, const Meeting& meeting) {
+
+	Meeting* newMeeting;
+
+	if (meeting.isExtended()){
+		newMeeting = new ExtendedMeeting((ExtendedMeeting&) meeting);
+	}
+	else{
+		newMeeting = new Meeting(meeting);
+	}
+
+	if (startTime != -1){
+		newMeeting->setStartTime(startTime);
+	}
+
+	if (endTime != -1){
+		newMeeting->setEndTime(endTime);
+	}
+
+	return _days[weekDay]->addMeeting(*newMeeting);
 }
+
 void Diary::cleanDiary() {
 	for (int i = 0; i < 7; i++) {
 		_days[i]->cleanDay();

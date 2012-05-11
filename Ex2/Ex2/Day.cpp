@@ -19,11 +19,9 @@ const Day& Day::operator=(const Day& day) {
 }
 
 Day::~Day() {
-	/*for (int i = 0; i < _meetings.size(); i++ ){
+	for (int i = 0; i < _meetings.size(); i++ ){
 		delete _meetings[i];
-	}*/
-
-	//TODO make sure that _meetings (and its meetings) are deleted
+	}
 }
 
 const WeekDay& Day::getWeekDay() const {
@@ -31,24 +29,24 @@ const WeekDay& Day::getWeekDay() const {
 }
 
 bool Day::addMeeting(Meeting& meeting) {
-	vector <Meeting>::const_iterator iter;
+	vector <Meeting*>::const_iterator iter;
 
 	for (iter = _meetings.begin(); iter != _meetings.end( ); iter++) {
-		if ((*iter).doesOverlap(meeting)) {
+		if ((*iter)->doesOverlap(meeting)) {
 			cout << "The meeting overlaps an exisitng meeting" << endl;
 			return false;
 		}
 	}
 
 	meeting.setId(_meetingIdCounter++);
-	_meetings.push_back(meeting);
+	_meetings.push_back(&meeting);
 	return true;
 }
 
 bool Day::deleteMeeting(const int& id) {
-	vector <Meeting>::const_iterator iter;
+	vector <Meeting*>::const_iterator iter;
 	for (iter = _meetings.begin(); iter != _meetings.end(); iter++) {
-		if (iter->getId() == id) {
+		if ((*iter)->getId() == id) {
 			break;
 		}
 	}
@@ -57,19 +55,25 @@ bool Day::deleteMeeting(const int& id) {
 		return false;
 	}
 	else {
+		delete * iter;
 		_meetings.erase(iter);
 		return true;
 	}
 }
 
 void Day::cleanDay() {
+
+	for (int i = 0 ; i < _meetings.size(); i++){
+		delete _meetings[i];
+	}
+
 	_meetings.clear();
 }
 
 const Meeting* Day::findMeeting(const float& startTime) const {
 	for (int i = 0; i < _meetings.size(); i++) {
-		if (Meeting::compareTimes(_meetings[i].getStartTime(), startTime)) {
-			return &(_meetings[i]);
+		if (Meeting::compareTimes(_meetings[i]->getStartTime(), startTime)) {
+			return _meetings[i];
 		}
 	}
 
@@ -78,8 +82,8 @@ const Meeting* Day::findMeeting(const float& startTime) const {
 
 const Meeting* Day::findMeeting(const int& id) const {
 	for (int i = 0; i < _meetings.size(); i++) {
-		if (_meetings[i].getId() == id) {
-			return &(_meetings[i]);
+		if (_meetings[i]->getId() == id) {
+			return _meetings[i];
 		}
 	}
 }
@@ -109,8 +113,8 @@ const void Day::print() const {
 		break;
 	}
 
-	vector <Meeting>::const_iterator iter;
+	vector <Meeting*>::const_iterator iter;
 	for (iter = _meetings.begin(); iter != _meetings.end( ); iter++) {
-		(*iter).print();
+		(*iter)->print();
 	}
 }

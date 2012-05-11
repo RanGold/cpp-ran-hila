@@ -2,7 +2,9 @@
 #include <math.h>
 
 void Meeting::printTime(const float& time) {
-	cout << (int)(floor(time)) << ":" << (int)(floor((time - floor(time)) * 60));
+	cout << (int)(floor(time)) << ":";
+	int minutes = (int)(floor((time - floor(time)) * 60));
+	minutes == 0 ? cout << "00" : cout << minutes;
 }
 
 float Meeting::epsilon = 0.0001;
@@ -66,7 +68,7 @@ bool Meeting::doesOverlap(const Meeting& meeting) const{
 }
 
 void Meeting::print() const{
-	cout << "ID: " << _id << "Start time: ";
+	cout << "ID: " << _id << ", Start time: ";
 	printTime(_startTime);
 	cout << ", End time: ";
 	printTime(_endTime);

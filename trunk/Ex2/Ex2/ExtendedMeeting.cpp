@@ -56,7 +56,8 @@ bool ExtendedMeeting::doesOverlap(const Meeting& meeting) const {
 }
 
 void ExtendedMeeting::print() const {
-	cout << "Start time: "; 
+	cout << "ID: " << this->getId();
+	cout << " Start time: "; 
 	printTime(this->getStartTime()) ;
 	cout << ", End time: ";
 	printTime(this->getEndTime());

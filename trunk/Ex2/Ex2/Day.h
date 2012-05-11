@@ -30,6 +30,6 @@ public:
 
 private:
 	WeekDay _weekDay;
-	vector <Meeting> _meetings;
+	vector <Meeting*> _meetings;
 	int _meetingIdCounter;
 };

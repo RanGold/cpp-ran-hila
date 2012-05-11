@@ -12,6 +12,7 @@ WeekDay getWeekDayFromUser() {
 	int weekDayInt;
 	cin >> weekDayInt;
 	WeekDay weekDay = (WeekDay)(weekDayInt - 1);
+	return weekDay;
 }
 
 int getAppointmentIdFromUser(Diary& diary, WeekDay& weekDay) {
@@ -37,8 +38,9 @@ void addMeeting(Diary& diary) {
 	cin >> endTime;
 	cout << "Enter subject" << endl;
 	string subject;
-	cin >> subject;
-	cout << "Enter participant name or \"Done\" when all participants were entered" << endl;
+	cin.ignore();
+	getline(cin, subject);
+	cout << "Enter participants name separated by new line or \"Done\" when all participants were entered" << endl;
 	list <string> participants;
 	bool done = false;
 	while (!done) {
@@ -93,24 +95,32 @@ void findMeeting(Diary& diary) {
 }
 
 void copyMeeting(Diary& diary) {
-	cout << "Source: ";
+	cout << "Source meeting details: ";
 	WeekDay srcWeekDay = getWeekDayFromUser();
 	int id = getAppointmentIdFromUser(diary, srcWeekDay);
-
-	cout << "Destination: ";
-	WeekDay dstWeekDay = getWeekDayFromUser();
-
+	
 	const Meeting* meeting = diary.findMeeting(srcWeekDay, id);
 	if (meeting == NULL) {
 		cout << "Source meeting not found" << endl;
+		return;
+	}
+
+	cout << "Destination meeting details: ";
+	WeekDay dstWeekDay = getWeekDayFromUser();
+
+	cout << "Enter a new start time or type -1 to remain start time unchanged: " << endl;
+	float startTime;
+	cin >> startTime;
+
+	cout << "Enter a new end time or type -1 to remain end time unchanged: " << endl;
+	float endTime;
+	cin >> endTime;
+
+	if (diary.copyMeeting(dstWeekDay, startTime, endTime, *meeting)) {
+		cout << "Meeting copied" << endl;
 	}
 	else {
-		if (diary.copyMeeting(dstWeekDay, *meeting)) {
-			cout << "Meeting copied" << endl;
-		}
-		else {
-			cout << "Meeting not copied" << endl;
-		}
+		cout << "Meeting not copied" << endl;
 	}
 }
 
@@ -137,6 +147,7 @@ int main(int argc, char* argv[]) {
 
 	bool quit = false;
 	while(!quit) {
+		cout << "\n" << endl;
 		cout << "1. Add meetings" << endl;
 		cout << "2. Remove meeting" << endl;
 		cout << "3. Clean Diary" << endl;

@@ -22,7 +22,9 @@ public:
 	const WeekDay& getWeekDay() const;
 	bool addMeeting(Meeting& meeting);
 	bool deleteMeeting(const int& id);
+	void cleanDay();
 	const Meeting* findMeeting(const float& startTime) const;
+	const Meeting* findMeeting(const int& id) const;
 
 	virtual const void print() const;
 

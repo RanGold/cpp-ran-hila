@@ -19,6 +19,11 @@ const Day& Day::operator=(const Day& day) {
 }
 
 Day::~Day() {
+	/*for (int i = 0; i < _meetings.size(); i++ ){
+		delete _meetings[i];
+	}*/
+
+	//TODO make sure that _meetings (and its meetings) are deleted
 }
 
 const WeekDay& Day::getWeekDay() const {

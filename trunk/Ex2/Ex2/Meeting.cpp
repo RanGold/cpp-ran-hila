@@ -10,44 +10,45 @@ float Meeting::epsilon = 0.0001;
 Meeting::Meeting(){}
 
 Meeting::Meeting(const float& startTime, const float& endTime, const string& subject) 
-	:_subject(subject)
-{
-	_startTime = startTime;
-	_endTime = endTime;
-}
+	:_startTime(startTime), _endTime(endTime), _subject(subject) {}
 
 Meeting::Meeting(const Meeting& meeting)
-	:_subject(meeting.getSubject())
-{
-	_startTime = meeting.getStartTime();
-	_endTime = meeting.getEndTime();
-}
+	:_id(meeting.getId()), _startTime(meeting.getStartTime()), _endTime(meeting.getEndTime()), _subject(meeting.getSubject()) {}
 
 const Meeting& Meeting::operator=(const Meeting& meeting){
 	if (this != &meeting){
 		_startTime = meeting.getStartTime();
 		_endTime = meeting.getEndTime();
 		_subject = meeting.getSubject();
+		_id = meeting.getId();
 	}
 
 	return *this;
 }
 
 const bool& Meeting::operator==(const Meeting& meeting) {
-	float startDelta = _startTime - meeting.getStartTime();
-	float endDelta = _endTime - meeting.getEndTime();
-	return (abs(startDelta) <= Meeting.epsilon &&
-		abs(endDelta) <= Meeting.epsilon &&
+	return (_id == meeting.getId() &&
+		compareTimes(_startTime, meeting.getStartTime()) &&
+		compareTimes(_endTime, meeting.getEndTime()) &&
 		_subject.compare(meeting.getSubject()) == 0);
 }
 
 Meeting::~Meeting(){}
 
+
+const int& Meeting::getId() const{
+	return _id;
+}
+
+void Meeting::setId(const int& id){
+	_id =  id;
+}
+
 const float& Meeting::getStartTime() const{
 	return _startTime;
 }
 
-const void Meeting::setStartTime(const float& startTime){
+void Meeting::setStartTime(const float& startTime){
 	_startTime = startTime;
 }
 
@@ -55,7 +56,7 @@ const float& Meeting::getEndTime() const{
 	return _endTime;
 }
 
-const void Meeting::setEndTime(const float& endTime){
+void Meeting::setEndTime(const float& endTime){
 	_endTime = endTime;
 }
 
@@ -73,7 +74,7 @@ bool Meeting::doesOverlap(const Meeting& meeting) const{
 }
 
 void Meeting::print() const{
-	cout << "Start time: " << _startTime << ", End time: " << _endTime << ", Subject: " << _subject << endl;
+	cout << "ID: " << _id << "Start time: " << _startTime << ", End time: " << _endTime << ", Subject: " << _subject << endl;
 }
 
 const bool& Meeting::isExtended() const {

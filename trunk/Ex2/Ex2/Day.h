@@ -20,10 +20,9 @@ public:
 	virtual ~Day();
 
 	const WeekDay& getWeekDay() const;
-	const bool& addMeeting(Meeting& meeting);
-	const bool& deleteMeeting(const Meeting& meeting);
+	bool addMeeting(Meeting& meeting);
+	bool deleteMeeting(const int& id);
 	const Meeting* findMeeting(const float& startTime) const;
-
 
 	virtual const void print() const;
 
@@ -31,4 +30,4 @@ private:
 	WeekDay _weekDay;
 	vector <Meeting> _meetings;
 	int _meetingIdCounter;
-}
+};

@@ -8,7 +8,6 @@ public:
 	Meeting(const float& startTime, const float& endTime, const string& subject);
 	Meeting(const Meeting& meeting);
 	virtual const Meeting& operator=(const Meeting& meeting);
-	virtual const bool& operator==(const Meeting& meeting);
 	virtual ~Meeting();
 	
 	const int& getId() const;
@@ -19,11 +18,11 @@ public:
 	void setEndTime(const float& endTime);
 	const string& getSubject() const;
 	void setSubject(const string& subject);
-	static const bool& compareTimes(const float& t1, const float& t2) { return (abs(t1 - t2) <= epsilon); }
+	static bool compareTimes(const float& t1, const float& t2) { return (abs(t1 - t2) <= epsilon); }
 
 	virtual bool doesOverlap(const Meeting& meeting) const;
 	virtual void print() const;
-	virtual const bool& isExtended() const;
+	virtual bool isExtended() const;
 
 protected:
 	static void printTime(const float& time);

@@ -26,13 +26,6 @@ const Meeting& Meeting::operator=(const Meeting& meeting){
 	return *this;
 }
 
-const bool& Meeting::operator==(const Meeting& meeting) {
-	return (_id == meeting.getId() &&
-		compareTimes(_startTime, meeting.getStartTime()) &&
-		compareTimes(_endTime, meeting.getEndTime()) &&
-		_subject.compare(meeting.getSubject()) == 0);
-}
-
 Meeting::~Meeting(){}
 
 
@@ -77,6 +70,6 @@ void Meeting::print() const{
 	cout << "ID: " << _id << "Start time: " << _startTime << ", End time: " << _endTime << ", Subject: " << _subject << endl;
 }
 
-const bool& Meeting::isExtended() const {
+bool Meeting::isExtended() const {
 	return false;
 }

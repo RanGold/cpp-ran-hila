@@ -25,7 +25,7 @@ const WeekDay& Day::getWeekDay() const {
 	return _weekDay;
 }
 
-const bool& Day::addMeeting(Meeting& meeting) {
+bool Day::addMeeting(Meeting& meeting) {
 	vector <Meeting>::const_iterator iter;
 
 	for (iter = _meetings.begin(); iter != _meetings.end( ); iter++) {
@@ -34,16 +34,16 @@ const bool& Day::addMeeting(Meeting& meeting) {
 		}
 	}
 
-	meeting.setId(_meetingIdCounter);
+	meeting.setId(_meetingIdCounter++);
 	_meetings.push_back(meeting);
 	return true;
 }
 
-const bool& Day::deleteMeeting(const Meeting& meeting) {
+bool Day::deleteMeeting(const int& id) {
 	vector <Meeting>::const_iterator iter;
 
 	for (iter = _meetings.begin(); iter != _meetings.end(); iter++) {
-		if ((Meeting) (*iter) == meeting) {
+		if (iter->getId() == id) {
 			break;
 		}
 	}
@@ -59,7 +59,7 @@ const bool& Day::deleteMeeting(const Meeting& meeting) {
 
 const Meeting* Day::findMeeting(const float& startTime) const {
 	for (int i = 0; i < _meetings.size(); i++) {
-		if (Meeting.compareTimes(_meetings[i].getStartTime(), startTime)) {
+		if (Meeting::compareTimes(_meetings[i].getStartTime(), startTime)) {
 			return &(_meetings[i]);
 		}
 	}

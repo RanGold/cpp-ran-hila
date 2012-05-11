@@ -9,13 +9,39 @@ ExtendedMeeting::ExtendedMeeting(const float& startTime, const float& endTime, c
 ExtendedMeeting::ExtendedMeeting(const ExtendedMeeting& meeting)
 	: Meeting(meeting), _participants(meeting.getParticipants()){}
 
-const ExtendedMeeting& ExtendedMeeting::operator=(const ExtendedMeeting& meeting){
-	if (this != &meeting){
+const Meeting& ExtendedMeeting::operator=(const Meeting& meeting){
+	if (this != &meeting) {
 		Meeting.operator=(meeting);
-		_participants = meeting.getParticipants();
+		if (meeting.isExtended()) {
+			_participants = ((ExtendedMeeting*)&meeting)->getParticipants();
+		}
 	}
 
 	return *this;
+}
+
+const bool& ExtendedMeeting::operator==(const Meeting& meeting) {
+	if (!meeting.isExtended() || !Meeting.operator==(meeting)) {
+		return false;
+	}
+
+	// Comparing participants
+	// TODO : verify no copy constructor is called (assign)
+	const list <string>& otherParticipants = ((ExtendedMeeting*)&meeting)->getParticipants();
+	list <string>::const_iterator iter1, iter2;
+	for (iter1 = _participants.begin(); iter1 != _participants.end(); iter1++) {
+		for (iter2 = otherParticipants.begin(); iter2 != otherParticipants.end(); iter2++) {
+			if ((*iter1).compare(*iter2) == 0) {
+				break;
+			}
+		}
+		
+		if (iter2 == otherParticipants.end()) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 ExtendedMeeting::~ExtendedMeeting(){}
@@ -60,7 +86,7 @@ void ExtendedMeeting::print() const {
 	cout << ", Subject: " << this->getSubject() << ", Participants: " << endl;
 	
 	list <string>::const_iterator iter;
-	for (iter = _participants.begin(); iter != _participants.end( ); iter++) {
+	for (iter = _participants.begin(); iter != _participants.end(); iter++) {
 		cout << *iter << endl;
 	}
 }

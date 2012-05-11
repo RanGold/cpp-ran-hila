@@ -1,4 +1,4 @@
-#include <list>
+#include <vector>
 #include "Meeting.h"
 
 enum WeekDay {
@@ -20,13 +20,15 @@ public:
 	virtual ~Day();
 
 	const WeekDay& getWeekDay() const;
-	const bool& addMeeting(const Meeting& meeting);
+	const bool& addMeeting(Meeting& meeting);
 	const bool& deleteMeeting(const Meeting& meeting);
-	Meeting& findMeeting(const float& startTime) const;
+	const Meeting* findMeeting(const float& startTime) const;
+
 
 	virtual const void print() const;
 
 private:
 	WeekDay _weekDay;
-	list <Meeting> _meetings;
+	vector <Meeting> _meetings;
+	int _meetingIdCounter;
 }

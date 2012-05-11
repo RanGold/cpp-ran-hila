@@ -11,37 +11,13 @@ ExtendedMeeting::ExtendedMeeting(const ExtendedMeeting& meeting)
 
 const Meeting& ExtendedMeeting::operator=(const Meeting& meeting){
 	if (this != &meeting) {
-		Meeting.operator=(meeting);
+		Meeting::operator=(meeting);
 		if (meeting.isExtended()) {
 			_participants = ((ExtendedMeeting*)&meeting)->getParticipants();
 		}
 	}
 
 	return *this;
-}
-
-const bool& ExtendedMeeting::operator==(const Meeting& meeting) {
-	if (!meeting.isExtended() || !Meeting.operator==(meeting)) {
-		return false;
-	}
-
-	// Comparing participants
-	// TODO : verify no copy constructor is called (assign)
-	const list <string>& otherParticipants = ((ExtendedMeeting*)&meeting)->getParticipants();
-	list <string>::const_iterator iter1, iter2;
-	for (iter1 = _participants.begin(); iter1 != _participants.end(); iter1++) {
-		for (iter2 = otherParticipants.begin(); iter2 != otherParticipants.end(); iter2++) {
-			if ((*iter1).compare(*iter2) == 0) {
-				break;
-			}
-		}
-		
-		if (iter2 == otherParticipants.end()) {
-			return false;
-		}
-	}
-
-	return true;
 }
 
 ExtendedMeeting::~ExtendedMeeting(){}
@@ -59,7 +35,7 @@ bool ExtendedMeeting::doesOverlap(const Meeting& meeting) const {
 		return true;
 	}
 
-	if (!Meeting.doesOverlap(meeting)) {
+	if (!Meeting::doesOverlap(meeting)) {
 		return false;
 	}
 	
@@ -91,6 +67,6 @@ void ExtendedMeeting::print() const {
 	}
 }
 
-const bool& Meeting::isExtended() const {
+bool ExtendedMeeting::isExtended() const {
 	return true;
 }

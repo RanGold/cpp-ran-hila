@@ -68,8 +68,7 @@ void Meeting::setSubject(const string& subject) {
 
 bool Meeting::doesOverlap(const Meeting& meeting) const {
 	return  
-		(compareTimes(_startTime, meeting.getStartTime()) || compareTimes(_endTime, meeting.getStartTime())) ||
-		(compareTimes(_startTime, meeting.getEndTime()) || compareTimes(_endTime, meeting.getEndTime())) ||
+		(compareTimes(_startTime, meeting.getStartTime()) || compareTimes(_endTime, meeting.getEndTime())) ||
 		(_startTime < meeting.getStartTime() && _endTime > meeting.getStartTime()) || 
 		(_startTime < meeting.getEndTime() && _endTime > meeting.getStartTime());
 }

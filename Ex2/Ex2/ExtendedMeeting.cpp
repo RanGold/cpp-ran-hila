@@ -40,7 +40,6 @@ bool ExtendedMeeting::doesOverlap(const Meeting& meeting) const {
 	}
 	else {
 		// Comparing participants
-		// TODO : verify no copy constructor is called (assign)
 		const list <string>& otherParticipants = ((ExtendedMeeting*)&meeting)->getParticipants();
 		list <string>::const_iterator iter1, iter2;
 		for (iter1 = _participants.begin(); iter1 != _participants.end(); iter1++) {

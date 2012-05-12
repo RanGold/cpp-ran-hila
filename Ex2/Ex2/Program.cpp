@@ -11,7 +11,7 @@ WeekDay getWeekDayFromUser() {
 	cout << "7 - Saturday" << endl;
 	int weekDayInt;
 	cin >> weekDayInt;
-	WeekDay weekDay = (WeekDay)(weekDay > 7 || weekDay < Sunday ? 0 : weekDayInt - 1);
+	WeekDay weekDay = (WeekDay)(weekDayInt > 7 || weekDayInt < Sunday ? 0 : weekDayInt - 1);
 	return weekDay;
 }
 
@@ -164,6 +164,13 @@ void printDiary(const Diary& diary) {
 }
 
 int main(int argc, char* argv[]) {
+	Diary *diary1 = new Diary();
+	Diary diary2;
+	list <string> part;
+	diary1->addMeeting(Sunday, 1, 2, "adsasd", part);
+	diary2.addMeeting(Sunday, 1, 2, "adsasd", part);
+	diary2 = *diary1;
+
 
 	cout << "Select type of diary: 1 - Regular Diary, 2 - Extended Diary" << endl;
 	int diaryType;

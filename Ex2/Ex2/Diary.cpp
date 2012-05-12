@@ -3,13 +3,35 @@
 Diary::Diary() {
 	for (int i = 0; i < 7; i++) {
 		_days[i] = new Day((WeekDay)i);
+		if (_days[i] == NULL) {
+			cleanDiary();
+			break;
+		}
 	}
 }
 
-Diary::~Diary(){
-	for (int i = 0; i < 7; i++){
-		delete _days[i];
+Diary::Diary(const Diary& diary) {
+	for (int i = 0; i < 7; i++) {
+		_days[i] = new Day(*(diary._days[i]));
+		if (_days[i] == NULL) {
+			cleanDiary();
+			break;
+		}
 	}
+}
+
+const Diary& Diary::operator=(const Diary& diary) {
+	if (this != &diary) {
+		for (int i = 0; i < 7; i++) {
+			*(_days[i]) = *(diary._days[i]);
+		}
+	}
+
+	return *this;
+}
+
+Diary::~Diary(){
+	cleanDiary();
 }
 
 bool Diary::addMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, 
@@ -25,6 +47,7 @@ bool Diary::addMeeting(const WeekDay& weekDay, const float& startTime, const flo
 
 	if (!meeting->isValid()) {
 		cout << "Invalid values for new meeting" << endl;
+		delete meeting;
 		return false;
 	}
 
@@ -51,7 +74,7 @@ bool Diary::copyMeeting(const WeekDay& weekDay, const float& startTime, const fl
 
 	Meeting* newMeeting;
 
-	if (meeting.isExtended()){
+	if (meeting.isExtended()) {
 		newMeeting = new ExtendedMeeting((ExtendedMeeting&) meeting);
 	}
 	else {
@@ -63,6 +86,7 @@ bool Diary::copyMeeting(const WeekDay& weekDay, const float& startTime, const fl
 
 	if (!meeting.isValid()) {
 		cout << "Invalid values for new meeting" << endl;
+		delete newMeeting;
 		return false;
 	}
 

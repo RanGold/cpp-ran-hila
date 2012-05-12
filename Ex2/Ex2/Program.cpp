@@ -33,7 +33,7 @@ float getTime() {
 		float time;
 		cin >> time;
 		if (time < 0 || time > 24) {
-			cout << "Invalid time enterd, the value must be between 0.0 and 24.0, choose again" << endl;
+			cout << "Invalid time entered, the value must be between 0.0 and 24.0, try again" << endl;
 			continue;
 		}
 

@@ -22,10 +22,10 @@ const Meeting& ExtendedMeeting::operator=(const Meeting& meeting){
 
 ExtendedMeeting::~ExtendedMeeting() {}
 
-const list <string> ExtendedMeeting::getParticipants() const {
+const list <string>& ExtendedMeeting::getParticipants() const {
 	return _participants;
 }
-const void ExtendedMeeting::setParticipants(const list <string> participants) {
+void ExtendedMeeting::setParticipants(const list <string>& participants) {
 	_participants = participants;
 }
 
@@ -55,16 +55,12 @@ bool ExtendedMeeting::doesOverlap(const Meeting& meeting) const {
 }
 
 void ExtendedMeeting::print() const {
-	cout << "ID: " << this->getId();
-	cout << " Start time: "; 
-	printTime(this->getStartTime()) ;
-	cout << ", End time: ";
-	printTime(this->getEndTime());
-	cout << ", Subject: " << this->getSubject() << ", Participants: " << endl;
+	printNoNL();
+	cout << ", Participants: " << endl;
 	
 	list <string>::const_iterator iter;
 	for (iter = _participants.begin(); iter != _participants.end(); iter++) {
-		cout << *iter << endl;
+		cout << '\t' << *iter << endl;
 	}
 }
 

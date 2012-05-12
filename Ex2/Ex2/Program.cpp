@@ -164,14 +164,6 @@ void printDiary(const Diary& diary) {
 }
 
 int main(int argc, char* argv[]) {
-	Diary *diary1 = new Diary();
-	Diary diary2;
-	list <string> part;
-	diary1->addMeeting(Sunday, 1, 2, "adsasd", part);
-	diary2.addMeeting(Sunday, 1, 2, "adsasd", part);
-	diary2 = *diary1;
-
-
 	cout << "Select type of diary: 1 - Regular Diary, 2 - Extended Diary" << endl;
 	int diaryType;
 	Diary* diary;
@@ -185,6 +177,11 @@ int main(int argc, char* argv[]) {
 	default:
 		diary = new Diary();
 		cout << "Regular diary created" << endl;
+	}
+
+	if (diary == NULL) {
+		cout << "Error allocating diary" << endl;
+		return -1;
 	}
 
 	bool quit = false;

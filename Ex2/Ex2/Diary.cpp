@@ -4,6 +4,7 @@ Diary::Diary() {
 	for (int i = 0; i < 7; i++) {
 		_days[i] = new Day((WeekDay)i);
 		if (_days[i] == NULL) {
+			cout << "Error allocating day" << endl;
 			cleanDiary();
 			break;
 		}
@@ -14,6 +15,7 @@ Diary::Diary(const Diary& diary) {
 	for (int i = 0; i < 7; i++) {
 		_days[i] = new Day(*(diary._days[i]));
 		if (_days[i] == NULL) {
+			cout << "Error allocating day" << endl;
 			cleanDiary();
 			break;
 		}
@@ -43,6 +45,11 @@ bool Diary::addMeeting(const WeekDay& weekDay, const float& startTime, const flo
 		meeting = new Meeting(startTime, endTime, subject);
 	} else {
 		meeting = new ExtendedMeeting(startTime, endTime, subject, participants);
+	}
+
+	if (meeting == NULL) {
+		cout << "Error allocating meeting" << endl;
+		return false;
 	}
 
 	if (!meeting->isValid()) {
@@ -79,6 +86,11 @@ bool Diary::copyMeeting(const WeekDay& weekDay, const float& startTime, const fl
 	}
 	else {
 		newMeeting = new Meeting(meeting);
+	}
+
+	if (newMeeting == NULL) {
+		cout << "Error allocating meeting" << endl;
+		return false;
 	}
 
 	newMeeting->setStartTime(startTime);

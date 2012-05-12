@@ -10,8 +10,16 @@ Day::Day(const Day& day)
 	: _weekDay(day.getWeekDay()), _meetingIdCounter(0)
 {
 	for (unsigned int i = 0; i < day._meetings.size(); i++) {
-		Meeting* newMeeting = new Meeting(*day._meetings[i]);
+		Meeting* newMeeting;
+		if ((*day._meetings[i]).isExtended()) {
+			newMeeting = new ExtendedMeeting(*((ExtendedMeeting*)day._meetings[i]));
+		}
+		else {
+			newMeeting = new Meeting(*(day._meetings[i]));
+		}
+		
 		if (newMeeting == NULL) {
+			cout << "Error allocating meeting" << endl;
 			cleanDay();
 			break;
 		}
@@ -25,8 +33,16 @@ const Day& Day::operator=(const Day& day) {
 		_weekDay = day.getWeekDay();
 		cleanDay();
 		for (unsigned int i = 0; i < day._meetings.size(); i++) {
-			Meeting* newMeeting = new Meeting(*day._meetings[i]);
+			Meeting* newMeeting;
+			if ((*day._meetings[i]).isExtended()) {
+				newMeeting = new ExtendedMeeting(*((ExtendedMeeting*)day._meetings[i]));
+			}
+			else {
+				newMeeting = new Meeting(*(day._meetings[i]));
+			}
+
 			if (newMeeting == NULL) {
+				cout << "Error allocating meeting" << endl;
 				cleanDay();
 				break;
 			}

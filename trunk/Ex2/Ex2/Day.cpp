@@ -1,27 +1,45 @@
 #include "Day.h"
 
-Day::Day() {
-}
+Day::Day() 
+	: _meetingIdCounter(0) {}
 
 Day::Day(const WeekDay& weekDay) 
 	: _weekDay(weekDay), _meetingIdCounter(0) {}
 
 Day::Day(const Day& day) 
-	: _weekDay(day.getWeekDay()), _meetings(day._meetings) {}
+	: _weekDay(day.getWeekDay()), _meetingIdCounter(0)
+{
+	for (unsigned int i = 0; i < day._meetings.size(); i++) {
+		Meeting* newMeeting = new Meeting(*day._meetings[i]);
+		if (newMeeting == NULL) {
+			cleanDay();
+			break;
+		}
+
+		_meetings.push_back(newMeeting);
+	}
+}
 
 const Day& Day::operator=(const Day& day) {
 	if (this != &day){
 		_weekDay = day.getWeekDay();
-		_meetings = day._meetings;
+		cleanDay();
+		for (unsigned int i = 0; i < day._meetings.size(); i++) {
+			Meeting* newMeeting = new Meeting(*day._meetings[i]);
+			if (newMeeting == NULL) {
+				cleanDay();
+				break;
+			}
+
+			_meetings.push_back(newMeeting);
+		}
 	}
 
 	return *this;
 }
 
 Day::~Day() {
-	for (int i = 0; i < _meetings.size(); i++ ){
-		delete _meetings[i];
-	}
+	cleanDay();
 }
 
 const WeekDay& Day::getWeekDay() const {
@@ -63,7 +81,7 @@ bool Day::deleteMeeting(const int& id) {
 }
 
 void Day::cleanDay() {
-	for (int i = 0 ; i < _meetings.size(); i++) {
+	for (unsigned int i = 0 ; i < _meetings.size(); i++) {
 		delete _meetings[i];
 	}
 
@@ -71,7 +89,7 @@ void Day::cleanDay() {
 }
 
 const Meeting* Day::findMeeting(const float& startTime) const {
-	for (int i = 0; i < _meetings.size(); i++) {
+	for (unsigned int i = 0; i < _meetings.size(); i++) {
 		if (Meeting::compareTimes(_meetings[i]->getStartTime(), startTime)) {
 			return _meetings[i];
 		}
@@ -81,11 +99,13 @@ const Meeting* Day::findMeeting(const float& startTime) const {
 }
 
 const Meeting* Day::findMeeting(const int& id) const {
-	for (int i = 0; i < _meetings.size(); i++) {
+	for (unsigned int i = 0; i < _meetings.size(); i++) {
 		if (_meetings[i]->getId() == id) {
 			return _meetings[i];
 		}
 	}
+
+	return NULL;
 }
 
 const void Day::print() const {

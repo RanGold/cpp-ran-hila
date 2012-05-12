@@ -7,20 +7,20 @@ ExtendedMeeting::ExtendedMeeting(const float& startTime, const float& endTime, c
 	: Meeting(startTime, endTime, subject), _participants(participants) {}
 
 ExtendedMeeting::ExtendedMeeting(const ExtendedMeeting& meeting)
-	: Meeting(meeting), _participants(meeting.getParticipants()){}
+	: Meeting(meeting), _participants(meeting.getParticipants()) {}
 
 const Meeting& ExtendedMeeting::operator=(const Meeting& meeting){
 	if (this != &meeting) {
 		Meeting::operator=(meeting);
 		if (meeting.isExtended()) {
-			_participants = ((ExtendedMeeting*)&meeting)->getParticipants();
+			_participants = ((ExtendedMeeting&)meeting).getParticipants();
 		}
 	}
 
 	return *this;
 }
 
-ExtendedMeeting::~ExtendedMeeting(){}
+ExtendedMeeting::~ExtendedMeeting() {}
 
 const list <string> ExtendedMeeting::getParticipants() const {
 	return _participants;

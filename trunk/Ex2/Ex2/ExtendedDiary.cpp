@@ -1,14 +1,25 @@
 #include "ExtendedDiary.h"
 
-ExtendedDiary::ExtendedDiary(){}
+ExtendedDiary::ExtendedDiary() {}
 
-ExtendedDiary::~ExtendedDiary(){}
+ExtendedDiary::ExtendedDiary(const ExtendedDiary& extendedDiary) 
+	: Diary(extendedDiary) {}
+
+const Diary& ExtendedDiary::operator=(const Diary& diary) {
+	if (this != &diary) {
+		Diary::operator=(diary);
+	}
+
+	return *this;
+}
+
+ExtendedDiary::~ExtendedDiary() {}
 
 bool ExtendedDiary::addMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, 
 	const string& subject, const list<string>& participants) 
 {
 	if (participants.size() == 0) {
-		cout << "Extended diary meetings must contain participants" << endl;
+		cout << "Extended diary's meetings must contain participants" << endl;
 		return false;
 	}
 
@@ -16,22 +27,12 @@ bool ExtendedDiary::addMeeting(const WeekDay& weekDay, const float& startTime, c
 }
 
 bool ExtendedDiary::copyMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, const Meeting& meeting) {
-	if (!meeting.isExtended()){
+	if (!meeting.isExtended()) {
+		cout << "Cannot copy non extended meeting to an extended diary" << endl;
 		return false;
 	}
 
-	ExtendedMeeting& extendedMeeting = (ExtendedMeeting&) meeting;
-	ExtendedMeeting& newMeeting = *(new ExtendedMeeting(extendedMeeting));
-
-	if (startTime != -1){
-		newMeeting.setStartTime(startTime);
-	}
-
-	if (endTime != -1){
-		newMeeting.setEndTime(endTime);
-	}
-
-	return _days[weekDay]->addMeeting(newMeeting);
+	return Diary::copyMeeting(weekDay, startTime, endTime, meeting);
 }
 
 void ExtendedDiary::print() const{

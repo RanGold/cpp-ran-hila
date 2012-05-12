@@ -20,4 +20,6 @@ public:
 
 protected:
 	Day* _days[7];
+
+	virtual void deleteDays(const WeekDay& weekDay);
 };

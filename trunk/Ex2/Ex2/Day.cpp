@@ -34,6 +34,7 @@ bool Day::addMeeting(Meeting& meeting) {
 	for (iter = _meetings.begin(); iter != _meetings.end( ); iter++) {
 		if ((*iter)->doesOverlap(meeting)) {
 			cout << "The meeting overlaps an exisitng meeting" << endl;
+			delete &meeting;
 			return false;
 		}
 	}
@@ -55,15 +56,14 @@ bool Day::deleteMeeting(const int& id) {
 		return false;
 	}
 	else {
-		delete * iter;
+		delete (*iter);
 		_meetings.erase(iter);
 		return true;
 	}
 }
 
 void Day::cleanDay() {
-
-	for (int i = 0 ; i < _meetings.size(); i++){
+	for (int i = 0 ; i < _meetings.size(); i++) {
 		delete _meetings[i];
 	}
 

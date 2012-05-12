@@ -23,6 +23,7 @@ public:
 	virtual bool doesOverlap(const Meeting& meeting) const;
 	virtual void print() const;
 	virtual bool isExtended() const;
+	virtual bool isValid() const;
 
 protected:
 	static void printTime(const float& time);

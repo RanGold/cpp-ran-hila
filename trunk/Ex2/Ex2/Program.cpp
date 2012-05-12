@@ -11,35 +11,49 @@ WeekDay getWeekDayFromUser() {
 	cout << "7 - Saturday" << endl;
 	int weekDayInt;
 	cin >> weekDayInt;
-	WeekDay weekDay = (WeekDay)(weekDayInt - 1);
+	WeekDay weekDay = (WeekDay)(weekDay > 7 || weekDay < Sunday ? 0 : weekDayInt - 1);
 	return weekDay;
 }
 
-int getAppointmentIdFromUser(Diary& diary, WeekDay& weekDay) {
-	cout << "Enter appointment id or -1 for appointments print for the selected day" << endl;
+int getAppointmentIdFromUser(const Diary& diary, const WeekDay& weekDay) {
+	cout << "Enter appointment id or -1 for the appointments printout for the selected day" << endl;
 	int id;
 	cin >> id;
 	while (id == -1) {
 		diary.printDay(weekDay);
-		cout << "Enter appointment id or -1 for appointments print for the selected day" << endl;
+		cout << "Enter appointment id or -1 for the appointments printout for the selected day" << endl;
 		cin >> id;
 	}
 
 	return id;
 }
 
+float getTime() {
+	while (1) {
+		float time;
+		cin >> time;
+		if (time < 0 || time > 24) {
+			cout << "Invalid time enterd, the value must be between 0.0 and 24.0, choose again" << endl;
+			continue;
+		}
+
+		return time;
+	}
+}
+
 void addMeeting(Diary& diary) {
 	WeekDay weekDay = getWeekDayFromUser();
-	cout << "Enter start time" << endl;
-	float startTime;
-	cin >> startTime;
-	cout << "Enter end time" << endl;
-	float endTime;
-	cin >> endTime;
+	cout << "Enter start time as a floating point number" << endl;
+	float startTime = getTime();
+
+	cout << "Enter end time as a floating point number" << endl;
+	float endTime = getTime();
+
 	cout << "Enter subject" << endl;
 	string subject;
 	cin.ignore();
 	getline(cin, subject);
+
 	cout << "Enter participants name separated by new line or \"Done\" when all participants were entered" << endl;
 	list <string> participants;
 	bool done = false;
@@ -78,11 +92,10 @@ void cleanDiary(Diary& diary) {
 	diary.cleanDiary();
 }
 
-void findMeeting(Diary& diary) {
+void findMeeting(const Diary& diary) {
 	WeekDay weekDay = getWeekDayFromUser();
-	cout << "Enter start time" << endl;
-	float startTime;
-	cin >> startTime;
+	cout << "Enter start time as a floating point number" << endl;
+	float startTime = getTime();
 
 	const Meeting* meeting = diary.findMeeting(weekDay, startTime);
 
@@ -105,18 +118,40 @@ void copyMeeting(Diary& diary) {
 		return;
 	}
 
-	cout << "Destination meeting details: ";
-	WeekDay dstWeekDay = getWeekDayFromUser();
-
-	cout << "Enter a new start time or type -1 to remain start time unchanged: " << endl;
+	cout << "Do you wish to:" << endl;
+	cout << "1. Change time" << endl;
+	cout << "2. Change day" << endl;
+	cout << "3. Change both" << endl;
+	int choice;
+	cin >> choice;
+	bool result;
 	float startTime;
-	cin >> startTime;
-
-	cout << "Enter a new end time or type -1 to remain end time unchanged: " << endl;
 	float endTime;
-	cin >> endTime;
+	WeekDay dstWeekDay;
+	switch (choice) {
+	case 1:
+		cout << "Enter a new start time as a floating point number: " << endl;
+		startTime = getTime();
+		cout << "Enter a new end time as a floating point number: " << endl;
+		endTime = getTime();
+		result = diary.copyMeeting(srcWeekDay, startTime, endTime, *meeting);
+		break;
+	case 2:
+		dstWeekDay = getWeekDayFromUser();
+		result = diary.copyMeeting(dstWeekDay, *meeting);
+		break;
+	case 3:
+	default:
+		cout << "Enter a new start time as a floating point number: " << endl;
+		startTime = getTime();
+		cout << "Enter a new end time as a floating point number: " << endl;
+		endTime = getTime();
+		dstWeekDay = getWeekDayFromUser();
+		result = diary.copyMeeting(dstWeekDay, startTime, endTime, *meeting);
+		break;
+	}
 
-	if (diary.copyMeeting(dstWeekDay, startTime, endTime, *meeting)) {
+	if (result) {
 		cout << "Meeting copied" << endl;
 	}
 	else {
@@ -147,7 +182,7 @@ int main(int argc, char* argv[]) {
 
 	bool quit = false;
 	while(!quit) {
-		cout << "\n" << endl;
+		cout << endl << endl;
 		cout << "1. Add meetings" << endl;
 		cout << "2. Remove meeting" << endl;
 		cout << "3. Clean Diary" << endl;
@@ -180,6 +215,8 @@ int main(int argc, char* argv[]) {
 			break;
 		case 7:
 			quit = true;
+			break;
+		default:
 			break;
 		}
 	}

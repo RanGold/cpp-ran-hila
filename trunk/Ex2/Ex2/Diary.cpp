@@ -5,7 +5,7 @@ Diary::Diary() {
 		_days[i] = new Day((WeekDay)i);
 		if (_days[i] == NULL) {
 			cout << "Error allocating day" << endl;
-			cleanDiary();
+			this->~Diary();
 			break;
 		}
 	}
@@ -16,7 +16,7 @@ Diary::Diary(const Diary& diary) {
 		_days[i] = new Day(*(diary._days[i]));
 		if (_days[i] == NULL) {
 			cout << "Error allocating day" << endl;
-			cleanDiary();
+			this->~Diary();
 			break;
 		}
 	}
@@ -32,8 +32,10 @@ const Diary& Diary::operator=(const Diary& diary) {
 	return *this;
 }
 
-Diary::~Diary(){
-	cleanDiary();
+Diary::~Diary() {
+	for (int i = 0; i < 7; i++) {
+		delete (_days[i]);
+	}
 }
 
 bool Diary::addMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, 
@@ -102,12 +104,7 @@ bool Diary::copyMeeting(const WeekDay& weekDay, const float& startTime, const fl
 		return false;
 	}
 
-	bool result = _days[weekDay]->addMeeting(*newMeeting);
-	if (!result) {
-		delete newMeeting;
-	}
-
-	return result;
+	return _days[weekDay]->addMeeting(*newMeeting);
 }
 
 void Diary::cleanDiary() {

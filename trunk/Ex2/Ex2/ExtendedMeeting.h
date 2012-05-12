@@ -9,8 +9,8 @@ public:
 	virtual const Meeting& operator=(const Meeting& meeting);
 	virtual ~ExtendedMeeting();
 
-	const list <string> getParticipants() const;
-	const void setParticipants(const list <string> participants);
+	const list <string>& getParticipants() const;
+	void setParticipants(const list <string>& participants);
 
 	virtual bool doesOverlap(const Meeting& meeting) const;
 	virtual void print() const;

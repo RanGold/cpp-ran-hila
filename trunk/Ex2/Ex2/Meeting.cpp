@@ -74,11 +74,16 @@ bool Meeting::doesOverlap(const Meeting& meeting) const {
 }
 
 void Meeting::print() const {
+	printNoNL();
+	cout << endl;
+}
+
+void Meeting::printNoNL() const {
 	cout << "ID: " << _id << ", Start time: ";
 	printTime(_startTime);
 	cout << ", End time: ";
 	printTime(_endTime);
-	cout << ", Subject: " << _subject << endl;
+	cout << ", Subject: " << _subject;
 }
 
 bool Meeting::isExtended() const {

@@ -72,3 +72,9 @@ void ExtendedMeeting::print() const {
 bool ExtendedMeeting::isExtended() const {
 	return true;
 }
+
+bool ExtendedMeeting::isValid() const {
+	return 
+		Meeting::isValid() &&
+		_participants.size() > 0;
+}

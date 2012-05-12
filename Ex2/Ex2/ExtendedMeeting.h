@@ -15,6 +15,7 @@ public:
 	virtual bool doesOverlap(const Meeting& meeting) const;
 	virtual void print() const;
 	virtual bool isExtended() const;
+	virtual bool isValid() const;
 
 private:
 	list <string> _participants;

@@ -1,13 +1,9 @@
 #include "Diary.h"
 
 Diary::Diary() {
-	_days[0] = new Day(Sunday);
-	_days[1] = new Day(Monday);
-	_days[2] = new Day(Tuesday);
-	_days[3] = new Day(Wednesday);
-	_days[4] = new Day(Thursday);
-	_days[5] = new Day(Friday);
-	_days[6] = new Day(Saturday);
+	for (int i = 0; i < 7; i++) {
+		_days[i] = new Day((WeekDay)i);
+	}
 }
 
 Diary::~Diary(){
@@ -27,6 +23,11 @@ bool Diary::addMeeting(const WeekDay& weekDay, const float& startTime, const flo
 		meeting = new ExtendedMeeting(startTime, endTime, subject, participants);
 	}
 
+	if (!meeting->isValid()) {
+		cout << "Invalid values for new meeting" << endl;
+		return false;
+	}
+
 	return _days[weekDay]->addMeeting(*meeting);
 }
 
@@ -42,6 +43,10 @@ const Meeting* Diary::findMeeting(const WeekDay& weekday, const float& startTime
 	return _days[weekday]->findMeeting(startTime);
 }
 
+bool Diary::copyMeeting(const WeekDay& weekDay, const Meeting& meeting) {
+	return copyMeeting(weekDay, meeting.getStartTime(), meeting.getEndTime(), meeting);
+}
+
 bool Diary::copyMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, const Meeting& meeting) {
 
 	Meeting* newMeeting;
@@ -49,19 +54,24 @@ bool Diary::copyMeeting(const WeekDay& weekDay, const float& startTime, const fl
 	if (meeting.isExtended()){
 		newMeeting = new ExtendedMeeting((ExtendedMeeting&) meeting);
 	}
-	else{
+	else {
 		newMeeting = new Meeting(meeting);
 	}
 
-	if (startTime != -1){
-		newMeeting->setStartTime(startTime);
+	newMeeting->setStartTime(startTime);
+	newMeeting->setEndTime(endTime);
+
+	if (!meeting.isValid()) {
+		cout << "Invalid values for new meeting" << endl;
+		return false;
 	}
 
-	if (endTime != -1){
-		newMeeting->setEndTime(endTime);
+	bool result = _days[weekDay]->addMeeting(*newMeeting);
+	if (!result) {
+		delete newMeeting;
 	}
 
-	return _days[weekDay]->addMeeting(*newMeeting);
+	return result;
 }
 
 void Diary::cleanDiary() {
@@ -74,6 +84,7 @@ void Diary::print() const {
 	cout << "Diary: " << endl;
 	for (int i = 0; i < 7; i++){
 		printDay((WeekDay)i);
+		cout << endl;
 	}
 }
 

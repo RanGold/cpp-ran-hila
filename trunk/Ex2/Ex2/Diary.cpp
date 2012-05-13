@@ -124,7 +124,7 @@ void Diary::printDay(const WeekDay& weekDay) const {
 }
 
 void Diary::deleteDays(const WeekDay& weekDay) {
-	for (unsigned int i = 0; i <= weekDay; i++) {
+	for (int i = 0; i <= weekDay; i++) {
 		delete (_days[i]);
 	}
 }

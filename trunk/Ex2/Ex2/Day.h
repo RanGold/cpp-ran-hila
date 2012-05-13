@@ -32,4 +32,6 @@ private:
 	WeekDay _weekDay;
 	vector <Meeting*> _meetings;
 	int _meetingIdCounter;
+	
+	void copyDayMeetings(const Day& day);
 };

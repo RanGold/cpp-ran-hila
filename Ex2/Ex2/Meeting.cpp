@@ -3,7 +3,7 @@
 #include <iostream>
 #include <iomanip>
 
-float Meeting::epsilon = 0.00001f;
+const float Meeting::epsilon = 0.00001f;
 
 void Meeting::printTime(const float& time) {
 	float impartialHour = time - floor(time);

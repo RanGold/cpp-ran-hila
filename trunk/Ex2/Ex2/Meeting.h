@@ -27,7 +27,7 @@ public:
 
 protected:
 	static void printTime(const float& time);
-	static float epsilon;
+	const static float epsilon;
 	void printNoNL() const;
 
 private:

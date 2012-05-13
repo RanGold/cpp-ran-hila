@@ -9,46 +9,14 @@ Day::Day(const WeekDay& weekDay)
 Day::Day(const Day& day) 
 	: _weekDay(day.getWeekDay()), _meetingIdCounter(0)
 {
-	for (unsigned int i = 0; i < day._meetings.size(); i++) {
-		Meeting* newMeeting;
-		if ((*day._meetings[i]).isExtended()) {
-			newMeeting = new ExtendedMeeting(*((ExtendedMeeting*)day._meetings[i]));
-		}
-		else {
-			newMeeting = new Meeting(*(day._meetings[i]));
-		}
-		
-		if (newMeeting == NULL) {
-			cout << "Error allocating meeting" << endl;
-			cleanDay();
-			break;
-		}
-
-		_meetings.push_back(newMeeting);
-	}
+	copyDayMeetings(day);
 }
 
 const Day& Day::operator=(const Day& day) {
 	if (this != &day){
 		_weekDay = day.getWeekDay();
 		cleanDay();
-		for (unsigned int i = 0; i < day._meetings.size(); i++) {
-			Meeting* newMeeting;
-			if ((*day._meetings[i]).isExtended()) {
-				newMeeting = new ExtendedMeeting(*((ExtendedMeeting*)day._meetings[i]));
-			}
-			else {
-				newMeeting = new Meeting(*(day._meetings[i]));
-			}
-
-			if (newMeeting == NULL) {
-				cout << "Error allocating meeting" << endl;
-				cleanDay();
-				break;
-			}
-
-			_meetings.push_back(newMeeting);
-		}
+		copyDayMeetings(day);
 	}
 
 	return *this;
@@ -76,6 +44,31 @@ bool Day::addMeeting(Meeting& meeting) {
 	meeting.setId(_meetingIdCounter++);
 	_meetings.push_back(&meeting);
 	return true;
+}
+
+void Day::copyDayMeetings(const Day& day) {
+	_meetingIdCounter = 0;
+	for (unsigned int i = 0; i < day._meetings.size(); i++) {
+		Meeting* newMeeting;
+		if ((*day._meetings[i]).isExtended()) {
+			newMeeting = new ExtendedMeeting(*((ExtendedMeeting*)day._meetings[i]));
+		}
+		else {
+			newMeeting = new Meeting(*(day._meetings[i]));
+		}
+
+		if (newMeeting == NULL) {
+			cout << "Error allocating meeting" << endl;
+			cleanDay();
+			break;
+		}
+
+		if (_meetingIdCounter <= newMeeting->getId()) {
+			_meetingIdCounter = newMeeting->getId() + 1;
+		}
+
+		_meetings.push_back(newMeeting);
+	}
 }
 
 bool Day::deleteMeeting(const int& id) {

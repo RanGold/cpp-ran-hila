@@ -24,6 +24,7 @@ Meeting::Meeting(const Meeting& meeting)
 
 const Meeting& Meeting::operator=(const Meeting& meeting) {
 	if (this != &meeting) {
+		_id = meeting.getId();
 		_startTime = meeting.getStartTime();
 		_endTime = meeting.getEndTime();
 		_subject = meeting.getSubject();

@@ -7,7 +7,7 @@ Day::Day(const WeekDay& weekDay)
 	: _weekDay(weekDay), _meetingIdCounter(0) {}
 
 Day::Day(const Day& day) 
-	: _weekDay(day.getWeekDay()), _meetingIdCounter(0)
+	: _weekDay(day.getWeekDay()), _meetingIdCounter(day._meetingIdCounter)
 {
 	copyDayMeetings(day);
 }
@@ -16,6 +16,7 @@ const Day& Day::operator=(const Day& day) {
 	if (this != &day){
 		_weekDay = day.getWeekDay();
 		cleanDay();
+		_meetingIdCounter = day._meetingIdCounter;
 		copyDayMeetings(day);
 	}
 
@@ -61,10 +62,6 @@ void Day::copyDayMeetings(const Day& day) {
 			cout << "Error allocating meeting" << endl;
 			cleanDay();
 			break;
-		}
-
-		if (_meetingIdCounter <= newMeeting->getId()) {
-			_meetingIdCounter = newMeeting->getId() + 1;
 		}
 
 		_meetings.push_back(newMeeting);

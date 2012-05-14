@@ -3,7 +3,7 @@
 ExtendedMeeting::ExtendedMeeting() {
 }
 
-ExtendedMeeting::ExtendedMeeting(const float& startTime, const float& endTime, const string& subject, const list <string>& participants)
+ExtendedMeeting::ExtendedMeeting(float startTime, float endTime, const string& subject, const list <string>& participants)
 	: Meeting(startTime, endTime, subject), _participants(participants) {}
 
 ExtendedMeeting::ExtendedMeeting(const ExtendedMeeting& meeting)

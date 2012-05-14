@@ -15,7 +15,7 @@ const Diary& ExtendedDiary::operator=(const Diary& diary) {
 
 ExtendedDiary::~ExtendedDiary() {}
 
-bool ExtendedDiary::addMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, 
+bool ExtendedDiary::addMeeting(WeekDay weekDay, float startTime, float endTime, 
 	const string& subject, const list<string>& participants) 
 {
 	if (participants.size() == 0) {
@@ -26,7 +26,7 @@ bool ExtendedDiary::addMeeting(const WeekDay& weekDay, const float& startTime, c
 	return Diary::addMeeting(weekDay, startTime, endTime, subject, participants);
 }
 
-bool ExtendedDiary::copyMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, const Meeting& meeting) {
+bool ExtendedDiary::copyMeeting(WeekDay weekDay, float startTime, float endTime, const Meeting& meeting) {
 	if (!meeting.isExtended()) {
 		cout << "Cannot copy non extended meeting to an extended diary" << endl;
 		return false;

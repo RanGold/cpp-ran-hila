@@ -14,17 +14,17 @@ enum WeekDay {
 class Day {
 public:
 	Day();
-	Day(const WeekDay& weekDay);
+	Day(WeekDay weekDay);
 	Day(const Day& day);
 	const Day& operator=(const Day& day);
 	virtual ~Day();
 
-	const WeekDay& getWeekDay() const;
+	WeekDay getWeekDay() const;
 	bool addMeeting(Meeting& meeting);
-	bool deleteMeeting(const int& id);
+	bool deleteMeeting(int id);
 	void cleanDay();
-	const Meeting* findMeeting(const float& startTime) const;
-	const Meeting* findMeeting(const int& id) const;
+	const Meeting* findMeeting(float startTime) const;
+	const Meeting* findMeeting(int id) const;
 
 	virtual const void print() const;
 

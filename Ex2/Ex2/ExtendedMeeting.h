@@ -4,7 +4,7 @@
 class ExtendedMeeting : public Meeting {
 public:
 	ExtendedMeeting();
-	ExtendedMeeting(const float& startTime, const float& endTime, const string& subject, const list <string>& participants);
+	ExtendedMeeting(float startTime, float endTime, const string& subject, const list <string>& participants);
 	ExtendedMeeting(const ExtendedMeeting& meeting);
 	virtual const Meeting& operator=(const Meeting& meeting);
 	virtual ~ExtendedMeeting();

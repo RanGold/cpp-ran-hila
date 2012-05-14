@@ -36,7 +36,7 @@ Diary::~Diary() {
 	deleteDays(Saturday);
 }
 
-bool Diary::addMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, 
+bool Diary::addMeeting(WeekDay weekDay, float startTime, float endTime, 
 	const string& subject, const list<string>& participants) 
 {
 	Meeting *meeting;
@@ -61,23 +61,23 @@ bool Diary::addMeeting(const WeekDay& weekDay, const float& startTime, const flo
 	return _days[weekDay]->addMeeting(*meeting);
 }
 
-bool Diary::deleteMeeting(const WeekDay& weekDay, const int& id) {
+bool Diary::deleteMeeting(WeekDay weekDay, int id) {
 	return _days[weekDay]->deleteMeeting(id);
 }
 
-const Meeting* Diary::findMeeting(const WeekDay& weekday, const int& id) const {
+const Meeting* Diary::findMeeting(WeekDay weekday, int id) const {
 	return _days[weekday]->findMeeting(id);
 }
 
-const Meeting* Diary::findMeeting(const WeekDay& weekday, const float& startTime) const {
+const Meeting* Diary::findMeeting(WeekDay weekday, float startTime) const {
 	return _days[weekday]->findMeeting(startTime);
 }
 
-bool Diary::copyMeeting(const WeekDay& weekDay, const Meeting& meeting) {
+bool Diary::copyMeeting(WeekDay weekDay, const Meeting& meeting) {
 	return copyMeeting(weekDay, meeting.getStartTime(), meeting.getEndTime(), meeting);
 }
 
-bool Diary::copyMeeting(const WeekDay& weekDay, const float& startTime, const float& endTime, const Meeting& meeting) {
+bool Diary::copyMeeting(WeekDay weekDay, float startTime, float endTime, const Meeting& meeting) {
 
 	Meeting* newMeeting;
 
@@ -119,11 +119,11 @@ void Diary::print() const {
 	}
 }
 
-void Diary::printDay(const WeekDay& weekDay) const {
+void Diary::printDay(WeekDay weekDay) const {
 	_days[weekDay]->print();
 }
 
-void Diary::deleteDays(const WeekDay& weekDay) {
+void Diary::deleteDays(WeekDay weekDay) {
 	for (int i = 0; i <= weekDay; i++) {
 		delete (_days[i]);
 	}

@@ -3,7 +3,7 @@
 Day::Day() 
 	: _meetingIdCounter(0) {}
 
-Day::Day(const WeekDay& weekDay) 
+Day::Day(WeekDay weekDay) 
 	: _weekDay(weekDay), _meetingIdCounter(0) {}
 
 Day::Day(const Day& day) 
@@ -27,7 +27,7 @@ Day::~Day() {
 	cleanDay();
 }
 
-const WeekDay& Day::getWeekDay() const {
+WeekDay Day::getWeekDay() const {
 	return _weekDay;
 }
 
@@ -68,7 +68,7 @@ void Day::copyDayMeetings(const Day& day) {
 	}
 }
 
-bool Day::deleteMeeting(const int& id) {
+bool Day::deleteMeeting(int id) {
 	vector <Meeting*>::const_iterator iter;
 	for (iter = _meetings.begin(); iter != _meetings.end(); iter++) {
 		if ((*iter)->getId() == id) {
@@ -94,7 +94,7 @@ void Day::cleanDay() {
 	_meetings.clear();
 }
 
-const Meeting* Day::findMeeting(const float& startTime) const {
+const Meeting* Day::findMeeting(float startTime) const {
 	for (unsigned int i = 0; i < _meetings.size(); i++) {
 		if (Meeting::compareTimes(_meetings[i]->getStartTime(), startTime)) {
 			return _meetings[i];
@@ -104,7 +104,7 @@ const Meeting* Day::findMeeting(const float& startTime) const {
 	return NULL;
 }
 
-const Meeting* Day::findMeeting(const int& id) const {
+const Meeting* Day::findMeeting(int id) const {
 	for (unsigned int i = 0; i < _meetings.size(); i++) {
 		if (_meetings[i]->getId() == id) {
 			return _meetings[i];

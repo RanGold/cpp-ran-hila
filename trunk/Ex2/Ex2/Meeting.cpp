@@ -5,7 +5,7 @@
 
 const float Meeting::epsilon = 0.00001f;
 
-void Meeting::printTime(const float& time) {
+void Meeting::printTime(float time) {
 	float impartialHour = time - floor(time);
 	int minutes = (int)(floor(impartialHour * 60));
 	int seconds = (int)(floor((impartialHour * 60 - minutes) * 60));
@@ -16,7 +16,7 @@ void Meeting::printTime(const float& time) {
 
 Meeting::Meeting() {}
 
-Meeting::Meeting(const float& startTime, const float& endTime, const string& subject) 
+Meeting::Meeting(float startTime, float endTime, const string& subject) 
 	:_startTime(startTime), _endTime(endTime), _subject(subject) {}
 
 Meeting::Meeting(const Meeting& meeting)
@@ -35,27 +35,27 @@ const Meeting& Meeting::operator=(const Meeting& meeting) {
 
 Meeting::~Meeting() {}
 
-const int& Meeting::getId() const {
+int Meeting::getId() const {
 	return _id;
 }
 
-void Meeting::setId(const int& id) {
+void Meeting::setId(int id) {
 	_id =  id;
 }
 
-const float& Meeting::getStartTime() const {
+float Meeting::getStartTime() const {
 	return _startTime;
 }
 
-void Meeting::setStartTime(const float& startTime) {
+void Meeting::setStartTime(float startTime) {
 	_startTime = startTime;
 }
 
-const float& Meeting::getEndTime() const {
+float Meeting::getEndTime() const {
 	return _endTime;
 }
 
-void Meeting::setEndTime(const float& endTime) {
+void Meeting::setEndTime(float endTime) {
 	_endTime = endTime;
 }
 

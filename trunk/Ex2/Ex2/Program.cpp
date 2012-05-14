@@ -15,7 +15,7 @@ WeekDay getWeekDayFromUser() {
 	return weekDay;
 }
 
-int getAppointmentIdFromUser(const Diary& diary, const WeekDay& weekDay) {
+int getAppointmentIdFromUser(const Diary& diary, WeekDay weekDay) {
 	cout << "Enter appointment id or -1 for the appointments printout for the selected day" << endl;
 	int id;
 	cin >> id;

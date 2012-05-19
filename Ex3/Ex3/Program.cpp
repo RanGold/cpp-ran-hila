@@ -2,7 +2,7 @@
 #include <list>
 #include <vector>
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 
 	tContainer_t<int, list> l;
 	tContainer_t<int, vector> v;

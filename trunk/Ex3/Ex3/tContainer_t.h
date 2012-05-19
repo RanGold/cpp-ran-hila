@@ -5,7 +5,7 @@ using namespace std;
 
 template <class T>
 struct eq {
-	eq(const T* compare_to) : _compareTo(compare_to) {}
+	eq(const T* compareTo) : _compareTo(compareTo) {}
 	bool operator()(T * currentVal) const { return  *currentVal == *_compareTo; }
 private:
 	const T* _compareTo;
@@ -74,16 +74,15 @@ public:
 	}
 
 	T& operator[](unsigned int index) const {
-
 		if (index >= _container.size()) {
 			throw IndexOutOfBoundsException();
 		} else if (typeid(_container) == typeid(vector<T*>)) {
-			return *(_container[index]);
+			return *((*((vector<T*>*)((void*)&_container)))[index]);
 		} else {
 			const_iter_t& iter = _container.begin();
 			int i = 0;
-			for (;iter != _container.end(); iter++){
-				if (i == index){
+			for (;iter != _container.end(); iter++) {
+				if (i == index) {
 					break;
 				}
 

@@ -5,7 +5,7 @@ using namespace std;
 
 template <class T>
 struct eq {
-	eq(const T* compare_to) : compare_to_(compare_to) {}
+	eq(const T* compare_to) : _compareTo(compare_to) {}
 	bool operator()(T * currentVal) const { return  *currentVal == *_compareTo; }
 private:
 	const T* _compareTo;
@@ -22,9 +22,9 @@ private:
 	tContainer_t(const tContainer_t& cont);
 	const tContainer_t& operator=(const tContainer_t& cont);
 
-	const_iter_t internalFind(const T& compareToValue) {
+	const_iter_t internalFind(const T& compareToValue) const {
 		const_iter_t& iter = _container.begin();
-		iter = find_if(iter, _container.end(), eq(&compareToValue));
+		iter = find_if(iter, _container.end(), eq<T>(&compareToValue));
 		return iter;
 	}
 
@@ -32,16 +32,16 @@ public:
 	tContainer_t() {}
 	virtual ~tContainer_t() {}
 
-	bool empty( ) const { return _container.empty(); }
-	size_t size( ) const { return _container.size(); }
-	void push_back(const T& val) { _container.push_back(&val); }
+	bool empty() const { return _container.empty(); }
+	size_t size() const { return _container.size(); }
+	void push_back(const T& val) { _container.push_back((T*)&val); }
 	T& front() { return *(_container.front()); }
 	const T& front() const { return *(_container.front()); }
 	T& back() { return *(_container.back()); }
 	const T& back() const { return *(_container.back()); }
 	
 	T* find(const T& compareToElement) const { 
-		const_iter_t iter = internalFind(&compareToElement);
+		const_iter_t& iter = internalFind(compareToElement);
 		return (iter != _container.end() ? *iter : 0);
 	}
 
@@ -73,12 +73,12 @@ public:
 		_container.clear();
 	}
 
-	T& operator[](int index) const {
+	T& operator[](unsigned int index) const {
 
 		if (index >= _container.size()) {
-			throw IndexOutOfBoundsException;
+			throw IndexOutOfBoundsException();
 		} else if (typeid(_container) == typeid(vector<T*>)) {
-			return _container[index];
+			return *(_container[index]);
 		} else {
 			const_iter_t& iter = _container.begin();
 			int i = 0;
@@ -86,6 +86,7 @@ public:
 				if (i == index){
 					break;
 				}
+
 				i++;
 			}
 
@@ -99,6 +100,7 @@ public:
 		for (;iter != _container.end(); iter++){
 			cout << *iter << ",";
 		}
+
 		cout << endl;
 	}
 };

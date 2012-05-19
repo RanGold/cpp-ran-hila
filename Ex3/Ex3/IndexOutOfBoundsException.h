@@ -2,7 +2,11 @@
 using namespace std;
 
 class IndexOutOfBoundsException {
-
 public:
-	void print() const { cout << "Index out of bounds." << endl; }
+	IndexOutOfBoundsException(const string& message = "Index out of bounds") : _message(message) {}
+	~IndexOutOfBoundsException() {};
+
+	const string& getMessage() { return _message; }
+private:
+	string _message;
 };

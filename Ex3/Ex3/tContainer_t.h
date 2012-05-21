@@ -65,6 +65,7 @@ public:
 		for (;iter != _container.end(); iter++) {
 			delete *iter;
 		}
+
 		_container.clear();
 	}
 

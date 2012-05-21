@@ -61,9 +61,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="IndexOutOfBoundsException.h" />
+    <ClInclude Include="Meeting.h" />
     <ClInclude Include="tContainer_t.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Meeting.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -88,11 +88,11 @@ public:
 		}
 	}
 
-	void print() const{ 
-		cout << "tContainer_t:";
+	void print() const { 
+		cout << "tContainer_t:" << endl;
 		const_iter_t& iter = _container.begin();
-		for (;iter != _container.end(); iter++){
-			cout << **iter << endl;
+		for (;iter != _container.end(); iter++) {
+			cout << '\t' << **iter << endl;
 		}
 
 		cout << endl;
@@ -101,7 +101,7 @@ public:
 private:
 	Cont<T*> _container;
 	typedef typename Cont<T*>::const_iterator	const_iter_t;
-	typedef typename Cont<T*>::iterator	iter_t;
+	typedef typename Cont<T*>::iterator			iter_t;
 
 	tContainer_t(const tContainer_t& cont);
 	const tContainer_t& operator=(const tContainer_t& cont);

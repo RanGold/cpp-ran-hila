@@ -75,7 +75,7 @@ void runRefTestsVector(){
 	try{
 		Meeting& meetingAt2 = v[2];
 	}
-	catch (IndexOutOfBoundsException& ex){
+	catch (const IndexOutOfBoundsException& ex){
 		cout << ex.getMessage() << endl;
 	}
 
@@ -93,10 +93,14 @@ void runRefTestsVector(){
 	v.clear();
 	cout << "tContainer after delete (expected: an empty container):" << endl;
 	v.print();
-	cout << "Meeting1 print after delete (expected: the meeting should not be deleted so the subject should be Subject1): " << endl;
+	cout << "Meeting1 print after clear (expected: the meeting should not be deleted so the subject should be Subject1): " << endl;
 	meeting1->print();
-	cout << "Meeting2 print after delete (expected: the meeting should not be deleted so the subject should be Subject2): " << endl;
+	cout << "Meeting2 print after clear (expected: the meeting should not be deleted so the subject should be Subject2): " << endl;
 	meeting2->print();
+
+	delete meeting1;
+	delete meeting2;
+	delete meeting3;
 }
 
 void runRefTestsList(){
@@ -170,7 +174,7 @@ void runRefTestsList(){
 	try{
 		Meeting& meetingAt2 = l[2];
 	}
-	catch (IndexOutOfBoundsException& ex){
+	catch (const IndexOutOfBoundsException& ex){
 		cout << ex.getMessage() << endl;
 	}
 
@@ -188,21 +192,28 @@ void runRefTestsList(){
 	l.clear();
 	cout << "tContainer after delete (expected: an empty container):" << endl;
 	l.print();
-	cout << "Meeting1 print after delete (expected: the meeting should not be deleted so the subject should be Subject1): " << endl;
+	cout << "Meeting1 print after clear (expected: the meeting should not be deleted so the subject should be Subject1): " << endl;
 	meeting1->print();
-	cout << "Meeting2 print after delete (expected: the meeting should not be deleted so the subject should be Subject2): " << endl;
+	cout << "Meeting2 print after clear (expected: the meeting should not be deleted so the subject should be Subject2): " << endl;
 	meeting2->print();
+
+	delete meeting1;
+	delete meeting2;
+	delete meeting3;
 }
-std::ostream& operator<<(std::ostream &strm, const Meeting& meeting) {
+
+ostream& operator<<(std::ostream &strm, const Meeting& meeting) {
 	return strm << "Start time: " << meeting.getStartTime() << ", End time: " << meeting.getEndTime() << ", Subject: " << meeting.getSubject();
 }
 
 int main(int argc, char* argv[]) {
-	
-	cout << endl << "@@@@@ Running Reference + Vetor tests @@@@@" << endl;
+	cout << endl << "@@@@@ Running Reference + Vector tests @@@@@" << endl;
 	runRefTestsVector();
 	cout << endl << "@@@@@ Running Reference + List tests @@@@@" << endl;
 	runRefTestsList();
 
+	cout << "Press enter to continue...";
+	string dummy;
+	getline(cin, dummy);
 	return 0;
 }

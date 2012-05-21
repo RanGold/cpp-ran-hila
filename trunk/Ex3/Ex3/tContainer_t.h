@@ -14,20 +14,6 @@ private:
 template <class T, template <class T1, class = allocator<T1>> class Cont>
 class tContainer_t {
 
-private:
-	Cont<T*> _container; //TODO remove the data member from public part
-	typedef typename Cont<T*>::const_iterator	const_iter_t;
-	typedef typename Cont<T*>::iterator	iter_t;
-
-	tContainer_t(const tContainer_t& cont);
-	const tContainer_t& operator=(const tContainer_t& cont);
-
-	const_iter_t internalFind(const T& compareToValue) const {
-		const_iter_t& iter = _container.begin();
-		iter = find_if(iter, _container.end(), eq<T>(&compareToValue));
-		return iter;
-	}
-
 public:
 	tContainer_t() {}
 	virtual ~tContainer_t() {}
@@ -73,6 +59,15 @@ public:
 		_container.clear();
 	}
 
+	void clearAndDeleteElements() {
+		const_iter_t& iter = _container.begin();
+
+		for (;iter != _container.end(); iter++) {
+			delete *iter;
+		}
+		_container.clear();
+	}
+
 	T& operator[](unsigned int index) const {
 		if (index >= _container.size()) {
 			throw IndexOutOfBoundsException();
@@ -97,9 +92,23 @@ public:
 		cout << "tContainer_t:";
 		const_iter_t& iter = _container.begin();
 		for (;iter != _container.end(); iter++){
-			cout << *iter << ",";
+			cout << **iter << endl;
 		}
 
 		cout << endl;
+	}
+
+private:
+	Cont<T*> _container;
+	typedef typename Cont<T*>::const_iterator	const_iter_t;
+	typedef typename Cont<T*>::iterator	iter_t;
+
+	tContainer_t(const tContainer_t& cont);
+	const tContainer_t& operator=(const tContainer_t& cont);
+
+	const_iter_t internalFind(const T& compareToValue) const {
+		const_iter_t& iter = _container.begin();
+		iter = find_if(iter, _container.end(), eq<T>(&compareToValue));
+		return iter;
 	}
 };

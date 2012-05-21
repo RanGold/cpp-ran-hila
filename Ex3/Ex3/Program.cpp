@@ -202,7 +202,7 @@ void runRefTestsList(){
 	delete meeting3;
 }
 
-ostream& operator<<(std::ostream &strm, const Meeting& meeting) {
+ostream& operator<<(ostream &strm, const Meeting& meeting) {
 	return strm << "Start time: " << meeting.getStartTime() << ", End time: " << meeting.getEndTime() << ", Subject: " << meeting.getSubject();
 }
 

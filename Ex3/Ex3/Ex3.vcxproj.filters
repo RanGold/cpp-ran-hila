@@ -21,15 +21,9 @@
     <ClInclude Include="IndexOutOfBoundsException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Meeting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Meeting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -21,6 +21,7 @@ public:
 	bool empty() const { return _container.empty(); }
 	size_t size() const { return _container.size(); }
 	void push_back(const T& val) { _container.push_back((T*)&val); }
+	void push_back(const T *val) { _container.push_back((T*)val); }
 	T& front() { return *(_container.front()); }
 	const T& front() const { return *(_container.front()); }
 	T& back() { return *(_container.back()); }
@@ -36,7 +37,6 @@ public:
 		if (iter == _container.end()){
 			return 0;
 		} else {
-			// TODO : check what happends when T*&
 			T* element = *iter;
 			_container.erase(iter);
 			return element;
@@ -70,8 +70,8 @@ public:
 	}
 
 	T& operator[](unsigned int index) const {
-		if (index >= _container.size()) {
-			throw IndexOutOfBoundsException();
+		if (index >= this->size()) {
+			throw IndexOutOfBoundsException("tContainer_t::operator[] : index out of range");
 		} else if (typeid(_container) == typeid(vector<T*>)) {
 			return *((*((vector<T*>*)((void*)&_container)))[index]);
 		} else {

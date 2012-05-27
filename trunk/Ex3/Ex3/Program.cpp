@@ -399,25 +399,23 @@ int main(int argc, char* argv[]) {
 	switch (testType) {
 	case 1:
 		automatedTest();
-		return 0;
 		break;
 	case 2:
 	default:
+		cout << "Select type of container (the container will hold integers): 1 - vector, 2 - list" << endl;
+		int containerType;
+		cin >> containerType;
+		switch (containerType) {
+		case 1:
+			manualTest<vector>();
+			break;
+		case 2:
+		default:
+			manualTest<list>();
+			break;
+		}
 		break;
 	}
-
-	cout << "Select type of container (the container will hold integers): 1 - vector, 2 - list" << endl;
-	int containerType;
-	cin >> containerType;
-	switch (containerType) {
-	case 1:
-		manualTest<vector>();
-		break;
-	case 2:
-	default:
-		manualTest<list>();
-		break;
-	}
-
+	
 	return 0;
 }

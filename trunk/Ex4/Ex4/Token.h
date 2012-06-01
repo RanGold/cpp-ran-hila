@@ -1,14 +1,21 @@
 #include <string>
 using namespace std;
 
-enum TokenType{ IDENTIFIER, PREDEFINED_TYPE, KEYWORD_GROUP1, KEYWORD_GROUP2, OPERATOR };
+enum TokenType { 
+	IDENTIFIER, 
+	PREDEFINED_TYPE, 
+	KEYWORD_GROUP1, 
+	KEYWORD_GROUP2, 
+	OPERATOR,
+	DELIMITER
+};
 
-class Token{
-
+class Token {
 public:
 	Token();
 	Token(const string& value, TokenType tokenType, int line);
 	Token(const Token& otherToken);
+	const Token& operator=(const Token& token);
 	virtual ~Token();
 
 	const string& getValue() const;
@@ -16,7 +23,7 @@ public:
 	int getLine() const;
 
 private:
-	const string _value;
-	const TokenType _type;
-	const int _line;
+	string _value;
+	TokenType _type;
+	int _line;
 };

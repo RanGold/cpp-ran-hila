@@ -10,7 +10,7 @@ list<Token> Parser::_tokens;
 bool Parser::_isParsed;
 
 bool Parser::parse(const string& path){
-	
+	InputLine l;
 	reset();
 
 	_fileName = path;
@@ -29,8 +29,8 @@ bool Parser::parse(const string& path){
 			file.close();
 			return false;
 		}
-
-		int numberOfTokens = InputLine::tokenize(currentLine, _lineCounter++, _tokens);
+		// TODO : fix
+		int numberOfTokens = 0; //InputLine::tokenize(currentLine, _lineCounter++, _tokens);
 		_totalTokensCounter += numberOfTokens;
 		_tokensPerLine.push_back(numberOfTokens);
 	}

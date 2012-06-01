@@ -65,6 +65,7 @@
     <ClInclude Include="InputLine.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Analyzer.cpp" />

@@ -1,14 +1,14 @@
 #include <string>
-#include <vector>
+#include <list>
 #include <iostream>
+#include "Token.h"
 
 using namespace std;
 
 class InputLine {
 public:
-	void tokenize(const string& line);
+	static void tokenize(const string& text, int line, const list<Token>& tokens);
 
 private:
-	vector<string> tokens;
 	static const string delimiters;
 };

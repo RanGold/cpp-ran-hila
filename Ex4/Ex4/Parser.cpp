@@ -2,6 +2,8 @@
 #include <fstream>
 using namespace std;
 
+int Parser::lineCounter = 0;
+list<Token> Parser::tokens;
 bool Parser::parse(const string& path){
 	ifstream file;
 	file.open(path);
@@ -20,8 +22,7 @@ bool Parser::parse(const string& path){
 			file.close();
 			return false;
 		}
-		InputLine inputLine;
-		inputLine.tokenize(currentLine);
+		InputLine::tokenize(currentLine, lineCounter++, tokens);
 	}
 	return true;
 }

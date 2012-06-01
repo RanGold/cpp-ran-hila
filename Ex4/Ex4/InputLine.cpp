@@ -3,15 +3,15 @@
 
 const string InputLine::delimiters = " \t()[]{};<>=+-*&";
 
-void InputLine::tokenize(const string& line) {
+void InputLine::tokenize(const string& text, int line, const list<Token>& tokens) {
 	size_t prev = 0, pos, tempPrev = 0, tempPos;
 	
-	while ((pos = line.find_first_of(delimiters, prev)) != string::npos) {
+	while ((pos = text.find_first_of(delimiters, prev)) != string::npos) {
 		if (pos > prev) {
-			tokens.push_back(line.substr(prev, pos - prev));
+		//	tokens.push_back(text.substr(prev, pos - prev));
 		} else { // Meaning the current char is a delimiter
 			tempPrev = prev + 1;
-			if ((tempPos = line.find_first_of(delimiters, tempPrev)) != string::npos){
+			if ((tempPos = text.find_first_of(delimiters, tempPrev)) != string::npos){
 				if (tempPrev == tempPos) { // This char is also a delimiter
 
 				}
@@ -21,7 +21,7 @@ void InputLine::tokenize(const string& line) {
 		prev = pos+1;
 	}
 
-	if (prev < line.length()) {
-		tokens.push_back(line.substr(prev, std::string::npos));
+	if (prev < text.length()) {
+	//	tokens.push_back(text.substr(prev, std::string::npos));
 	}
 }

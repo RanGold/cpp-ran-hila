@@ -3,7 +3,7 @@
 
 const string InputLine::delimiters = " \t()[]{};<>=+-*&";
 
-void InputLine::tokenize(const string& line){
+void InputLine::tokenize(const string& line) {
 	size_t prev = 0, pos, tempPrev = 0, tempPos;
 	
 	while ((pos = line.find_first_of(delimiters, prev)) != string::npos) {

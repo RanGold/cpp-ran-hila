@@ -24,6 +24,12 @@
     <ClInclude Include="Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Analyzer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilationError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Parser.cpp">
@@ -36,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Token.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyzer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CompilationError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -22,7 +22,7 @@ bool Parser::parse(const string& path){
 			file.close();
 			return false;
 		}
-		InputLine::tokenize(currentLine, lineCounter++, tokens);
+		int numberOfTokens = InputLine::tokenize(currentLine, lineCounter++, tokens);
 	}
 	return true;
 }

@@ -3,7 +3,7 @@
 
 const string InputLine::delimiters = " \t()[]{};<>=+-*&";
 
-void InputLine::tokenize(const string& text, int line, const list<Token>& tokens) {
+int InputLine::tokenize(const string& text, int line, const list<Token>& tokens) {
 	size_t prev = 0, pos, tempPrev = 0, tempPos;
 	
 	while ((pos = text.find_first_of(delimiters, prev)) != string::npos) {
@@ -24,4 +24,5 @@ void InputLine::tokenize(const string& text, int line, const list<Token>& tokens
 	if (prev < text.length()) {
 	//	tokens.push_back(text.substr(prev, std::string::npos));
 	}
+	return 0;
 }

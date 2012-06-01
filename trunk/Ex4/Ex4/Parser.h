@@ -7,4 +7,7 @@ class Parser{
 public:
 	static bool parse(const string& path);
 
+private:
+	static int lineCounter;
+	static list<Token> tokens;
 };

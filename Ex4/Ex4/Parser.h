@@ -6,7 +6,7 @@ using namespace std;
 class Parser{
 
 public:
-	static bool parse(const string& path, const Tokenizer* tokenizer, const Analyzer* analyzer);
+	static bool parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer);
 	static void print();
 
 private:
@@ -19,4 +19,6 @@ private:
 	Parser();
 	~Parser();
 	static void reset();
+	static void clearAndDeleteTokensButLast(list<Token*>& tokens);
+	static void clearAndDeleteTokens(list<Token*>& tokens);
 };

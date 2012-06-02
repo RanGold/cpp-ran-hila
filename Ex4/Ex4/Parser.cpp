@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "CompilationError.h"
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -9,7 +10,7 @@ int Parser::_lineCounter;
 list<int> Parser::_tokensPerLine;
 bool Parser::_isParsed;
 
-bool Parser::parse(const string& path, const Tokenizer* tokenizer, const Analyzer* analyzer){
+bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer){
 	reset();
 
 	_fileName = path;
@@ -20,6 +21,7 @@ bool Parser::parse(const string& path, const Tokenizer* tokenizer, const Analyze
 		return false;
 	}
 
+	list<Token*> tokens;
 	string currentLine;
 	while (!file.eof()){
 		getline(file, currentLine);
@@ -29,11 +31,21 @@ bool Parser::parse(const string& path, const Tokenizer* tokenizer, const Analyze
 			return false;
 		}
 		// TODO : fix
-		int numberOfTokens = 0; //InputLine::tokenize(currentLine, _lineCounter++, _tokens);
-		_totalTokensCounter += numberOfTokens;
-		_tokensPerLine.push_back(numberOfTokens);
+		if (!tokenizer->tokenize(currentLine, _lineCounter++, tokens)){
+			//TODO an error has occured - report and quit.
+		}
+
+		_totalTokensCounter += tokens.size() - 1;
+		_tokensPerLine.push_back(tokens.size() - 1);
+		try{
+			analyzer->analyze(tokens);
+		} catch (CompilationError ex){
+			ex.print();
+		}
+		clearAndDeleteTokensButLast(tokens);
 	}
 
+	clearAndDeleteTokens(tokens);
 	file.close();
 
 	_isParsed = true;
@@ -76,4 +88,27 @@ void Parser::reset(){
 
 	_fileName.clear();
 	_tokensPerLine.clear();
+}
+
+void Parser::clearAndDeleteTokensButLast(list<Token*>& tokens){
+	list<Token*>::reverse_iterator iter = tokens.rbegin();
+
+	Token* lastToken = *iter;
+	iter++;
+	
+	for (; iter != tokens.rend(); iter++){
+		delete *iter;
+	}
+	tokens.clear();
+	
+	tokens.push_back(lastToken);
+}
+
+void Parser::clearAndDeleteTokens(list<Token*>& tokens){
+	list<Token*>::iterator iter = tokens.begin();
+	
+	for (; iter != tokens.end(); iter++){
+		delete *iter;
+	}
+	tokens.clear();
 }

@@ -1,5 +1,4 @@
 #include "Parser.h"
-#include "CompilationError.h"
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -22,33 +21,43 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer)
 	}
 
 	list<Token*> tokens;
+	CompilationError* compilationError =  new CompilationError();
 	string currentLine;
 	while (!file.eof()){
 		getline(file, currentLine);
 		if (file.fail()){
 			cout << "ERROR: Failed to read from file " << path << ". " << endl;
+			delete compilationError;
 			clearAndDeleteTokens(tokens);
 			file.close();
 			return false;
 		}
 
 		if (!tokenizer->tokenize(currentLine, _lineCounter++, tokens)){
-			cout << "Error: Failed to tokenize line " << _lineCounter << ". Stopped parsing." << endl;
+			cout << "Error: Failed to tokenize line " << _lineCounter << ". Compilation stopped." << endl;
+			delete compilationError;
 			clearAndDeleteTokens(tokens);
 			file.close();
 			return false;
 		}
 
-		_totalTokensCounter += tokens.size() - 1;
-		_tokensPerLine.push_back(tokens.size() - 1);
-		try{
-			analyzer->analyze(tokens);
-		} catch (CompilationError ex){
-			ex.print();
+		int numOfTokens = tokens.size() - 1;
+		_totalTokensCounter += numOfTokens;
+		_tokensPerLine.push_back(numOfTokens);
+
+		if (numOfTokens > 0){
+			compilationError->setLine(_lineCounter);
+			analyzer->analyze(tokens, compilationError);
+			if (!(compilationError->isPassed())){
+				compilationError->print();	
+			}
+			compilationError->reset(); //reuse the object
 		}
 		clearAndDeleteTokensButLast(tokens);
 	}
 
+	//TODO need to check if there are any unclosed brackets. Do we need to report the line number for this error?
+	delete compilationError;
 	clearAndDeleteTokens(tokens);
 	file.close();
 
@@ -77,7 +86,7 @@ void Parser::print(){
 }
 
 void Parser::reset(){
-	
+
 	if (_totalTokensCounter != 0){ //what's better - check if == 0 and save a ctor or just assign?
 		_totalTokensCounter = 0;
 	}
@@ -85,7 +94,7 @@ void Parser::reset(){
 	if (_lineCounter != 0){
 		_lineCounter = 0;
 	}
-	
+
 	if (_isParsed){
 		_isParsed = false;
 	}
@@ -99,18 +108,18 @@ void Parser::clearAndDeleteTokensButLast(list<Token*>& tokens){
 
 	Token* lastToken = *iter;
 	iter++;
-	
+
 	for (; iter != tokens.rend(); iter++){
 		delete *iter;
 	}
 	tokens.clear();
-	
+
 	tokens.push_back(lastToken);
 }
 
 void Parser::clearAndDeleteTokens(list<Token*>& tokens){
 	list<Token*>::iterator iter = tokens.begin();
-	
+
 	for (; iter != tokens.end(); iter++){
 		delete *iter;
 	}

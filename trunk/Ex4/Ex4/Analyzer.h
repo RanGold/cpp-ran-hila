@@ -3,12 +3,13 @@
 
 #include <list>
 #include "Token.h"
+#include "CompilationError.h"
 using namespace std;
 
 class Analyzer{
 	
 public:
-	virtual void analyze(const list<Token*>& tokens) = 0;
+	virtual void analyze(const list<Token*>& tokens, CompilationError* compilationError) = 0;
 };
 
 #endif

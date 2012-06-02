@@ -4,8 +4,8 @@
 #include <string>
 using namespace std;
 
-enum TokenType { 
-	IDENTIFIER, 
+enum TokenType {
+	IDENTIFIER,
 	PREDEFINED_TYPE, 
 	KEYWORD_GROUP1, 
 	KEYWORD_GROUP2, 
@@ -31,4 +31,4 @@ private:
 	int _line;
 };
 
-#endif 
+#endif

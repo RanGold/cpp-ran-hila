@@ -57,6 +57,10 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer)
 	}
 
 	//TODO need to check if there are any unclosed brackets. Do we need to report the line number for this error?
+
+	analyzer->printSymbolTable();
+	print();
+
 	delete compilationError;
 	clearAndDeleteTokens(tokens);
 	file.close();
@@ -65,12 +69,7 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer)
 	return true;
 }
 
-void Parser::print(){
-
-	if (!_isParsed){
-		cout << "File was not parsed succesfully, cannot print statistics." << endl;
-		return;
-	}
+void Parser::print(){ //should be private?
 
 	cout << "Statistics of " << _fileName << ":" << endl;
 	cout << "Number of lines: " << _lineCounter << endl;
@@ -83,6 +82,7 @@ void Parser::print(){
 	}
 
 	cout << "Total number of tokens: " << _totalTokensCounter << endl;
+
 }
 
 void Parser::reset(){

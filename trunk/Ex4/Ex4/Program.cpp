@@ -6,8 +6,8 @@ int main(int argc, char* argv[]) {
 
 	const string path = "E:/music/hila.txt";
 
-	const AnalyzerImpl* analyzer = new AnalyzerImpl();
-	const InputLine* inputLine = new InputLine();
+	AnalyzerImpl* analyzer = new AnalyzerImpl();
+	InputLine* inputLine = new InputLine();
 	bool ok = Parser::parse(path, inputLine, analyzer);
 
 	if (!ok){

@@ -10,6 +10,7 @@ class Analyzer{
 	
 public:
 	virtual void analyze(const list<Token*>& tokens, CompilationError* compilationError) = 0;
+	void printSymbolTable() const = 0;
 };
 
 #endif

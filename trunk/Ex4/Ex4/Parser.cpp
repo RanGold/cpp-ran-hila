@@ -27,12 +27,16 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer)
 		getline(file, currentLine);
 		if (file.fail()){
 			cout << "ERROR: Failed to read from file " << path << ". " << endl;
+			clearAndDeleteTokens(tokens);
 			file.close();
 			return false;
 		}
-		// TODO : fix
+
 		if (!tokenizer->tokenize(currentLine, _lineCounter++, tokens)){
-			//TODO an error has occured - report and quit.
+			cout << "Error: Failed to tokenize line " << _lineCounter << ". Stopped parsing." << endl;
+			clearAndDeleteTokens(tokens);
+			file.close();
+			return false;
 		}
 
 		_totalTokensCounter += tokens.size() - 1;

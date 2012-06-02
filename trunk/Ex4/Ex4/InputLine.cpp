@@ -4,10 +4,10 @@ const string InputLine::Delimiters = " \t()[]{};<>=+-*&";
 const string InputLine::Operators[] = { "++", "--", "==", "->", "=", "+", "-", "*", "&", "<<", ">>" };
 const int InputLine::OperatorsNum = 11;
 const string InputLine::DelimiterWhiteSpaces = " \t";
-const string InputLine::PredefinedTypes[] = { "char", "short", "int", "long", "float", "double", "void" };
-const int InputLine::PredefinedTypesNum = 7;
-const string InputLine::KeywordsGroup1[] = { "if", "else", "for", "while", "function" };
-const int InputLine::KeywordsGroup1Num = 5;
+const string InputLine::PredefinedTypes[] = { "char", "short", "int", "long", "float", "double", "void", "function" };
+const int InputLine::PredefinedTypesNum = 8;
+const string InputLine::KeywordsGroup1[] = { "if", "else", "for", "while" };
+const int InputLine::KeywordsGroup1Num = 4;
 const string InputLine::KeywordsGroup2[] = { "class", "private", "public", "const", "virtual" };
 const int InputLine::KeywordsGroup2Num = 5;
 

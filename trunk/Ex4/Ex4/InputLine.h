@@ -20,6 +20,7 @@ private:
 	static const int KeywordsGroup2Num;
 
 	static bool isWithinArray(const string& text, const string* arr, int arrSize);
+	static bool isNumber(const string& text);
 	static bool isWhiteSpace(const string& text);
 	static bool isOperator(const string& text, int pos, int& opLength);
 	static TokenType getTokenType(const string& value);

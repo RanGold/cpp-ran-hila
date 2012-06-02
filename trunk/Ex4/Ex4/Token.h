@@ -5,6 +5,7 @@
 using namespace std;
 
 enum TokenType {
+	NUMBER,
 	IDENTIFIER,
 	PREDEFINED_TYPE, 
 	KEYWORD_GROUP1, 

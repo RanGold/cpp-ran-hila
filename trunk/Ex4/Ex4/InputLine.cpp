@@ -75,6 +75,16 @@ bool InputLine::isWithinArray(const string& text, const string* arr, int arrSize
 	return false;
 }
 
+bool InputLine::isNumber(const string& text) {
+	for (string::const_iterator i = text.begin(); i != text.end(); i++) {
+		if (!isdigit(*i)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 TokenType InputLine::getTokenType(const string& value) {
 	if (isWithinArray(value, PredefinedTypes, PredefinedTypesNum)) {
 		return PREDEFINED_TYPE;
@@ -84,6 +94,8 @@ TokenType InputLine::getTokenType(const string& value) {
 		return KEYWORD_GROUP2;
 	} else if (isWithinArray(value, Operators, OperatorsNum)) {
 		return OPERATOR;
+	} else if (isNumber(value)) {
+		return NUMBER;
 	} else {
 		return IDENTIFIER;
 	}

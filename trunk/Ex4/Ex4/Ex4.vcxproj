@@ -61,6 +61,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Analyzer.h" />
+    <ClInclude Include="AnalyzerImpl.h" />
     <ClInclude Include="CompilationError.h" />
     <ClInclude Include="InputLine.h" />
     <ClInclude Include="Parser.h" />
@@ -68,7 +69,7 @@
     <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Analyzer.cpp" />
+    <ClCompile Include="AnalyzerImpl.cpp" />
     <ClCompile Include="CompilationError.cpp" />
     <ClCompile Include="InputLine.cpp" />
     <ClCompile Include="Parser.cpp" />

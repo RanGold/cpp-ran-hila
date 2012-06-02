@@ -1,14 +1,14 @@
-#include <string>
+#ifndef ANALYZER_H
+#define ANALYZER_H
+
 #include <list>
 #include "Token.h"
-#include "CompilationError.h"
 using namespace std;
 
 class Analyzer{
 	
 public:
-	static void analyize(const list<Token>& tokens);
-
-private:
-	static list<CompilationError*> errors;
+	virtual void analyze(const list<Token*>& tokens) = 0;
 };
+
+#endif

@@ -1,16 +1,15 @@
 #include "Parser.h"
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 string Parser::_fileName;
 int Parser::_totalTokensCounter;
 int Parser::_lineCounter;
 list<int> Parser::_tokensPerLine;
-list<Token> Parser::_tokens;
 bool Parser::_isParsed;
 
-bool Parser::parse(const string& path){
-	InputLine l;
+bool Parser::parse(const string& path, const Tokenizer* tokenizer, const Analyzer* analyzer){
 	reset();
 
 	_fileName = path;
@@ -39,10 +38,6 @@ bool Parser::parse(const string& path){
 
 	_isParsed = true;
 	return true;
-}
-
-list<Token>& Parser::getTokens(){
-	return _tokens;
 }
 
 void Parser::print(){
@@ -81,5 +76,4 @@ void Parser::reset(){
 
 	_fileName.clear();
 	_tokensPerLine.clear();
-	_tokens.clear();
 }

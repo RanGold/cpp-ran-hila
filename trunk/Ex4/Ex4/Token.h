@@ -1,3 +1,6 @@
+#ifndef TOKEN_H
+#define TOKEN_H
+
 #include <string>
 using namespace std;
 
@@ -27,3 +30,5 @@ private:
 	TokenType _type;
 	int _line;
 };
+
+#endif 

@@ -45,7 +45,7 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* s
 
 		if (numOfTokens > 0) {
 			try {
-			semanticAnalyzer->analyzeLine(tokens);
+				semanticAnalyzer->analyzeLine(tokens);
 			} catch(const CompilationError& compilationError) {
 				cout << "Line " << _lineCounter << ":" << endl;
 				for (list<string>::const_iterator& i = compilationError.getErrorMessages().begin(); 

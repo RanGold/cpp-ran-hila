@@ -59,7 +59,7 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 		currentToken = *iter;
 		switch(currentToken->getType()) {
 		case IDENTIFIER:
-			checkIdentifier(_previousToken, currentToken);
+			checkIdentifier(currentToken);
 			break;
 		case PREDEFINED_TYPE:
 			if (_previousToken->getType() == PREDEFINED_TYPE) {
@@ -67,13 +67,13 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 			}
 			break;
 		case KEYWORD_GROUP1:
-			checkPreviousPredefinedType(_previousToken, currentToken);
+			checkPreviousPredefinedType(currentToken);
 			checkIfElse(currentToken->getValue());
 			break;
 		case DELIMITER:
 			checkBrackets(currentToken->getValue());
 		case KEYWORD_GROUP2:
-			checkPreviousPredefinedType(_previousToken, currentToken);
+			checkPreviousPredefinedType(currentToken);
 			break;
 		default:
 			break;
@@ -106,15 +106,15 @@ void Analyzer::reset() {
 	_symbolTable.clear();
 }
 
-void Analyzer::checkIdentifier(const Token* previousToken, const Token* currentToken) {
+void Analyzer::checkIdentifier(const Token* currentToken) {
 
-	if (previousToken->getType() == PREDEFINED_TYPE) { //Declaration of an identifier
+	if (_previousToken->getType() == PREDEFINED_TYPE) { //Declaration of an identifier
 		if (_symbolTable.find(currentToken->getValue()) == _symbolTable.end()) {
 			if (currentToken->getType() != IDENTIFIER) {
-				_errorMessages.push_back(currentToken->getValue() + " cannot follow " + previousToken->getValue() + ". Only identifiers can follow predefined types.");
+				_errorMessages.push_back(currentToken->getValue() + " cannot follow " + _previousToken->getValue() + ". Only identifiers can follow predefined types.");
 			}
 			if (isValidIdentifier(currentToken->getValue())) {
-				_symbolTable.insert(pair<string,string>(currentToken->getValue(), previousToken->getValue()));
+				_symbolTable.insert(pair<string,string>(currentToken->getValue(), _previousToken->getValue()));
 			} else {
 				_errorMessages.push_back("Identifier name " + currentToken->getValue() + " is invalid. Identifiers names hvae to start with an alphabetic character.");
 			}
@@ -128,9 +128,9 @@ void Analyzer::checkIdentifier(const Token* previousToken, const Token* currentT
 	}
 }
 
-void Analyzer::checkPreviousPredefinedType(const Token* previousToken, const Token* currentToken) {
-	if (previousToken->getType() == PREDEFINED_TYPE){
-		_errorMessages.push_back(currentToken->getValue() + " cannot follow " + previousToken->getValue() + ". Only identifiers can follow predefined types.");
+void Analyzer::checkPreviousPredefinedType(const Token* currentToken) {
+	if (_previousToken->getType() == PREDEFINED_TYPE){
+		_errorMessages.push_back(currentToken->getValue() + " cannot follow " + _previousToken->getValue() + ". Only identifiers can follow predefined types.");
 	}
 }
 

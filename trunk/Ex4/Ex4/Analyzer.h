@@ -34,8 +34,8 @@ private:
 	static const string IF;
 	static const string ELSE;
 	
-	void checkIdentifier(const Token* previousToken, const Token* currentToken);
-	void checkPreviousPredefinedType(const Token* previousToken, const Token* currentToken);
+	void checkIdentifier(const Token* currentToken);
+	void checkPreviousPredefinedType(const Token* currentToken);
 	void checkIfElse(const string& keyword);
 	void checkBrackets(const string& delimiter);
 	bool checkMain(const list<Token*>& tokens);

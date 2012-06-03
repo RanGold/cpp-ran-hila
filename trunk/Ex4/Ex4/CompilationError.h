@@ -3,26 +3,18 @@
 #include <list>
 using namespace std;
 
-class CompilationError{
+class CompilationError {
 
 public:
 	CompilationError();
-	CompilationError(int lineNumber);
-	CompilationError(const CompilationError& otherError);
-	const CompilationError& operator=(const CompilationError& token);
+	CompilationError(const list<string>& errorMessages);
+	CompilationError(const CompilationError& compilationError);
+	const CompilationError& operator=(const CompilationError& compilationError);
 	virtual ~CompilationError();
 
-	bool isPassed() const;
-	void setLine(int lineNumber);
-	int getLine() const;
 	const list<string>& getErrorMessages() const;
 	void addError(const string& errorMessage);
-	virtual void print() const;
-	void reset();
 
 private:
-	int _lineNumber;
 	list<string> _errorMessages;
-
-	void copyErrorMessages(const list<string>& errorMessages);
 };

@@ -20,6 +20,7 @@ public:
 	Token(const string& value, TokenType tokenType, int line);
 	Token(const Token& otherToken);
 	const Token& operator=(const Token& token);
+	bool operator==(const Token& token) const;
 	virtual ~Token();
 
 	const string& getValue() const;

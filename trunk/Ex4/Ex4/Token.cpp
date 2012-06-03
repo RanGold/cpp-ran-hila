@@ -22,8 +22,12 @@ const Token& Token::operator=(const Token& token) {
 	return *this;
 }
 
-Token::~Token()
-{}
+bool Token::operator==(const Token& token) const {
+	return this->getType() == token.getType() &&
+		this->getValue() == token.getValue();
+}
+
+Token::~Token() {}
 
 const string& Token::getValue() const {
 	return _value;

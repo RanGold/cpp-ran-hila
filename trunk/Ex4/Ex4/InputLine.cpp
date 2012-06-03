@@ -76,7 +76,7 @@ bool InputLine::isWithinArray(const string& text, const string* arr, int arrSize
 }
 
 bool InputLine::isNumber(const string& text) {
-	for (string::const_iterator i = text.begin(); i != text.end(); i++) {
+	for (string::const_iterator& i = text.begin(); i != text.end(); i++) {
 		if (!isdigit(*i)) {
 			return false;
 		}

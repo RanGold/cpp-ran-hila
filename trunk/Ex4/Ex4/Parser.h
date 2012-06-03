@@ -1,12 +1,12 @@
 #include <string>
 #include "Tokenizer.h"
-#include "Analyzer.h"
+#include "SemanticAnalyzer.h"
 using namespace std;
 
 class Parser{
 
 public:
-	static bool parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer);
+	static bool parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* semanticAnalyzer);
 	static void print();
 
 private:

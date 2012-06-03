@@ -24,16 +24,16 @@
     <ClInclude Include="Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Analyzer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CompilationError.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AnalyzerImpl.h">
+    <ClInclude Include="SemanticAnalyzer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Analyzer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClCompile Include="CompilationError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnalyzerImpl.cpp">
+    <ClCompile Include="Analyzer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

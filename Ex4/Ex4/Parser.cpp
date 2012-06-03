@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "CompilationError.h"
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -9,7 +10,7 @@ int Parser::_lineCounter;
 list<int> Parser::_tokensPerLine;
 bool Parser::_isParsed;
 
-bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer){
+bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* semanticAnalyzer){
 	reset();
 
 	_fileName = path;
@@ -21,13 +22,11 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer)
 	}
 
 	list<Token*> tokens;
-	CompilationError* compilationError =  new CompilationError();
 	string currentLine;
 	while (!file.eof()){
 		getline(file, currentLine);
 		if (file.fail()){
 			cout << "ERROR: Failed to read from file " << path << ". " << endl;
-			delete compilationError;
 			clearAndDeleteTokens(tokens);
 			file.close();
 			return false;
@@ -35,7 +34,6 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer)
 
 		if (!tokenizer->tokenize(currentLine, _lineCounter++, tokens)){
 			cout << "Error: Failed to tokenize line " << _lineCounter << ". Compilation stopped." << endl;
-			delete compilationError;
 			clearAndDeleteTokens(tokens);
 			file.close();
 			return false;
@@ -45,23 +43,27 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, Analyzer* analyzer)
 		_totalTokensCounter += numOfTokens;
 		_tokensPerLine.push_back(numOfTokens);
 
-		if (numOfTokens > 0){
-			compilationError->setLine(_lineCounter);
-			analyzer->analyze(tokens, compilationError);
-			if (!(compilationError->isPassed())){
-				compilationError->print();	
+		if (numOfTokens > 0) {
+			try {
+			semanticAnalyzer->analyzeLine(tokens);
+			} catch(const CompilationError& compilationError) {
+				cout << "Line " << _lineCounter << ":" << endl;
+				for (list<string>::const_iterator& i = compilationError.getErrorMessages().begin(); 
+					i != compilationError.getErrorMessages().end(); i++) {
+						cout << "\t" << *i << endl;
+				}
 			}
-			compilationError->reset(); //reuse the object
+			
 		}
+
 		clearAndDeleteTokensButLast(tokens);
 	}
 
 	//TODO need to check if there are any unclosed brackets. Do we need to report the line number for this error?
 
-	analyzer->printSymbolTable();
+	semanticAnalyzer->printSymbolTable();
 	print();
 
-	delete compilationError;
 	clearAndDeleteTokens(tokens);
 	file.close();
 

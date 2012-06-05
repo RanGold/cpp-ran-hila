@@ -5,7 +5,8 @@
 int main(int argc, char* argv[]) {
 
 	Tokenizer *tokenizer = new InputLine();
-	list<Token*> l;
+	SemanticAnalyzer *analyzer = new Analyzer();
+	/*list<Token*> l;
 	tokenizer->tokenize("-++ 3hhh <if++--->function class&	fds-int()(5445->-float", 1, l);
 	for(list<Token*>::iterator i = l.begin(); i != l.end(); i++) {
 		cout << (*i)->getValue() << " " << (*i)->getValue().length() << " "; 
@@ -35,19 +36,9 @@ int main(int argc, char* argv[]) {
 		cout << endl;
 	}
 	int h;
-	cin >> h;
-	/*
-	const string path = "E:/music/hila.txt";
+	cin >> h;*/
 
-	Analyzer* analyzer = new Analyzer();
-	InputLine* inputLine = new InputLine();
-	bool ok = Parser::parse(path, inputLine, analyzer);
-
-	if (!ok){
-		return 0;
-	};
-
-	Parser::print();
-
-	return 1;*/
+	Parser::parse("test01.txt", tokenizer, analyzer);
+	delete tokenizer;
+	delete analyzer;
 }

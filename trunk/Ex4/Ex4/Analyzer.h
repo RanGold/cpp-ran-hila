@@ -11,6 +11,7 @@ public:
 	virtual ~Analyzer();
 
 	virtual void analyzeLine(const list<Token*>& tokens);
+	virtual void printFinalErrors() const;
 	virtual void printSymbolTable() const;
 	virtual void reset();
 

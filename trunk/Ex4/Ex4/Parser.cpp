@@ -39,7 +39,7 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* s
 			return false;
 		}
 
-		int numOfTokens = tokens.size() - 1;
+		int numOfTokens = _lineCounter == 1 ? tokens.size() : tokens.size() - 1;
 		_totalTokensCounter += numOfTokens;
 		_tokensPerLine.push_back(numOfTokens);
 
@@ -59,8 +59,7 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* s
 		clearAndDeleteTokensButLast(tokens);
 	}
 
-	//TODO need to check if there are any unclosed brackets. Do we need to report the line number for this error?
-
+	semanticAnalyzer->printFinalErrors();
 	semanticAnalyzer->printSymbolTable();
 	print();
 
@@ -78,13 +77,12 @@ void Parser::print(){ //should be private?
 	cout << "Numer of tokens per line:" << endl;
 
 	list <int>::const_iterator iter = _tokensPerLine.begin();
-	int i = 1; //TODO start with 0?
+	int i = 1;
 	for (; iter != _tokensPerLine.end( ); iter++) {
-		cout << "Line " << i << ": " << *iter << " tokens" << endl;
+		cout << "Line " << i++ << ": " << *iter << " tokens" << endl;
 	}
 
 	cout << "Total number of tokens: " << _totalTokensCounter << endl;
-
 }
 
 void Parser::reset(){

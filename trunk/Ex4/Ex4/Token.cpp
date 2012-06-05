@@ -24,7 +24,7 @@ const Token& Token::operator=(const Token& token) {
 
 bool Token::operator==(const Token& token) const {
 	return this->getType() == token.getType() &&
-		this->getValue() == token.getValue();
+		this->getValue().compare(token.getValue()) == 0;
 }
 
 Token::~Token() {}

@@ -12,7 +12,7 @@ const string Analyzer::ELSE = "else";
 
 Analyzer::Analyzer() 
 	: _isFirstCall(true), _ifCounter(0), _parenthesesCounter(0),
-	_bracketsCounter(0), _curlyBracketsCounter(0)
+	_bracketsCounter(0), _curlyBracketsCounter(0), _previousToken(0)
 {}
 	
 Analyzer::Analyzer(const Analyzer& analyzer) 
@@ -42,19 +42,21 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 
 	// TODO questions
 	// 1. int short k - do we need to add k to the symbol table as short?
-	// 2. function is not a perdefined type for some reason - need to handle this is function declaration
-	// 3. what do we do for "int short float"? do we need to report multiple errors?
+	// 2. what do we do for "int short float"? do we need to report multiple errors?
 	
 	_errorMessages.clear();
+
+
+	list<Token*>::const_iterator& iter = _isFirstCall ? tokens.begin() : ++tokens.begin();
+	if (!_isFirstCall) {
+		_previousToken = tokens.front();
+	}
 
 	if (!checkMain(tokens)) {
 		_errorMessages.push_back(MainFunctionError);
 	}
 
-	list<Token*>::const_iterator& iter = tokens.begin();
 	Token* currentToken;
-
-	// TODO : all verifications need to check if _previousToken isn't null
 	for (; iter != tokens.end(); iter++) {
 		currentToken = *iter;
 		switch(currentToken->getType()) {
@@ -62,7 +64,7 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 			checkIdentifier(currentToken);
 			break;
 		case PREDEFINED_TYPE:
-			if (_previousToken->getType() == PREDEFINED_TYPE) {
+			if (_previousToken != 0 && _previousToken->getType() == PREDEFINED_TYPE) {
 				_errorMessages.push_back("Multiple type definition.");
 			}
 			break;
@@ -87,11 +89,25 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 	}
 }
 
+void Analyzer::printFinalErrors() const{
+	if (_parenthesesCounter > 0){
+		cout << _parenthesesCounter << " parentheses are not closed. " <<  endl;
+	}
+
+	if (_bracketsCounter > 0){
+		cout << _bracketsCounter << " brackets are not closed. " <<  endl;
+	}
+
+	if (_curlyBracketsCounter > 0){
+		cout << _curlyBracketsCounter << " curly brackets are not closed. " <<  endl;
+	}
+}
+
 void Analyzer::printSymbolTable() const{
 	cout << "Symbol Table:" << endl;
 	map<string, string>::const_iterator iter = _symbolTable.begin();
 	for (; iter != _symbolTable.end(); iter++){
-		cout << (*iter).second << "\t" << (*iter).second << endl;
+		cout << (*iter).second << "\t" << (*iter).first << endl;
 	}
 }
 
@@ -108,7 +124,7 @@ void Analyzer::reset() {
 
 void Analyzer::checkIdentifier(const Token* currentToken) {
 
-	if (_previousToken->getType() == PREDEFINED_TYPE) { //Declaration of an identifier
+	if (_previousToken != 0 && _previousToken->getType() == PREDEFINED_TYPE) { //Declaration of an identifier
 		if (_symbolTable.find(currentToken->getValue()) == _symbolTable.end()) {
 			if (currentToken->getType() != IDENTIFIER) {
 				_errorMessages.push_back(currentToken->getValue() + " cannot follow " + _previousToken->getValue() + ". Only identifiers can follow predefined types.");
@@ -129,7 +145,7 @@ void Analyzer::checkIdentifier(const Token* currentToken) {
 }
 
 void Analyzer::checkPreviousPredefinedType(const Token* currentToken) {
-	if (_previousToken->getType() == PREDEFINED_TYPE){
+	if (_previousToken != 0 && _previousToken->getType() == PREDEFINED_TYPE){
 		_errorMessages.push_back(currentToken->getValue() + " cannot follow " + _previousToken->getValue() + ". Only identifiers can follow predefined types.");
 	}
 }
@@ -183,7 +199,7 @@ bool Analyzer::checkMain(const list<Token*>& tokens) {
 	_isFirstCall = false;
 	return tokens.size() >= 2 && 
 		*(tokens.front()) == Token("function", PREDEFINED_TYPE, 0) &&
-		**(tokens.begin()++) == Token("main", IDENTIFIER, 0);
+		**(++tokens.begin()) == Token("main", IDENTIFIER, 0);
 }
 
 bool Analyzer::isValidIdentifier(const string& str) {

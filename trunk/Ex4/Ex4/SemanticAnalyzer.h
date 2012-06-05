@@ -9,6 +9,7 @@ using namespace std;
 class SemanticAnalyzer {
 public:
 	virtual void analyzeLine(const list<Token*>& tokens) = 0;
+	virtual void printFinalErrors() const = 0;
 	virtual void printSymbolTable() const = 0;
 	virtual void reset() = 0;
 };

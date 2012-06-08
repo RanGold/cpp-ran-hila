@@ -3,12 +3,15 @@ function main int
 k
 int short float m
 int}
+float +;
+short 431
 
 else
 [][
 ()((
 {{
 double k
+char 34gsf
 undefined = main
 if 
 k m = main (}

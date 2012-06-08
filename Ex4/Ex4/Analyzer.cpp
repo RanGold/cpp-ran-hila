@@ -54,6 +54,8 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 		case DELIMITER:
 			checkBrackets(currentToken->getValue());
 		case KEYWORD_GROUP2:
+		case NUMBER:
+		case OPERATOR:
 			checkPreviousPredefinedType(currentToken);
 			break;
 		default:

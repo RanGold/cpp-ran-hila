@@ -75,6 +75,7 @@
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="Tokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test01.txt" />

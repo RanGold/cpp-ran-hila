@@ -1,3 +1,6 @@
+#ifndef COMPILATION_ERROR_H
+#define COMPILATION_ERROR_H
+
 #include <string>
 #include <iostream>
 #include <list>
@@ -13,8 +16,9 @@ public:
 	virtual ~CompilationError();
 
 	const list<string>& getErrorMessages() const;
-	void addError(const string& errorMessage);
 
 private:
 	list<string> _errorMessages;
 };
+
+#endif

@@ -1,17 +1,18 @@
+#ifndef ANALIZER_H
+#define ANALIZER_H
+
 #include "SemanticAnalyzer.h"
 #include "CompilationError.h"
 #include <map>
 #include <iostream>
+#include <sstream>
 
 class Analyzer : public SemanticAnalyzer {
 public:
 	Analyzer();
-	Analyzer(const Analyzer& analyzer);
-	const Analyzer& operator=(const Analyzer& analyzer);
-	virtual ~Analyzer();
 
 	virtual void analyzeLine(const list<Token*>& tokens);
-	virtual void printFinalErrors() const;
+	virtual void finalizeAnalysis();
 	virtual void printSymbolTable() const;
 	virtual void reset();
 
@@ -21,11 +22,11 @@ private:
 	int _parenthesesCounter;
 	int _bracketsCounter;
 	int _curlyBracketsCounter;
-	Token* _previousToken;
+	bool _previousTokenInitialized;
+	Token _previousToken;
 	list<string> _errorMessages;
 	map<string,string> _symbolTable;
 
-	static const string MainFunctionError;
 	static const string LP;
 	static const string RP;
 	static const string LB;
@@ -42,3 +43,5 @@ private:
 	bool checkMain(const list<Token*>& tokens);
 	static bool isValidIdentifier(const string& str);
 };
+
+#endif

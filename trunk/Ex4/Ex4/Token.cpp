@@ -1,7 +1,7 @@
 #include "Token.h"
 
 Token::Token()
-	: _value(0), _type((TokenType) 0), _line(0)
+	: _type((TokenType) 0), _line(0)
 {}
 
 Token::Token(const string& value, TokenType tokenType, int line)

@@ -1,17 +1,10 @@
 #include "InputLine.h"
 
-const string InputLine::Delimiters = " \t()[]{};<>=+-*&";
-const string InputLine::Operators[] = { "++", "--", "==", "->", "=", "+", "-", "*", "&", "<<", ">>" };
-const int InputLine::OperatorsNum = 11;
-const string InputLine::DelimiterWhiteSpaces = " \t";
-const string InputLine::PredefinedTypes[] = { "char", "short", "int", "long", "float", "double", "void", "function" };
-const int InputLine::PredefinedTypesNum = 8;
-const string InputLine::KeywordsGroup1[] = { "if", "else", "for", "while" };
-const int InputLine::KeywordsGroup1Num = 4;
-const string InputLine::KeywordsGroup2[] = { "class", "private", "public", "const", "virtual" };
-const int InputLine::KeywordsGroup2Num = 5;
+InputLine::InputLine() {
+	initKeywordsSets();
+}
 
-bool InputLine::tokenize(const string& text, int line, list<Token*>& tokens) {
+bool InputLine::tokenize(const string& text, int line, list<Token*>& tokens) const {
 	size_t prev = 0, pos;
 	int opLength = 0;
 	bool res;
@@ -23,7 +16,7 @@ bool InputLine::tokenize(const string& text, int line, list<Token*>& tokens) {
 			prev = pos;
 		} else if (isWhiteSpace(text.substr(pos, 1))) {
 			prev = pos + 1;
-		} else if (isOperator(text, pos, opLength)) {
+		} else if (isOperator(text.substr(pos), opLength)) {
 			res = addToken(text.substr(pos, opLength), line, OPERATOR, tokens);
 			prev = pos + opLength;
 		} else {
@@ -51,23 +44,12 @@ bool InputLine::isWhiteSpace(const string& text) {
 	return pos != string::npos;
 }
 
-bool InputLine::isOperator(const string& text, int pos, int& opLength) {
-	for (int i = 0; i < OperatorsNum; i++) {
-		if (text.length() - pos >= Operators[i].length()) {
-			string temp = text.substr(pos, Operators[i].length());
-			if (temp.compare(Operators[i]) == 0) {
-				opLength = Operators[i].length();
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
-
-bool InputLine::isWithinArray(const string& text, const string* arr, int arrSize) {
-	for (int i = 0; i < arrSize; i++) {
-		if (text.compare(arr[i]) == 0) {
+bool InputLine::isOperator(const string& text, int& opLength) const {
+	// Trying to find the longest operator match
+	for (int i = min(_maxLengthOperator, text.length()); i >= 1; i--) {
+		string temp = text.substr(0, i);
+		if (_operators.find(temp) != _operators.end()) {
+			opLength = i;
 			return true;
 		}
 	}
@@ -85,14 +67,14 @@ bool InputLine::isNumber(const string& text) {
 	return true;
 }
 
-TokenType InputLine::getTokenType(const string& value) {
-	if (isWithinArray(value, PredefinedTypes, PredefinedTypesNum)) {
+TokenType InputLine::getTokenType(const string& value) const {
+	if (_predefinedTypes.find(value) != _predefinedTypes.end()) {
 		return PREDEFINED_TYPE;
-	} else if (isWithinArray(value, KeywordsGroup1, KeywordsGroup1Num)) {
+	} else if (_keywordsGroup1.find(value) != _keywordsGroup1.end()) {
 		return KEYWORD_GROUP1;
-	} else if (isWithinArray(value, KeywordsGroup2, KeywordsGroup2Num)) {
+	} else if (_keywordsGroup2.find(value) != _keywordsGroup2.end()) {
 		return KEYWORD_GROUP2;
-	} else if (isWithinArray(value, Operators, OperatorsNum)) {
+	} else if (_operators.find(value) != _operators.end()) {
 		return OPERATOR;
 	} else if (isNumber(value)) {
 		return NUMBER;
@@ -110,4 +92,26 @@ bool InputLine::addToken(const string& value, int line, TokenType tokenType, lis
 
 	tokens.push_back(token);
 	return true;
+}
+
+void InputLine::initKeywordsSets() {
+	_maxLengthOperator = 0;
+	for (int i = 0; i < OperatorsNum; i++) {
+		_operators.insert(OperatorsArr[i]);
+		if (OperatorsArr[i].length() > _maxLengthOperator) {
+			_maxLengthOperator = OperatorsArr[i].length();
+		}
+	}
+	
+	for (int i = 0; i < PredefinedTypesNum; i++) {
+		_predefinedTypes.insert(PredefinedTypesArr[i]);
+	}
+
+	for (int i = 0; i < KeywordsGroup1Num; i++) {
+		_keywordsGroup1.insert(KeywordsGroup1Arr[i]);
+	}
+
+	for (int i = 0; i < KeywordsGroup2Num; i++) {
+		_keywordsGroup2.insert(KeywordsGroup2Arr[i]);
+	}
 }

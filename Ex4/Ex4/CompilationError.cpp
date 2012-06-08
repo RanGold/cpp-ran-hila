@@ -24,8 +24,3 @@ CompilationError::~CompilationError() {}
 const list<string>& CompilationError::getErrorMessages() const {
 	return _errorMessages;
 }
-
-void CompilationError::addError(const string& errorMessage) {
-	// TODO: check string scope of liveliness
-	_errorMessages.push_back(string(errorMessage));
-}

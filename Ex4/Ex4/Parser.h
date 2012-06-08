@@ -1,24 +1,22 @@
+#ifndef PARSER_H
+#define PARSER_H
+
 #include <string>
+#include <map>
 #include "Tokenizer.h"
 #include "SemanticAnalyzer.h"
 using namespace std;
 
-class Parser{
-
+class Parser {
 public:
 	static bool parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* semanticAnalyzer);
-	static void print();
 
 private:
-	static string _fileName;
-	static int _totalTokensCounter;
-	static int _lineCounter;
-	static list<int> _tokensPerLine;
-	static bool _isParsed;
 
 	Parser();
-	~Parser();
-	static void reset();
-	static void clearAndDeleteTokensButLast(list<Token*>& tokens);
+	
+	static void print(const string& path, const map<int, int>& tokensPerLine);
 	static void clearAndDeleteTokens(list<Token*>& tokens);
 };
+
+#endif

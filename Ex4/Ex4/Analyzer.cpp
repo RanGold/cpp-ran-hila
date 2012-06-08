@@ -1,6 +1,5 @@
 #include "Analyzer.h"
 
-const string Analyzer::MainFunctionError = "File should begin with \"function main\"";
 const string Analyzer::LP = "(";
 const string Analyzer::RP = ")";
 const string Analyzer::LB = "[";
@@ -12,31 +11,8 @@ const string Analyzer::ELSE = "else";
 
 Analyzer::Analyzer() 
 	: _isFirstCall(true), _ifCounter(0), _parenthesesCounter(0),
-	_bracketsCounter(0), _curlyBracketsCounter(0), _previousToken(0)
+	_bracketsCounter(0), _curlyBracketsCounter(0), _previousTokenInitialized(false)
 {}
-	
-Analyzer::Analyzer(const Analyzer& analyzer) 
-	: _isFirstCall(analyzer._isFirstCall), _ifCounter(analyzer._ifCounter), _parenthesesCounter(analyzer._parenthesesCounter),
-	_bracketsCounter(analyzer._bracketsCounter), _curlyBracketsCounter(analyzer._curlyBracketsCounter),
-	_errorMessages(analyzer._errorMessages), _previousToken(analyzer._previousToken), _symbolTable(analyzer._symbolTable)
-{}
-
-const Analyzer& Analyzer::operator=(const Analyzer& analyzer) {
-	if (this != &analyzer) {
-		_isFirstCall = analyzer._isFirstCall;
-		_ifCounter = analyzer._ifCounter;
-		_parenthesesCounter = analyzer._parenthesesCounter;
-		_bracketsCounter = analyzer._bracketsCounter;
-		_curlyBracketsCounter = analyzer._curlyBracketsCounter;
-		_previousToken = analyzer._previousToken;
-		_errorMessages = analyzer._errorMessages;
-		_symbolTable = analyzer._symbolTable;
-	}
-
-	return *this;
-}
-	
-Analyzer::~Analyzer() {}
 
 void Analyzer::analyzeLine(const list<Token*>& tokens) {
 
@@ -46,14 +22,15 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 	
 	_errorMessages.clear();
 
-
-	list<Token*>::const_iterator& iter = _isFirstCall ? tokens.begin() : ++tokens.begin();
-	if (!_isFirstCall) {
-		_previousToken = tokens.front();
+	if (!checkMain(tokens)) {
+		_errorMessages.push_back("File should begin with 'function main'");
 	}
 
-	if (!checkMain(tokens)) {
-		_errorMessages.push_back(MainFunctionError);
+	list<Token*>::const_iterator& iter = tokens.begin();
+	if (!_previousTokenInitialized  && tokens.size() > 0) {
+		_previousToken = *tokens.front();
+		_previousTokenInitialized = true;
+		iter++; 
 	}
 
 	Token* currentToken;
@@ -64,8 +41,10 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 			checkIdentifier(currentToken);
 			break;
 		case PREDEFINED_TYPE:
-			if (_previousToken != 0 && _previousToken->getType() == PREDEFINED_TYPE) {
-				_errorMessages.push_back("Multiple type definition.");
+			if (_previousToken.getType() == PREDEFINED_TYPE) {
+				stringstream message;
+				message << "Multiple type definition - '" << _previousToken.getValue() << " " << currentToken->getValue() << "'.";
+				_errorMessages.push_back(message.str());
 			}
 			break;
 		case KEYWORD_GROUP1:
@@ -81,7 +60,7 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 			break;
 		}
 		
-		_previousToken = *iter;
+		_previousToken = **iter;
 	}
 
 	if (_errorMessages.size() > 0) {
@@ -89,17 +68,31 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 	}
 }
 
-void Analyzer::printFinalErrors() const{
-	if (_parenthesesCounter > 0){
-		cout << _parenthesesCounter << " parentheses are not closed. " <<  endl;
+void Analyzer::finalizeAnalysis() {
+	_errorMessages.clear();
+
+	if (_parenthesesCounter > 0) {
+		stringstream message;
+		message << _parenthesesCounter << " parentheses are not closed.";
+		_errorMessages.push_back(message.str());
 	}
 
-	if (_bracketsCounter > 0){
-		cout << _bracketsCounter << " brackets are not closed. " <<  endl;
+	if (_bracketsCounter > 0) {
+		stringstream message;
+		message << _bracketsCounter << " brackets are not closed.";
+		_errorMessages.push_back(message.str());
+		message.ignore();
 	}
 
-	if (_curlyBracketsCounter > 0){
-		cout << _curlyBracketsCounter << " curly brackets are not closed. " <<  endl;
+	if (_curlyBracketsCounter > 0) {
+		stringstream message;
+		message << _curlyBracketsCounter << " curly brackets are not closed.";
+		_errorMessages.push_back(message.str());
+		message.ignore();
+	}
+
+	if (_errorMessages.size() > 0) {
+		throw CompilationError(_errorMessages);
 	}
 }
 
@@ -107,7 +100,7 @@ void Analyzer::printSymbolTable() const{
 	cout << "Symbol Table:" << endl;
 	map<string, string>::const_iterator iter = _symbolTable.begin();
 	for (; iter != _symbolTable.end(); iter++){
-		cout << (*iter).second << "\t" << (*iter).first << endl;
+		cout << (*iter).second << '\t' << (*iter).first << endl;
 	}
 }
 
@@ -117,46 +110,58 @@ void Analyzer::reset() {
 	_parenthesesCounter = 0;
 	_bracketsCounter = 0;
 	_curlyBracketsCounter = 0;
-	_previousToken = 0;
+	_previousTokenInitialized = false;
 	_errorMessages.clear();
 	_symbolTable.clear();
 }
 
 void Analyzer::checkIdentifier(const Token* currentToken) {
 
-	if (_previousToken != 0 && _previousToken->getType() == PREDEFINED_TYPE) { //Declaration of an identifier
+	stringstream message;
+
+	// Check for declaration of an identifier
+	if (_previousToken.getType() == PREDEFINED_TYPE) {
 		if (_symbolTable.find(currentToken->getValue()) == _symbolTable.end()) {
-			if (currentToken->getType() != IDENTIFIER) {
-				_errorMessages.push_back(currentToken->getValue() + " cannot follow " + _previousToken->getValue() + ". Only identifiers can follow predefined types.");
-			}
 			if (isValidIdentifier(currentToken->getValue())) {
-				_symbolTable.insert(pair<string,string>(currentToken->getValue(), _previousToken->getValue()));
+				_symbolTable[currentToken->getValue()] = _previousToken.getValue();
 			} else {
-				_errorMessages.push_back("Identifier name " + currentToken->getValue() + " is invalid. Identifiers names hvae to start with an alphabetic character.");
+				message << "Identifier name '" <<
+					currentToken->getValue() <<
+					"' is invalid. Identifiers names have to start with an alphabetic character.";
+				_errorMessages.push_back(message.str());
 			}
 		} else {
-			_errorMessages.push_back("Identifier \'" + currentToken->getValue() + "\' already declared.");
+			message << "Identifier '" << currentToken->getValue() << "' already declared.";
+			_errorMessages.push_back(message.str());
 		}
-	} else { //Use of an identifier
+	} 
+	// Use of an identifier
+	else { 
 		if (_symbolTable.find(currentToken->getValue()) == _symbolTable.end()) {
-			_errorMessages.push_back("Identifier \'" + currentToken->getValue() + "\' wasn't declared.");
+			message << "Identifier '" << currentToken->getValue() << "' wasn't declared.";
+			_errorMessages.push_back(message.str());
 		}
 	}
 }
 
 void Analyzer::checkPreviousPredefinedType(const Token* currentToken) {
-	if (_previousToken != 0 && _previousToken->getType() == PREDEFINED_TYPE){
-		_errorMessages.push_back(currentToken->getValue() + " cannot follow " + _previousToken->getValue() + ". Only identifiers can follow predefined types.");
+	if (_previousToken.getType() == PREDEFINED_TYPE) {
+		stringstream message;
+		message << '\'' << currentToken->getValue() <<
+			"' cannot follow '" <<
+			_previousToken.getValue() << 
+			"'. Only identifiers can follow predefined types.";
+		_errorMessages.push_back(message.str());
 	}
 }
 
 void Analyzer::checkIfElse(const string& keyword) {
-	if (keyword.compare(IF) == 0){
+	if (keyword.compare(IF) == 0) {
 		_ifCounter++;
-	} else if (keyword.compare(ELSE) == 0){
-		if (_ifCounter == 0){
-			_errorMessages.push_back("\"else\" without \"if\"");
-		} else{
+	} else if (keyword.compare(ELSE) == 0) {
+		if (_ifCounter == 0) {
+			_errorMessages.push_back("'else' without 'if'");
+		} else {
 			_ifCounter--;
 		}
 	}
@@ -171,20 +176,20 @@ void Analyzer::checkBrackets(const string& delimiter) {
 	} else if (delimiter.compare(LP) == 0) {
 		_parenthesesCounter++;
 	} else if (delimiter.compare(RB) == 0) {
-		if (_bracketsCounter == 0){
-			_errorMessages.push_back("\"]\" without \"[\"");
+		if (_bracketsCounter == 0) {
+			_errorMessages.push_back("']' without '['");
 		} else{
 			_bracketsCounter--;
 		}
 	} else if (delimiter.compare(RCBR) == 0) {
 		if (_curlyBracketsCounter == 0) {
-			_errorMessages.push_back("\"}\" without \"{\"");
+			_errorMessages.push_back("'}' without '{'");
 		} else{
 			_curlyBracketsCounter--;
 		}
 	} else if (delimiter.compare(RP) == 0) {
 		if (_parenthesesCounter == 0){
-			_errorMessages.push_back("\")\" without \"(\"");
+			_errorMessages.push_back("')' without '('");
 		} else {
 			_parenthesesCounter--;
 		}

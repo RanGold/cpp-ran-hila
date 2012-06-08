@@ -2,126 +2,105 @@
 #include "CompilationError.h"
 #include <fstream>
 #include <iostream>
-using namespace std;
 
-string Parser::_fileName;
-int Parser::_totalTokensCounter;
-int Parser::_lineCounter;
-list<int> Parser::_tokensPerLine;
-bool Parser::_isParsed;
-
-bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* semanticAnalyzer){
-	reset();
-
-	_fileName = path;
+bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* semanticAnalyzer) {
 
 	ifstream file(path);
-	if (!file.is_open()){
+	if (!file.is_open()) {
 		cout << "ERROR: Failed to open file " << path << ". Make sure the file exists." << endl;
 		return false;
 	}
 
 	list<Token*> tokens;
 	string currentLine;
-	while (!file.eof()){
+	int lineCounter = 1;
+	map<int, int> tokensPerLine;
+	while (!file.eof()) {
 		getline(file, currentLine);
-		if (file.fail()){
+		if (file.fail()) {
 			cout << "ERROR: Failed to read from file " << path << ". " << endl;
 			clearAndDeleteTokens(tokens);
 			file.close();
 			return false;
 		}
 
-		if (!tokenizer->tokenize(currentLine, _lineCounter++, tokens)){
-			cout << "Error: Failed to tokenize line " << _lineCounter << ". Compilation stopped." << endl;
+		if (!tokenizer->tokenize(currentLine, lineCounter, tokens)) {
+			cout << "Error: Failed to tokenize line " << lineCounter << ". Compilation stopped." << endl;
 			clearAndDeleteTokens(tokens);
 			file.close();
 			return false;
 		}
 
-		int numOfTokens = _lineCounter == 1 ? tokens.size() : tokens.size() - 1;
-		_totalTokensCounter += numOfTokens;
-		_tokensPerLine.push_back(numOfTokens);
+		tokensPerLine[lineCounter] = tokens.size();
 
-		if (numOfTokens > 0) {
-			try {
-				semanticAnalyzer->analyzeLine(tokens);
-			} catch(const CompilationError& compilationError) {
-				cout << "Line " << _lineCounter << ":" << endl;
-				for (list<string>::const_iterator& i = compilationError.getErrorMessages().begin(); 
-					i != compilationError.getErrorMessages().end(); i++) {
-						cout << "\t" << *i << endl;
-				}
+		try {
+			semanticAnalyzer->analyzeLine(tokens);
+		} catch(const CompilationError& compilationError) {
+			cout << "Line " << lineCounter << ':' << endl;
+			list<string>::const_iterator& i = compilationError.getErrorMessages().begin();
+			for (; i != compilationError.getErrorMessages().end(); i++) {
+					cout << '\t' << *i << endl;
 			}
-			
 		}
 
-		clearAndDeleteTokensButLast(tokens);
+		clearAndDeleteTokens(tokens);
+		lineCounter++;
 	}
 
-	semanticAnalyzer->printFinalErrors();
+	try {
+		semanticAnalyzer->finalizeAnalysis();
+	} catch(const CompilationError& compilationError) {
+		cout << "Finalization Errors:" << endl;
+		list<string>::const_iterator& i = compilationError.getErrorMessages().begin();
+		for (; i != compilationError.getErrorMessages().end(); i++) {
+			cout << '\t' << *i << endl;
+		}
+	}
+	
 	semanticAnalyzer->printSymbolTable();
-	print();
+	print(path, tokensPerLine);
 
 	clearAndDeleteTokens(tokens);
 	file.close();
 
-	_isParsed = true;
 	return true;
 }
 
-void Parser::print(){ //should be private?
-
-	cout << "Statistics of " << _fileName << ":" << endl;
-	cout << "Number of lines: " << _lineCounter << endl;
+void Parser::print(const string& path, const map<int, int>& tokensPerLine) {
+	cout << "Statistics of " << path << ":" << endl;
+	cout << "Number of lines: " << tokensPerLine.size() << endl;
 	cout << "Numer of tokens per line:" << endl;
 
-	list <int>::const_iterator iter = _tokensPerLine.begin();
-	int i = 1;
-	for (; iter != _tokensPerLine.end( ); iter++) {
-		cout << "Line " << i++ << ": " << *iter << " tokens" << endl;
+	map <int, int>::const_iterator iter = tokensPerLine.begin();
+	int totalTokensCounter = 0;
+	for (; iter != tokensPerLine.end( ); iter++) {
+		cout << "Line " << (*iter).first << ": " << (*iter).second << " tokens" << endl;
+		totalTokensCounter += (*iter).second;
 	}
 
-	cout << "Total number of tokens: " << _totalTokensCounter << endl;
+	cout << "Total number of tokens: " << totalTokensCounter << endl;
 }
 
-void Parser::reset(){
+/*
+void Parser::reset() {
 
-	if (_totalTokensCounter != 0){ //what's better - check if == 0 and save a ctor or just assign?
+	/
+	// TODO: what's better - check if == 0 and save a ctor or just assign?
+	// TODO: assignment isn't a ctor
+	if (_totalTokensCounter != 0) { 
 		_totalTokensCounter = 0;
 	}
-
-	if (_lineCounter != 0){
-		_lineCounter = 0;
-	}
-
-	if (_isParsed){
-		_isParsed = false;
-	}
-
-	_fileName.clear();
+	/
+	_totalTokensCounter = 0;
 	_tokensPerLine.clear();
-}
+}*/
 
-void Parser::clearAndDeleteTokensButLast(list<Token*>& tokens){
-	list<Token*>::reverse_iterator iter = tokens.rbegin();
-
-	Token* lastToken = *iter;
-	iter++;
-
-	for (; iter != tokens.rend(); iter++){
-		delete *iter;
-	}
-	tokens.clear();
-
-	tokens.push_back(lastToken);
-}
-
-void Parser::clearAndDeleteTokens(list<Token*>& tokens){
+void Parser::clearAndDeleteTokens(list<Token*>& tokens) {
 	list<Token*>::iterator iter = tokens.begin();
 
-	for (; iter != tokens.end(); iter++){
+	for (; iter != tokens.end(); iter++) {
 		delete *iter;
 	}
+
 	tokens.clear();
 }

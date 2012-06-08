@@ -27,7 +27,7 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 	}
 
 	list<Token*>::const_iterator& iter = tokens.begin();
-	if (!_previousTokenInitialized  && tokens.size() > 0) {
+	if (!_previousTokenInitialized && tokens.size() > 0) {
 		_previousToken = *tokens.front();
 		_previousTokenInitialized = true;
 		iter++; 

@@ -79,7 +79,7 @@ TokenType InputLine::getTokenType(const string& value) const {
 	} else if (_operators.find(value) != _operators.end()) {
 		return OPERATOR;
 	} else if (Delimiters.find_first_of(value, 0)) {
-
+		return DELIMITER;
 	} else {
 		return IDENTIFIER;
 	}

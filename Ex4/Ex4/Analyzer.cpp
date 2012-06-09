@@ -132,6 +132,7 @@ void Analyzer::checkIdentifier(const Token* currentToken) {
 			message << "Identifier '" << currentToken->getValue() << "' wasn't declared.";
 			_errorMessages.push_back(message.str());
 		}
+		// TODO : check for invalid identifier or maybe move the check to the tokenizer?
 	}
 }
 

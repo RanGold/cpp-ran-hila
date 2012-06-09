@@ -60,6 +60,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CatchMemoryLeak.h" />
     <ClInclude Include="SemanticAnalyzer.h" />
     <ClInclude Include="Analyzer.h" />
     <ClInclude Include="CompilationError.h" />
@@ -70,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Analyzer.cpp" />
+    <ClCompile Include="CatchMemoryLeak.cpp" />
     <ClCompile Include="CompilationError.cpp" />
     <ClCompile Include="InputLine.cpp" />
     <ClCompile Include="Parser.cpp" />

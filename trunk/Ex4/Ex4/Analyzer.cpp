@@ -15,10 +15,6 @@ Analyzer::Analyzer()
 {}
 
 void Analyzer::analyzeLine(const list<Token*>& tokens) {
-
-	// TODO questions
-	// 1. int short k - do we need to add k to the symbol table as short?
-	// 2. what do we do for "int short float"? do we need to report multiple errors?
 	
 	_errorMessages.clear();
 
@@ -127,12 +123,18 @@ void Analyzer::checkIdentifier(const Token* currentToken) {
 		}
 	} 
 	// Use of an identifier
-	else { 
-		if (_symbolTable.find(currentToken->getValue()) == _symbolTable.end()) {
+	else {
+		if (!isValidIdentifier(currentToken->getValue())) {
+			//an invalid identifier will not be added to the Symbol Table so no need to find it
+			message << "Identifier name '" <<
+			currentToken->getValue() <<
+			"' is invalid. Identifiers names have to start with an alphabetic character.";
+			_errorMessages.push_back(message.str());
+		}
+		else if (_symbolTable.find(currentToken->getValue()) == _symbolTable.end()) {
 			message << "Identifier '" << currentToken->getValue() << "' wasn't declared.";
 			_errorMessages.push_back(message.str());
 		}
-		// TODO : check for invalid identifier or maybe move the check to the tokenizer?
 	}
 }
 

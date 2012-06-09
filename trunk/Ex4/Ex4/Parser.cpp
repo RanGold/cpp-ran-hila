@@ -81,20 +81,6 @@ void Parser::print(const string& path, const map<int, int>& tokensPerLine) {
 	cout << "Total number of tokens: " << totalTokensCounter << endl;
 }
 
-/*
-void Parser::reset() {
-
-	/
-	// TODO: what's better - check if == 0 and save a ctor or just assign?
-	// TODO: assignment isn't a ctor
-	if (_totalTokensCounter != 0) { 
-		_totalTokensCounter = 0;
-	}
-	/
-	_totalTokensCounter = 0;
-	_tokensPerLine.clear();
-}*/
-
 void Parser::clearAndDeleteTokens(list<Token*>& tokens) {
 	list<Token*>::iterator iter = tokens.begin();
 

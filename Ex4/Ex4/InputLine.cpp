@@ -68,7 +68,9 @@ bool InputLine::isNumber(const string& text) {
 }
 
 TokenType InputLine::getTokenType(const string& value) const {
-	if (_predefinedTypes.find(value) != _predefinedTypes.end()) {
+	if (isNumber(value)) {
+		return NUMBER;
+	} else if (_predefinedTypes.find(value) != _predefinedTypes.end()) {
 		return PREDEFINED_TYPE;
 	} else if (_keywordsGroup1.find(value) != _keywordsGroup1.end()) {
 		return KEYWORD_GROUP1;
@@ -76,8 +78,8 @@ TokenType InputLine::getTokenType(const string& value) const {
 		return KEYWORD_GROUP2;
 	} else if (_operators.find(value) != _operators.end()) {
 		return OPERATOR;
-	} else if (isNumber(value)) {
-		return NUMBER;
+	} else if (Delimiters.find_first_of(value, 0)) {
+
 	} else {
 		return IDENTIFIER;
 	}
@@ -94,6 +96,7 @@ bool InputLine::addToken(const string& value, int line, TokenType tokenType, lis
 	return true;
 }
 
+// TODO : maybe change to map?
 void InputLine::initKeywordsSets() {
 	_maxLengthOperator = 0;
 	for (int i = 0; i < OperatorsNum; i++) {

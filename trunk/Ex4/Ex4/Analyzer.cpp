@@ -27,12 +27,6 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 	}
 
 	list<Token*>::const_iterator& iter = tokens.begin();
-	if (!_previousTokenInitialized && tokens.size() > 0) {
-		_previousToken = *tokens.front();
-		_previousTokenInitialized = true;
-		iter++; 
-	}
-
 	Token* currentToken;
 	for (; iter != tokens.end(); iter++) {
 		currentToken = *iter;
@@ -40,19 +34,13 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 		case IDENTIFIER:
 			checkIdentifier(currentToken);
 			break;
-		case PREDEFINED_TYPE:
-			if (_previousToken.getType() == PREDEFINED_TYPE) {
-				stringstream message;
-				message << "Multiple type definition - '" << _previousToken.getValue() << " " << currentToken->getValue() << "'.";
-				_errorMessages.push_back(message.str());
-			}
-			break;
 		case KEYWORD_GROUP1:
 			checkPreviousPredefinedType(currentToken);
 			checkIfElse(currentToken->getValue());
 			break;
 		case DELIMITER:
 			checkBrackets(currentToken->getValue());
+		case PREDEFINED_TYPE:
 		case KEYWORD_GROUP2:
 		case NUMBER:
 		case OPERATOR:
@@ -63,6 +51,7 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 		}
 		
 		_previousToken = **iter;
+		_previousTokenInitialized = true;
 	}
 
 	if (_errorMessages.size() > 0) {
@@ -122,7 +111,7 @@ void Analyzer::checkIdentifier(const Token* currentToken) {
 	stringstream message;
 
 	// Check for declaration of an identifier
-	if (_previousToken.getType() == PREDEFINED_TYPE) {
+	if (_previousTokenInitialized && _previousToken.getType() == PREDEFINED_TYPE) {
 		if (_symbolTable.find(currentToken->getValue()) == _symbolTable.end()) {
 			if (isValidIdentifier(currentToken->getValue())) {
 				_symbolTable[currentToken->getValue()] = _previousToken.getValue();
@@ -147,12 +136,19 @@ void Analyzer::checkIdentifier(const Token* currentToken) {
 }
 
 void Analyzer::checkPreviousPredefinedType(const Token* currentToken) {
-	if (_previousToken.getType() == PREDEFINED_TYPE) {
+	if (_previousTokenInitialized && _previousToken.getType() == PREDEFINED_TYPE) {
 		stringstream message;
-		message << '\'' << currentToken->getValue() <<
-			"' cannot follow '" <<
-			_previousToken.getValue() << 
-			"'. Only identifiers can follow predefined types.";
+		if (currentToken->getType() == PREDEFINED_TYPE) {
+			message << "Multiple type definition - '" << 
+				_previousToken.getValue() << ' ' << 
+				currentToken->getValue() << "'.";
+		} else {
+			message << '\'' << currentToken->getValue() <<
+				"' cannot follow '" <<
+				_previousToken.getValue() << 
+				"'. Only identifiers can follow predefined types.";
+		}
+
 		_errorMessages.push_back(message.str());
 	}
 }

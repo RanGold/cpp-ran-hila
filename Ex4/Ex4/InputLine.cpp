@@ -78,7 +78,7 @@ TokenType InputLine::getTokenType(const string& value) const {
 		return KEYWORD_GROUP2;
 	} else if (_operators.find(value) != _operators.end()) {
 		return OPERATOR;
-	} else if (Delimiters.find_first_of(value, 0)) {
+	} else if (Delimiters.find_first_of(value, 0) != string::npos) {
 		return DELIMITER;
 	} else {
 		return IDENTIFIER;

@@ -37,7 +37,7 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* s
 			semanticAnalyzer->analyzeLine(tokens);
 		} catch(const CompilationError& compilationError) {
 			cout << "Line " << lineCounter << ':' << endl;
-			list<string>::const_iterator& i = compilationError.getErrorMessages().begin();
+			list<string>::const_iterator i = compilationError.getErrorMessages().begin();
 			for (; i != compilationError.getErrorMessages().end(); i++) {
 					cout << '\t' << *i << endl;
 			}
@@ -47,11 +47,12 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* s
 		lineCounter++;
 	}
 
+	file.close();
 	try {
 		semanticAnalyzer->finalizeAnalysis();
 	} catch(const CompilationError& compilationError) {
 		cout << "Finalization Errors:" << endl;
-		list<string>::const_iterator& i = compilationError.getErrorMessages().begin();
+		list<string>::const_iterator i = compilationError.getErrorMessages().begin();
 		for (; i != compilationError.getErrorMessages().end(); i++) {
 			cout << '\t' << *i << endl;
 		}
@@ -59,9 +60,6 @@ bool Parser::parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* s
 	
 	semanticAnalyzer->printSymbolTable();
 	print(path, tokensPerLine);
-
-	clearAndDeleteTokens(tokens);
-	file.close();
 
 	return true;
 }

@@ -22,7 +22,7 @@ void Analyzer::analyzeLine(const list<Token*>& tokens) {
 		_errorMessages.push_back("File should begin with 'function main'");
 	}
 
-	list<Token*>::const_iterator& iter = tokens.begin();
+	list<Token*>::const_iterator iter = tokens.begin();
 	Token* currentToken;
 	for (; iter != tokens.end(); iter++) {
 		currentToken = *iter;
@@ -125,7 +125,7 @@ void Analyzer::checkIdentifier(const Token* currentToken) {
 	// Use of an identifier
 	else {
 		if (!isValidIdentifier(currentToken->getValue())) {
-			//an invalid identifier will not be added to the Symbol Table so no need to find it
+			// An invalid identifier will not be added to the Symbol Table so no need to find it
 			message << "Identifier name '" <<
 			currentToken->getValue() <<
 			"' is invalid. Identifiers names have to start with an alphabetic character.";

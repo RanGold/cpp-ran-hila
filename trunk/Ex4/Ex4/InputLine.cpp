@@ -58,7 +58,7 @@ bool InputLine::isOperator(const string& text, int& opLength) const {
 }
 
 bool InputLine::isNumber(const string& text) {
-	for (string::const_iterator& i = text.begin(); i != text.end(); i++) {
+	for (string::const_iterator i = text.begin(); i != text.end(); i++) {
 		if (!isdigit(*i)) {
 			return false;
 		}
@@ -96,7 +96,6 @@ bool InputLine::addToken(const string& value, int line, TokenType tokenType, lis
 	return true;
 }
 
-// TODO : maybe change to map?
 void InputLine::initKeywordsSets() {
 	_maxLengthOperator = 0;
 	for (int i = 0; i < OperatorsNum; i++) {

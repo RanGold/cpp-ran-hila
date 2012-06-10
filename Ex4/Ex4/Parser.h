@@ -12,7 +12,6 @@ public:
 	static bool parse(const string& path, Tokenizer* tokenizer, SemanticAnalyzer* semanticAnalyzer);
 
 private:
-
 	Parser();
 	
 	static void print(const string& path, const map<int, int>& tokensPerLine);

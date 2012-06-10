@@ -10,8 +10,8 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	SemanticAnalyzer *analyzer = new Analyzer();
-	if (analyzer == 0) {
+	SemanticAnalyzer *semanticAnalyzer = new Analyzer();
+	if (semanticAnalyzer == 0) {
 		cout << "Error allocating SemanticAnalizer" << endl;
 		delete tokenizer;
 		return  -1;
@@ -31,11 +31,11 @@ int main(int argc, char* argv[]) {
 		case 1:
 			cout << "Enter file path" << endl;
 			cin >> path;
-			if (!Parser::parse(path, tokenizer, analyzer)) {
+			if (!Parser::parse(path, tokenizer, semanticAnalyzer)) {
 				cout << "Error while parsing" << endl;
 			}
 
-			analyzer->reset();
+			semanticAnalyzer->reset();
 			break;
 		case 2:
 			quit = true;
@@ -49,5 +49,5 @@ int main(int argc, char* argv[]) {
 	}
 
 	delete tokenizer;
-	delete analyzer;
+	delete semanticAnalyzer;
 }

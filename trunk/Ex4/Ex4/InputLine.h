@@ -10,6 +10,7 @@
 class InputLine : public Tokenizer {
 public:
 	InputLine();
+
 	virtual const Tokenizer& operator=(const Tokenizer& tokenizer);
 	virtual bool tokenize(const string& text, int line, list<Token*>& tokens) const;
 

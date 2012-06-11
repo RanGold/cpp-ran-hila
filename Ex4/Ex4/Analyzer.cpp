@@ -14,6 +14,14 @@ Analyzer::Analyzer()
 	_bracketsCounter(0), _curlyBracketsCounter(0), _previousTokenInitialized(false)
 {}
 
+const SemanticAnalyzer& Analyzer::operator=(const SemanticAnalyzer& semanticAnalyzer) {
+	if (this != &semanticAnalyzer && typeid(semanticAnalyzer) == typeid(Analyzer)) {
+		*this = (Analyzer&)semanticAnalyzer;
+	}
+	
+	return *this;
+}
+
 void Analyzer::analyzeLine(const list<Token*>& tokens) {
 	
 	_errorMessages.clear();

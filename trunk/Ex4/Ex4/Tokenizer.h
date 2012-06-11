@@ -7,8 +7,10 @@
 
 class Tokenizer {
 public:
-	virtual bool tokenize(const string& text, int line, list<Token*>& tokens) const = 0;
+	virtual const Tokenizer& operator=(const Tokenizer& tokenizer) { return *this; };
 	virtual ~Tokenizer() {};
+
+	virtual bool tokenize(const string& text, int line, list<Token*>& tokens) const = 0;
 
 protected:
 	static const string Delimiters;

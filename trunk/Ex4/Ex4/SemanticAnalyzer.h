@@ -8,6 +8,7 @@ using namespace std;
 
 class SemanticAnalyzer {
 public:
+	virtual const SemanticAnalyzer& operator=(const SemanticAnalyzer& semanticAnalyzer) { return *this; };
 	virtual ~SemanticAnalyzer() {};
 
 	virtual void analyzeLine(const list<Token*>& tokens) = 0;

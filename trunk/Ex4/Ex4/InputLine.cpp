@@ -4,6 +4,14 @@ InputLine::InputLine() {
 	initKeywordsSets();
 }
 
+const Tokenizer& InputLine::operator=(const Tokenizer& tokenizer) {
+	if (this != &tokenizer && typeid(tokenizer) == typeid(InputLine)) {
+		*this = (InputLine&)tokenizer;
+	}
+	
+	return *this;
+}
+
 bool InputLine::tokenize(const string& text, int line, list<Token*>& tokens) const {
 	size_t prev = 0, pos;
 	int opLength = 0;

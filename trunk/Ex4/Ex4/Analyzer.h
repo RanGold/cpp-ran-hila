@@ -10,6 +10,7 @@
 class Analyzer : public SemanticAnalyzer {
 public:
 	Analyzer();
+	virtual const SemanticAnalyzer& operator=(const SemanticAnalyzer& semanticAnalyzer);
 
 	virtual void analyzeLine(const list<Token*>& tokens);
 	virtual void finalizeAnalysis();

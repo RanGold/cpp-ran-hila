@@ -3,9 +3,9 @@
 #include "GoldFishImpl.h"
 #include "SalmonFishImpl.h"
 
-FishImpl* FishFactory::create(FishType fishType){
+FishImpl* FishFactory::create(FishType fishType) {
 
-	switch(fishType){
+	switch(fishType) {
 	case GOLD:
 		return new GoldFishImpl();
 	case SALMON:

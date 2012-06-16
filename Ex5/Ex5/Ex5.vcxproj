@@ -70,10 +70,13 @@
     <ClInclude Include="Subject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Aquarium.cpp" />
     <ClCompile Include="Fish.cpp" />
     <ClCompile Include="FishFactory.cpp" />
     <ClCompile Include="FishImpl.cpp" />
     <ClCompile Include="GoldFishImpl.cpp" />
+    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Subject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

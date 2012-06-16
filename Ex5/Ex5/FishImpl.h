@@ -3,11 +3,10 @@
 
 #include "Observer.h"
 
-class FishImpl: public Observer {
-
+class FishImpl {
 public:
 	virtual	~FishImpl();
-    virtual void update(const Subject* changedSubject);
+    virtual void update(const Subject* changedSubject, Action action);
 	virtual void printStatus() const;
 
 	void setSpeed(int speed);
@@ -21,10 +20,11 @@ public:
 	void setSubject(Subject* subject);
 	Subject* getSubject() const;
 	
-	virtual void feed()=0;
+	virtual void feed() = 0;
 	void play();
 	void pause();
 	void debug() const;
+
 protected:
 	int _speed;
 	int _size;

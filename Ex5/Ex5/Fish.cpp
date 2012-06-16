@@ -10,8 +10,8 @@ Fish::~Fish() {
 	delete _fishImpl;
 }
 
-void Fish::update(const Subject* changedSubject) {
-	_fishImpl->update(changedSubject);
+void Fish::update(const Subject* changedSubject, Action action) {
+	_fishImpl->update(changedSubject, action);
 }
 
 void Fish::printStatus() const{

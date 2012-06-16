@@ -1,11 +1,16 @@
 #ifndef FISH_IMPL_H
 #define FISH_IMPL_H
 
-#include "Observer.h"
+#include <map>
 
-class FishImpl: public Observer {
+using namespace std;
 
+enum Action;
+class Subject;
+
+class FishImpl {
 public:
+	FishImpl();
 	virtual	~FishImpl();
 
 	void setSpeed(int speed);
@@ -16,21 +21,24 @@ public:
 	int getTransparency() const;
 	void setLocation(int Location);
 	int getLocation() const;
-	void setSubject(Subject* subject);
 	
 	virtual void update(const Subject* changedSubject, Action action);
 	virtual void printStatus() const;
 
-	virtual void feed() = 0;
-	void play();
-	void pause();
-	void debug() const;
+	virtual void feed(const Subject* subject) = 0;
+	void play(const Subject* subject);
+	void pause(const Subject* subject);
+	void debug(const Subject* subject);
 
 protected:
 	int _speed;
 	int _size;
 	int _transparency;
 	int _location;
+
+private:
+	typedef void (FishImpl::*actionFunction)(const Subject*);
+	map<size_t, map<Action, actionFunction>> _actionFunctions;
 };
 
 #endif

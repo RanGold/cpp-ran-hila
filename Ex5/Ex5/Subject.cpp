@@ -13,7 +13,9 @@ void Subject::detach(const Observer* ob) {
 		}
 	}
 	
-	_observers.erase(iter);
+	if (iter != _observers.end()) {
+		_observers.erase(iter);
+	}
 }
 
 void Subject::detachAll() {

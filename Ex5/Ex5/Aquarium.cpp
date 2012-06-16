@@ -35,9 +35,6 @@ void Aquarium::emptyAquarium() {
 	detachAll();
 }
 
-Aquarium::~Aquarium() {
-	emptyAquarium();
-}
+Aquarium::~Aquarium() {}
 
-Aquarium::Aquarium() {
-}
+Aquarium::Aquarium() {}

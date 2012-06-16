@@ -1,6 +1,5 @@
 #include "FishImpl.h"
 #include "Aquarium.h"
-#include "UnimplementedHandleException.h"
 #include <iostream>
 #include <time.h>
 
@@ -15,10 +14,10 @@ FishImpl::~FishImpl() {
 
 void FishImpl::printStatus() const {
 	cout << id() << ":" << endl;
-	cout << "\tSpeed: " << _speed << endl;
-	cout << "\tSize: " << _size << endl;
-	cout << "\tTransparency: " << _transparency << endl;
-	cout << "\tLocation: " << _location << endl;
+	cout << "\tSpeed: " << getSpeed() << endl;
+	cout << "\tSize: " << getSize() << endl;
+	cout << "\tTransparency: " << getTransparency() << endl;
+	cout << "\tLocation: " << getLocation() << endl;
 }
 
 void FishImpl::setSpeed(int speed) {

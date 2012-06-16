@@ -3,7 +3,7 @@
 #include "Aquarium.h"
 #include "AllocationException.h"
 #include "Fish.h"
-#include "UnimplementedHandleException.h"
+#include "GeneralException.h"
 
 Fish* addFish() {
 	cout << "Enter fish type:" << endl;
@@ -118,7 +118,8 @@ void addExistingFish(vector<Fish*>& removedFishes) {
 	}
 }
 
-// TODO check all new for exception
+// TODO verify the observer + bridge implementation
+// TODO check if the implementation we did is as was requested, meaning factory within the bridge
 int main(int argc, char* argv[]) {
 	bool quit = false;
 	vector<Fish*> fishes;
@@ -176,9 +177,7 @@ int main(int argc, char* argv[]) {
 
 			cout << endl << endl;
 		}
-	} catch(const AllocationException& exp) {
-		cout << "Error: " << exp.getMessage() << endl;
-	} catch(const UnimplementedHandleException& exp) {
+	} catch(const GeneralException& exp) {
 		cout << "Error: " << exp.getMessage() << endl;
 	}
 

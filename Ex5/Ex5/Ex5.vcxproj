@@ -64,19 +64,20 @@
     <ClInclude Include="Fish.h" />
     <ClInclude Include="FishFactory.h" />
     <ClInclude Include="FishImpl.h" />
-    <ClInclude Include="GoldFishImpl.h" />
+    <ClInclude Include="GoldFish.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="SalmonFishImpl.h" />
+    <ClInclude Include="SalmonFish.h" />
     <ClInclude Include="Subject.h" />
+    <ClInclude Include="UnimplementedHandleException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Aquarium.cpp" />
     <ClCompile Include="Fish.cpp" />
     <ClCompile Include="FishFactory.cpp" />
     <ClCompile Include="FishImpl.cpp" />
-    <ClCompile Include="GoldFishImpl.cpp" />
+    <ClCompile Include="GoldFish.cpp" />
     <ClCompile Include="Program.cpp" />
-    <ClCompile Include="SalmonFishImpl.cpp" />
+    <ClCompile Include="SalmonFish.cpp" />
     <ClCompile Include="Subject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

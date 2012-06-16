@@ -9,7 +9,6 @@ public:
 	virtual	~Fish();
 
     virtual void update(const Subject* changedSubject, Action action);
-	void printStatus() const;
 
 private:
 	FishImpl* _fishImpl;

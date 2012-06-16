@@ -32,11 +32,11 @@ void Aquarium::remove(const Fish* fish) {
 }
 
 void Aquarium::emptyAquarium() {
-	// TODO : delete fishes? make it a part of the factory?
 	detachAll();
 }
 
 Aquarium::~Aquarium() {
+	emptyAquarium();
 }
 
 Aquarium::Aquarium() {

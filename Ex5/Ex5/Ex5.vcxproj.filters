@@ -27,16 +27,19 @@
     <ClInclude Include="FishImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GoldFishImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SalmonFishImpl.h">
+    <ClInclude Include="Subject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Subject.h">
+    <ClInclude Include="UnimplementedHandleException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldFish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SalmonFish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,9 +53,6 @@
     <ClCompile Include="FishImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GoldFishImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -62,7 +62,10 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SalmonFishImpl.cpp">
+    <ClCompile Include="SalmonFish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldFish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

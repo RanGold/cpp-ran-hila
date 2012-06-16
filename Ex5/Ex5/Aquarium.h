@@ -4,18 +4,20 @@
 
 using namespace std;
 
-enum Action {FEED, EMPTY, PLAY, PAUSE, DEBUG};
+enum Action {FEED, PLAY, PAUSE, DEBUG};
 
 class Aquarium : public Subject {
 public:
 	static Aquarium& instance();
 
 	void addFish(const Fish* fish);
+	void remove(const Fish* fish);
+	
 	void feed() const;
 	void play() const;
 	void pause() const;
 	void debug() const;
-	void remove(const Fish* fish);
+	
 	void emptyAquarium();
 
 protected: 

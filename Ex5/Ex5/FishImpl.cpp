@@ -1,11 +1,19 @@
 #include "FishImpl.h"
-#include "Subject.h"
 #include "Aquarium.h"
+#include "UnimplementedHandleException.h"
 #include <iostream>
+
 using namespace std;
 
+FishImpl::FishImpl() {
+	// TODO : maybe feed won't work
+	_actionFunctions[typeid(Aquarium).hash_code()][FEED] = &FishImpl::feed;
+	_actionFunctions[typeid(Aquarium).hash_code()][PLAY] = &FishImpl::play;
+	_actionFunctions[typeid(Aquarium).hash_code()][PLAY] = &FishImpl::pause;
+	_actionFunctions[typeid(Aquarium).hash_code()][PLAY] = &FishImpl::debug;
+}
+
 FishImpl::~FishImpl() {
-	_subject->detach(this);
 }
 
 void FishImpl::printStatus() const {
@@ -45,29 +53,25 @@ int FishImpl::getLocation() const {
 	return _location;
 }
 
-void FishImpl::setSubject(Subject* subject) {
-	if (_subject != 0){
-		_subject->detach(this);
-	}
+void FishImpl::play(const Subject* subject) {
+	// TODO
+}
 
-	_subject = subject;
-	_subject->attach(this);
+void FishImpl::pause(const Subject* subject) {
+	// TODO
+}
+
+void FishImpl::debug(const Subject* subject) {
+	// TODO
 }
 
 void FishImpl::update(const Subject* changedSubject, Action action) {
-
-	if (changedSubject != _subject) {
-		// TODO maybe print error message;
-		return;	
+	size_t typeHashCode = typeid(*changedSubject).hash_code();
+	
+	if (_actionFunctions.find(typeHashCode) == _actionFunctions.end() ||
+		_actionFunctions[typeHashCode].find(action) == _actionFunctions[typeHashCode].end()) {
+			throw UnimplementedHandleException();
 	}
-
-	/* Not to use RTTI, use action instead
-	Aquarium* aquarium = (Aquarium*) changedSubject;
-	switch (aquarium->getPressedButton()){
-	case FEED: feed();
-	case PLAY: play();
-	case PAUSE: pause();
-	case DEBUG: debug();
-	}
-	*/
+	
+	(this->*(_actionFunctions[typeHashCode][action]))(changedSubject);
 }

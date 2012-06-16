@@ -8,18 +8,13 @@ using namespace std;
 
 FishImpl::FishImpl() 
 	: _speed(0), _size(0), _transparency(0), _location(0), _isPaused(false)
-{
-	_actionFunctions[typeid(Aquarium).hash_code()][FEED] = &FishImpl::feed;
-	_actionFunctions[typeid(Aquarium).hash_code()][PLAY] = &FishImpl::play;
-	_actionFunctions[typeid(Aquarium).hash_code()][PAUSE] = &FishImpl::pause;
-	_actionFunctions[typeid(Aquarium).hash_code()][DEBUG] = &FishImpl::debug;
-}
+{}
 
 FishImpl::~FishImpl() {
 }
 
 void FishImpl::printStatus() const {
-	cout << "Fish: " << id() << endl;
+	cout << id() << ":" << endl;
 	cout << "\tSpeed: " << _speed << endl;
 	cout << "\tSize: " << _size << endl;
 	cout << "\tTransparency: " << _transparency << endl;
@@ -75,15 +70,4 @@ void FishImpl::debug() {
 	}
 
 	printStatus();
-}
-
-void FishImpl::update(const Subject* changedSubject, Action action) {
-	size_t typeHashCode = typeid(*changedSubject).hash_code();
-	
-	if (_actionFunctions.find(typeHashCode) == _actionFunctions.end() ||
-		_actionFunctions[typeHashCode].find(action) == _actionFunctions[typeHashCode].end()) {
-			throw UnimplementedHandleException();
-	}
-	
-	(this->*(_actionFunctions[typeHashCode][action]))();
 }

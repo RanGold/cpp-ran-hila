@@ -42,6 +42,9 @@
     <ClInclude Include="SalmonFish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AllocationException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Fish.cpp">

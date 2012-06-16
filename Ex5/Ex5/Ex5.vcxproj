@@ -60,6 +60,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AllocationException.h" />
     <ClInclude Include="Aquarium.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="FishFactory.h" />

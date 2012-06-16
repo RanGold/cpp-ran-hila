@@ -58,7 +58,7 @@ void FishImpl::play() {
 }
 
 void FishImpl::pause() {
-	_isPaused = false;
+	_isPaused = true;
 }
 
 void FishImpl::debug() {

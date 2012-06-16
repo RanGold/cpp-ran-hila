@@ -25,6 +25,7 @@ public:
 	virtual void update(const Subject* changedSubject, Action action);
 	virtual void printStatus() const;
 
+	virtual string id() const = 0;
 	virtual void feed() = 0;
 	void play();
 	void pause();

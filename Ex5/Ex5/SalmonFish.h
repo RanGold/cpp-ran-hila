@@ -7,6 +7,7 @@ class SalmonFish : public FishImpl {
 friend class FishFactory;
 
 public:
+	virtual string id() const;
 	virtual void feed();
 
 protected:

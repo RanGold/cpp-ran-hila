@@ -6,20 +6,24 @@
 
 using namespace std;
 
-FishImpl::FishImpl() {
-	// TODO : maybe feed won't work
+FishImpl::FishImpl() 
+	: _speed(0), _size(0), _transparency(0), _location(0), _isPaused(false)
+{
 	_actionFunctions[typeid(Aquarium).hash_code()][FEED] = &FishImpl::feed;
 	_actionFunctions[typeid(Aquarium).hash_code()][PLAY] = &FishImpl::play;
-	_actionFunctions[typeid(Aquarium).hash_code()][PLAY] = &FishImpl::pause;
-	_actionFunctions[typeid(Aquarium).hash_code()][PLAY] = &FishImpl::debug;
+	_actionFunctions[typeid(Aquarium).hash_code()][PAUSE] = &FishImpl::pause;
+	_actionFunctions[typeid(Aquarium).hash_code()][DEBUG] = &FishImpl::debug;
 }
 
 FishImpl::~FishImpl() {
 }
 
 void FishImpl::printStatus() const {
-	cout << "Speed: " << _speed << ", Size: " << _size 
-		<< ", Transparency: " << _transparency << ", Location: " << _location << endl;
+	cout << "Fish: " << id() << endl;
+	cout << "\tSpeed: " << _speed << endl;
+	cout << "\tSize: " << _size << endl;
+	cout << "\tTransparency: " << _transparency << endl;
+	cout << "\tLocation: " << _location << endl;
 }
 
 void FishImpl::setSpeed(int speed) {

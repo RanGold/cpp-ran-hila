@@ -1,3 +1,6 @@
+#ifndef AQUARIUM_H
+#define AQUARIUM_H
+
 #include "Fish.h"
 #include "Subject.h"
 #include <list>
@@ -29,3 +32,5 @@ private:
 	Aquarium(const Aquarium&);
 	void operator=(Aquarium&);
 };
+
+#endif

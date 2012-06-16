@@ -1,3 +1,6 @@
+#ifndef UNIMPLEMENT_HANDLE_EXCEPTION_H
+#define UNIMPLEMENT_HANDLE_EXCEPTION_H
+
 #include <string>
 
 using namespace std;
@@ -11,3 +14,5 @@ public:
 private:
 	string _message;
 };
+
+#endif

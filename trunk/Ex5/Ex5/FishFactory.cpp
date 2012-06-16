@@ -2,6 +2,7 @@
 #include "FishImpl.h"
 #include "GoldFish.h"
 #include "SalmonFish.h"
+#include "Fish.h"
 
 FishImpl* FishFactory::create(FishType fishType) {
 

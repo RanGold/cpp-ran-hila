@@ -1,6 +1,9 @@
+#ifndef FISH_H
+#define FISH_H
+
 #include "Observer.h"
 
-enum FishType;
+enum FishType {GOLD, SALMON};
 class FishImpl;
 
 class Fish : public Observer {
@@ -13,3 +16,5 @@ public:
 private:
 	FishImpl* _fishImpl;
 };
+
+#endif

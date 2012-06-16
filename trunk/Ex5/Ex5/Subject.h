@@ -15,7 +15,6 @@ public:
 	virtual void detachAll();
 	virtual void notify(Action) const;
 
-
 protected:
 	Subject();
 	virtual ~Subject();

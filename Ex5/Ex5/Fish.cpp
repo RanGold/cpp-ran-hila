@@ -3,8 +3,12 @@
 #include "FishFactory.h"
 #include "Subject.h"
 
-Fish::Fish(FishType fishType) {
+Fish::Fish(FishType fishType, Subject* subject = 0) {
 	_fishImpl = FishFactory::create(fishType);
+	_subject = subject;
+	if (_subject != 0) {
+		_subject->attach(this);
+	}
 }
 
 Fish::~Fish() {

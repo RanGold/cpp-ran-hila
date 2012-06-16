@@ -26,6 +26,4 @@ private:
 	Aquarium();
 	Aquarium(const Aquarium&);
 	void operator=(Aquarium&);
-
-	list<Fish*> fishes;
 };

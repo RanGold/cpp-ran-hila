@@ -12,7 +12,10 @@ Fish::Fish(FishType fishType, Subject* subject) {
 }
 
 Fish::~Fish() {
-	_subject->detach(this);
+	if (_subject != 0) {
+		_subject->detach(this);
+	}
+
 	delete _fishImpl;
 }
 

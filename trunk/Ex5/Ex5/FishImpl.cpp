@@ -2,6 +2,7 @@
 #include "Aquarium.h"
 #include "UnimplementedHandleException.h"
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
@@ -62,8 +63,11 @@ void FishImpl::pause() {
 }
 
 void FishImpl::debug() {
+	time_t now = time(NULL);
+
 	if (!_isPaused){
-		_location += _speed;
+		_location += (static_cast<unsigned int>(now - _timeStamp)) * _speed;
+		_timeStamp = now;
 	}
 
 	printStatus();

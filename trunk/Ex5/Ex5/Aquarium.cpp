@@ -1,7 +1,7 @@
 #include "Aquarium.h"
 #include "Observer.h"
 
-//static Aquarium::Aquarium _instance;
+Aquarium Aquarium::_instance;
 
 Aquarium& Aquarium::instance() { 
 	return _instance;

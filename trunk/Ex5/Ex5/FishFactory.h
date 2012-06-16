@@ -1,4 +1,5 @@
 class FishImpl;
+class Subject;
 
 enum FishType {GOLD, SALMON};
 
@@ -6,6 +7,7 @@ class FishFactory{
 
 public:
 	static FishImpl* create(FishType fishType);
+	static FishImpl* create(Subject* subject, FishType fishType);
 
 protected:
 	FishFactory();

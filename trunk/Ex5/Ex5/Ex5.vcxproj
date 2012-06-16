@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1450624B-628A-4156-82BD-0F1026FCFDF0}</ProjectGuid>
+    <ProjectGuid>{358B169A-21C3-42D2-ACF8-3C77EF465C6D}</ProjectGuid>
     <RootNamespace>Ex5</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -76,6 +76,7 @@
     <ClCompile Include="FishImpl.cpp" />
     <ClCompile Include="GoldFishImpl.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="SalmonFishImpl.cpp" />
     <ClCompile Include="Subject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

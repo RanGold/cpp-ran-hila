@@ -56,13 +56,14 @@ Subject* FishImpl::getSubject() const {
 	return _subject;
 }
 
-void FishImpl::update(const Subject* changedSubject){
+void FishImpl::update(const Subject* changedSubject, Action action) {
 
-	if (changedSubject != _subject){
-		//TODO maybe print error message;
+	if (changedSubject != _subject) {
+		// TODO maybe print error message;
 		return;	
 	}
 
+	/* Not to use RTTI, use action instead
 	Aquarium* aquarium = (Aquarium*) changedSubject;
 	switch (aquarium->getPressedButton()){
 	case FEED: feed();
@@ -70,4 +71,5 @@ void FishImpl::update(const Subject* changedSubject){
 	case PAUSE: pause();
 	case DEBUG: debug();
 	}
+	*/
 }

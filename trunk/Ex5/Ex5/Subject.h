@@ -1,13 +1,27 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
 
+#include  <vector>
+
+using namespace std;
+
 class Observer;
+enum Action;
 
-class Subject{
-
+class Subject {
 public: 
-	virtual void attach(Observer*) = 0;
-    virtual void detach(Observer*) = 0;
+	virtual void attach(const Observer*);
+    virtual void detach(const Observer*);
+	virtual void detachAll();
+	virtual void notify(Action) const;
+
+
+protected:
+	Subject();
+	virtual ~Subject();
+
+private:
+    vector<Observer*> _observers; 
 };
 
 #endif

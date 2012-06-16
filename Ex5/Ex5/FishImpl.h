@@ -34,8 +34,9 @@ protected:
 	int _speed;
 	int _size;
 	int _transparency;
-	int _location;
+	long _location;
 	bool _isPaused;
+	time_t _timeStamp;
 
 private:
 	typedef void (FishImpl::*actionFunction)();

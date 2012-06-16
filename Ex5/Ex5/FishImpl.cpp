@@ -4,7 +4,9 @@
 #include <iostream>
 using namespace std;
 
-FishImpl::~FishImpl() {}
+FishImpl::~FishImpl() {
+	_subject->detach(this);
+}
 
 void FishImpl::printStatus() const {
 	cout << "Speed: " << _speed << ", Size: " << _size 
@@ -50,10 +52,6 @@ void FishImpl::setSubject(Subject* subject) {
 
 	_subject = subject;
 	_subject->attach(this);
-}
-
-Subject* FishImpl::getSubject() const {
-	return _subject;
 }
 
 void FishImpl::update(const Subject* changedSubject, Action action) {

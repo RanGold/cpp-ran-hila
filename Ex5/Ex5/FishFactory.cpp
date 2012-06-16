@@ -14,3 +14,16 @@ FishImpl* FishFactory::create(FishType fishType) {
 
 	return 0;
 }
+
+FishImpl* FishFactory::create(Subject* subject, FishType fishType){
+
+	switch(fishType){
+	case GOLD:
+		return new GoldFishImpl(subject);
+	case SALMON:
+		return new SalmonFishImpl(subject);
+	}
+
+	return 0;
+}
+

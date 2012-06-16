@@ -4,7 +4,6 @@ class GoldFishImpl : public FishImpl {
 	friend class FishFactory;
 
 public:
-	virtual ~GoldFishImpl(); //TODO maybe hide the dtor also?
 	virtual void feed();
 
 protected:

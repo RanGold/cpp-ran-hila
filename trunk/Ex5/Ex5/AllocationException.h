@@ -1,18 +1,13 @@
 #ifndef ALLOCATION_EXCEPTION_H
 #define ALLOCATION_EXCEPTION_H
 
-#include <string>
+#include "GeneralException.h"
 
 using namespace std;
 
-class AllocationException {
+class AllocationException : public GeneralException {
 public:
-	AllocationException(const string& message = "Failed to allocate memory") : _message(message) {}
-	virtual ~AllocationException() {};
-
-	const string& getMessage() const { return _message; }
-private:
-	string _message;
+	AllocationException(const string& message = "Failed to allocate memory") : GeneralException(message) {}
 };
 
 #endif

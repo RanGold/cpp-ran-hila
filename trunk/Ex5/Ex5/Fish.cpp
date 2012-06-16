@@ -5,7 +5,9 @@
 #include "Aquarium.h"
 #include "UnimplementedHandleException.h"
 
-Fish::Fish(FishType fishType, Subject* subject) {
+Fish::Fish(FishType fishType, Subject* subject) 
+	: Observer(subject)
+{
 	_fishImpl = FishFactory::create(fishType);
 	_subject = subject;
 	if (_subject != 0) {

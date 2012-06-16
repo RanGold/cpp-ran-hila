@@ -53,16 +53,20 @@ int FishImpl::getLocation() const {
 	return _location;
 }
 
-void FishImpl::play(const Subject* subject) {
-	// TODO
+void FishImpl::play() {
+	_isPaused = false;
 }
 
-void FishImpl::pause(const Subject* subject) {
-	// TODO
+void FishImpl::pause() {
+	_isPaused = false;
 }
 
-void FishImpl::debug(const Subject* subject) {
-	// TODO
+void FishImpl::debug() {
+	if (!_isPaused){
+		_location += _speed;
+	}
+
+	printStatus();
 }
 
 void FishImpl::update(const Subject* changedSubject, Action action) {
@@ -73,5 +77,5 @@ void FishImpl::update(const Subject* changedSubject, Action action) {
 			throw UnimplementedHandleException();
 	}
 	
-	(this->*(_actionFunctions[typeHashCode][action]))(changedSubject);
+	(this->*(_actionFunctions[typeHashCode][action]))();
 }

@@ -25,19 +25,20 @@ public:
 	virtual void update(const Subject* changedSubject, Action action);
 	virtual void printStatus() const;
 
-	virtual void feed(const Subject* subject) = 0;
-	void play(const Subject* subject);
-	void pause(const Subject* subject);
-	void debug(const Subject* subject);
+	virtual void feed() = 0;
+	void play();
+	void pause();
+	void debug();
 
 protected:
 	int _speed;
 	int _size;
 	int _transparency;
 	int _location;
+	bool _isPaused;
 
 private:
-	typedef void (FishImpl::*actionFunction)(const Subject*);
+	typedef void (FishImpl::*actionFunction)();
 	map<size_t, map<Action, actionFunction>> _actionFunctions;
 };
 

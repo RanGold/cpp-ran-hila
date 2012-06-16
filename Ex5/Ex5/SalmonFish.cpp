@@ -2,7 +2,7 @@
 
 SalmonFish::SalmonFish() {}
 
-void SalmonFish::feed(const Subject* subject) {
+void SalmonFish::feed() {
 	_transparency += 1;
 	_size += 2;
 }

@@ -2,7 +2,7 @@
 
 GoldFish::GoldFish() {}
 
-void GoldFish::feed(const Subject* subject) {
+void GoldFish::feed() {
 	_speed += 2;
 	_size += 1;
 }

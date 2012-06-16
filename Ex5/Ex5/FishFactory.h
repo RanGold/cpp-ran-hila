@@ -1,13 +1,15 @@
-class FishImpl;
+#ifndef FISH_FACTORY_H
+#define FISH_FACTORY_H
 
-enum FishType {GOLD, SALMON};
+enum FishType;
+class FishImpl;
 
 class FishFactory {
 public:
 	static FishImpl* create(FishType fishType);
 
-protected:
+private:
 	FishFactory();
-	FishFactory(const FishFactory& fishFactory);
-	FishFactory& operator=(const FishFactory& fishFactory);
 };
+
+#endif

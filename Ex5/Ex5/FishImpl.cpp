@@ -1,24 +1,15 @@
 #include "FishImpl.h"
-#include "Aquarium.h"
 #include <iostream>
-#include <time.h>
 
 using namespace std;
 
+const int FishImpl::InitialSpeed = 5;
+
 FishImpl::FishImpl() 
-	: _speed(0), _size(0), _transparency(0), _location(0), _isPaused(false)
+	: _speed(InitialSpeed), _size(0), _transparency(0), _location(0)
 {}
 
-FishImpl::~FishImpl() {
-}
-
-void FishImpl::printStatus() const {
-	cout << id() << ":" << endl;
-	cout << "\tSpeed: " << getSpeed() << endl;
-	cout << "\tSize: " << getSize() << endl;
-	cout << "\tTransparency: " << getTransparency() << endl;
-	cout << "\tLocation: " << getLocation() << endl;
-}
+FishImpl::~FishImpl() {}
 
 void FishImpl::setSpeed(int speed) {
 	_speed = speed;
@@ -53,20 +44,19 @@ int FishImpl::getLocation() const {
 }
 
 void FishImpl::play() {
-	_isPaused = false;
+	setSpeed(InitialSpeed);
 }
 
 void FishImpl::pause() {
-	_isPaused = true;
+	setSpeed(0);
 }
 
 void FishImpl::debug() {
-	time_t now = time(NULL);
+	_location += getSpeed();
 
-	if (!_isPaused){
-		_location += (static_cast<unsigned int>(now - _timeStamp)) * _speed;
-		_timeStamp = now;
-	}
-
-	printStatus();
+	cout << id() << ":" << endl;
+	cout << "\tSpeed: " << getSpeed() << endl;
+	cout << "\tSize: " << getSize() << endl;
+	cout << "\tTransparency: " << getTransparency() << endl;
+	cout << "\tLocation: " << getLocation() << endl;
 }

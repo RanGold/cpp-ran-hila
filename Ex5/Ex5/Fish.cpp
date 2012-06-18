@@ -14,9 +14,7 @@ Fish::Fish(FishType fishType, Subject* subject)
 }
 
 Fish::~Fish() {
-	if (_subject != 0) {
-		_subject->detach(this);
-	}
+	removeFromContainer();
 
 	if (_fishImpl != 0) {
 		delete _fishImpl;
@@ -24,9 +22,7 @@ Fish::~Fish() {
 }
 
 void Fish::addToContainer(Subject* subject) {
-	if (_subject != 0) {
-		_subject->detach(this);
-	}
+	removeFromContainer();
 
 	_subject = subject;
 	if (_subject != 0) {

@@ -1,5 +1,4 @@
 #include "Aquarium.h"
-#include "Observer.h"
 
 Aquarium Aquarium::_instance;
 
@@ -24,7 +23,7 @@ void Aquarium::debug() const {
 }
 
 void Aquarium::emptyAquarium() {
-	detachAll();
+	clear();
 }
 
 Aquarium::~Aquarium() {}

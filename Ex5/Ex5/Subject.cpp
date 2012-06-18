@@ -25,7 +25,12 @@ void Subject::detach(const Observer* ob) {
 	}
 }
 
-void Subject::detachAll() {
+void Subject::clear() {
+	vector<Observer*>::const_iterator iter = _observers.begin();
+	for (; iter != _observers.end(); iter++) {
+		(*iter)->clearSubject();
+	}
+
 	_observers.clear();
 }
 
@@ -38,4 +43,6 @@ void Subject::notify(Action action) const {
 
 Subject::Subject() {}
 
-Subject::~Subject() {}
+Subject::~Subject() {
+	clear();
+}

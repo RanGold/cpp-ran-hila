@@ -10,7 +10,6 @@ public:
 	const string& getMessage() const { return _message; };
 
 protected:
-	GeneralException() {}
 	GeneralException(const string& message) : _message(message) {}
 	virtual ~GeneralException() {}
 

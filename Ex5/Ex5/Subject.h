@@ -12,7 +12,7 @@ class Subject {
 public: 
 	virtual void attach(const Observer*);
     virtual void detach(const Observer*);
-	virtual void detachAll();
+	virtual void clear();
 	virtual void notify(Action) const;
 
 protected:

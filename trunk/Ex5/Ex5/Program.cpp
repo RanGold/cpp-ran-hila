@@ -46,7 +46,7 @@ void removeFish(const vector<Fish*>& fishes, vector<Fish*>& removedFishes) {
 			cout << "Enter fish id" << endl;
 			cin >> fishId;
 			if (fishId < fishes.size() - removedFishes.size()) {
-				Aquarium::instance().remove(fishes[fishId]);
+				fishes[fishId]->removeFromContainer();
 				removedFishes.push_back(fishes[fishId]);
 				cancel = true;
 			} else {
@@ -93,8 +93,9 @@ void addExistingFish(vector<Fish*>& removedFishes) {
 			cout << "Enter fish id" << endl;
 			cin >> fishId;
 			if (fishId < removedFishes.size()) {
-				Aquarium::instance().addFish(removedFishes[fishId]);
+				removedFishes[fishId]->addToContainer(&Aquarium::instance());
 				vector<Fish*>::const_iterator iter;
+				iter = removedFishes.begin();
 				iter += fishId;
 				removedFishes.erase(iter);
 				cancel = true;
@@ -151,6 +152,7 @@ int main(int argc, char* argv[]) {
 				break;
 			case 3:
 				Aquarium::instance().emptyAquarium();
+				removedFishes = fishes;
 				break;
 			case 4:
 				Aquarium::instance().play();

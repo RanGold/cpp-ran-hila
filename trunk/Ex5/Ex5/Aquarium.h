@@ -12,9 +12,6 @@ enum Action {FEED, PLAY, PAUSE, DEBUG};
 class Aquarium : public Subject {
 public:
 	static Aquarium& instance();
-
-	void addFish(const Fish* fish);
-	void remove(const Fish* fish);
 	
 	void feed() const;
 	void play() const;

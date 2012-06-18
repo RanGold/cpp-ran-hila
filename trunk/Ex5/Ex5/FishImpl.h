@@ -1,12 +1,12 @@
 #ifndef FISH_IMPL_H
 #define FISH_IMPL_H
 
-#include<string>
+#include <string>
+#include <map>
 
 using namespace std;
 
 enum Action;
-class Subject;
 
 class FishImpl {
 public:
@@ -22,6 +22,8 @@ public:
 	void setLocation(int Location);
 	int getLocation() const;
 
+	virtual void update(size_t subjectHashCode, Action action);
+
 	virtual string id() const = 0;
 	virtual void feed() = 0;
 	void play();
@@ -33,6 +35,8 @@ protected:
 	int _size;
 	int _transparency;
 	long _location;
+	typedef void (FishImpl::*actionFunction)();
+	map<size_t, map<Action, actionFunction>> _actionFunctions;
 
 	static const int InitialSpeed;
 };

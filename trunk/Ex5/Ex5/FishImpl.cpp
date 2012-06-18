@@ -1,5 +1,7 @@
-#include "FishImpl.h"
 #include <iostream>
+#include "FishImpl.h"
+#include "Aquarium.h"
+#include "UnimplementedHandleException.h"
 
 using namespace std;
 
@@ -7,7 +9,13 @@ const int FishImpl::InitialSpeed = 5;
 
 FishImpl::FishImpl() 
 	: _speed(InitialSpeed), _size(0), _transparency(0), _location(0)
-{}
+{
+	size_t aquariumHashCode = typeid(Aquarium).hash_code();
+	_actionFunctions[aquariumHashCode][FEED] = &FishImpl::feed;
+	_actionFunctions[aquariumHashCode][PLAY] = &FishImpl::play;
+	_actionFunctions[aquariumHashCode][PAUSE] = &FishImpl::pause;
+	_actionFunctions[aquariumHashCode][DEBUG] = &FishImpl::debug;
+}
 
 FishImpl::~FishImpl() {}
 
@@ -41,6 +49,15 @@ void FishImpl::setLocation(int location) {
 
 int FishImpl::getLocation() const {
 	return _location;
+}
+
+void FishImpl::update(size_t subjectHashCode, Action action) {
+	if (_actionFunctions.find(subjectHashCode) == _actionFunctions.end() ||
+		_actionFunctions[subjectHashCode].find(action) == _actionFunctions[subjectHashCode].end()) {
+			throw UnimplementedHandleException();
+	}
+
+	(this->*(_actionFunctions[subjectHashCode][action]))();
 }
 
 void FishImpl::play() {

@@ -119,8 +119,6 @@ void addExistingFish(vector<Fish*>& removedFishes) {
 	}
 }
 
-// TODO verify the observer + bridge implementation
-// TODO check if the implementation we did is as was requested, meaning factory within the bridge
 int main(int argc, char* argv[]) {
 	bool quit = false;
 	vector<Fish*> fishes;

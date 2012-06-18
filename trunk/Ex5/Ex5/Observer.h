@@ -6,9 +6,10 @@ enum Action;
 
 class Observer {
 public:
-	Observer(Subject* subject);
+	Observer(Subject*);
 	virtual ~Observer() {}
-
+	
+	void clearSubject();
     virtual void update(const Subject*, Action) = 0;
 
 protected:

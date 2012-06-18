@@ -11,8 +11,10 @@ FishImpl* FishFactory::create(FishType fishType) {
 	switch(fishType) {
 	case GOLD:
 		newFish = new GoldFish();
+		break;
 	case SALMON:
 		newFish = new SalmonFish();
+		break;
 	}
 
 	if (newFish == 0) {

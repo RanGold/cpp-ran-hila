@@ -7,10 +7,6 @@ Aquarium& Aquarium::instance() {
 	return _instance;
 }
 
-void Aquarium::addFish(const Fish* fish) {
-	attach(fish);
-}
-
 void Aquarium::feed() const {
 	notify(FEED);
 }
@@ -25,10 +21,6 @@ void Aquarium::pause() const {
 
 void Aquarium::debug() const {
 	notify(DEBUG);
-}
-
-void Aquarium::remove(const Fish* fish) {
-	detach(fish);
 }
 
 void Aquarium::emptyAquarium() {

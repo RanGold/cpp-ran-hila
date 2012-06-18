@@ -10,7 +10,6 @@ public:
 	virtual ~Observer() {}
 
     virtual void update(const Subject*, Action) = 0;
-	void setSubject(Subject* subject);
 
 protected:
 	Subject* _subject;

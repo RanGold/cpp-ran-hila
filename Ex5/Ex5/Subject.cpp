@@ -1,7 +1,14 @@
 #include "Subject.h"
 #include "Observer.h"
 
-void Subject::attach(const Observer* ob) { 
+void Subject::attach(const Observer* ob) {
+	vector<Observer*>::const_iterator iter = _observers.begin();
+	for (; iter != _observers.end(); iter++) { 
+		if (*iter == ob) {
+			return; 
+		}
+	}
+
 	_observers.push_back((Observer*)ob); 
 } 
 
@@ -29,9 +36,6 @@ void Subject::notify(Action action) const {
 	}
 }
 
-Subject::Subject() {
-}
+Subject::Subject() {}
 
-Subject::~Subject() {
-	detachAll();
-}
+Subject::~Subject() {}

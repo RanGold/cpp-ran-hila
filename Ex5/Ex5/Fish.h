@@ -21,9 +21,6 @@ public:
 	void pause();
 	void debug();
 
-protected:
-	Fish();
-
 private:
 	FishImpl* _fishImpl;
 	typedef void (Fish::*actionFunction)();

@@ -10,6 +10,7 @@ public:
 
 private:
 	FishFactory();
+	~FishFactory();
 };
 
 #endif

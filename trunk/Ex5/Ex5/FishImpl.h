@@ -22,21 +22,19 @@ public:
 	void setLocation(int Location);
 	int getLocation() const;
 
-	virtual void printStatus() const;
-
 	virtual string id() const = 0;
 	virtual void feed() = 0;
 	void play();
 	void pause();
-	void debug();
+	virtual void debug();
 
 protected:
 	int _speed;
 	int _size;
 	int _transparency;
 	long _location;
-	bool _isPaused;
-	time_t _timeStamp;
+
+	static const int InitialSpeed;
 };
 
 #endif

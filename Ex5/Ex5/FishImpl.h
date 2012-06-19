@@ -22,7 +22,7 @@ public:
 	void setLocation(int Location);
 	int getLocation() const;
 
-	virtual void update(size_t subjectHashCode, Action action);
+	void update(size_t subjectHashCode, Action action);
 
 	virtual string id() const = 0;
 	virtual void feed() = 0;

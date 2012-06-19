@@ -14,6 +14,10 @@ public:
 
 protected:
 	Subject* _subject;
+
+private:
+	Observer(const Observer&);
+	Observer& operator=(const Observer&);
 };
 
 #endif

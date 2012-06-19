@@ -27,8 +27,8 @@ public:
 private:
 	FishImpl* _fishImpl;
 
-	Fish(const Fish& fish);
-	Fish& operator=(const Fish& fish);
+	Fish(const Fish&);
+	Fish& operator=(const Fish&);
 };
 
 #endif

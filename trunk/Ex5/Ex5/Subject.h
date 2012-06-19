@@ -20,7 +20,10 @@ protected:
 	virtual ~Subject();
 
 private:
-    vector<Observer*> _observers; 
+    vector<Observer*> _observers;
+
+	Subject(const Subject&);
+	Subject& operator=(const Subject&);
 };
 
 #endif

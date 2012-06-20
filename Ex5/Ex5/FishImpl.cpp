@@ -51,13 +51,14 @@ int FishImpl::getLocation() const {
 	return _location;
 }
 
-void FishImpl::update(size_t subjectHashCode, Action action) {
+void FishImpl::update(size_t subjectHashCode, int action) {
+	AquariumAction aquariumAction = (AquariumAction)action;
 	if (_actionFunctions.find(subjectHashCode) == _actionFunctions.end() ||
-		_actionFunctions[subjectHashCode].find(action) == _actionFunctions[subjectHashCode].end()) {
+		_actionFunctions[subjectHashCode].find(aquariumAction) == _actionFunctions[subjectHashCode].end()) {
 			throw UnimplementedHandleException();
 	}
 
-	(this->*(_actionFunctions[subjectHashCode][action]))();
+	(this->*(_actionFunctions[subjectHashCode][aquariumAction]))();
 }
 
 void FishImpl::play() {

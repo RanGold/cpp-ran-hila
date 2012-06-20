@@ -7,7 +7,6 @@ using namespace std;
 
 enum FishType {GOLD, SALMON};
 class FishImpl;
-enum Action;
 class Subject;
 
 class Fish : public Observer {
@@ -18,7 +17,7 @@ public:
 	void addToContainer(Subject* subject);
 	void removeFromContainer();
 
-    virtual void update(const Subject* changedSubject, Action action);
+    virtual void update(const Subject* changedSubject, int action);
 	void feed();
 	void play();
 	void pause();

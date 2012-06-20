@@ -34,7 +34,7 @@ void Subject::clear() {
 	_observers.clear();
 }
 
-void Subject::notify(Action action) const {
+void Subject::notify(int action) const {
 	vector<Observer*>::const_iterator iter = _observers.begin();
 	for (; iter != _observers.end(); iter++) {
 		(*iter)->update(this, action);

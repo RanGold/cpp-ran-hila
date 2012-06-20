@@ -6,7 +6,7 @@
 
 using namespace std;
 
-enum Action {FEED, PLAY, PAUSE, DEBUG};
+enum AquariumAction {FEED, PLAY, PAUSE, DEBUG};
 
 class Aquarium : public Subject {
 public:

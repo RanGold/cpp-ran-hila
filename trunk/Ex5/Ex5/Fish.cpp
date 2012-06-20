@@ -38,7 +38,7 @@ void Fish::removeFromContainer() {
 	_subject = 0;
 }
 
-void Fish::update(const Subject* changedSubject, Action action) {
+void Fish::update(const Subject* changedSubject, int action) {
 	if (changedSubject == _subject) {
 		size_t subjectHashCode = typeid(*changedSubject).hash_code();
 		_fishImpl->update(subjectHashCode, action);

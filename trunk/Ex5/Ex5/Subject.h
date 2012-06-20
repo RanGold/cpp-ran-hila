@@ -6,14 +6,13 @@
 using namespace std;
 
 class Observer;
-enum Action;
 
 class Subject {
 public: 
 	virtual void attach(const Observer*);
     virtual void detach(const Observer*);
 	virtual void clear();
-	virtual void notify(Action) const;
+	virtual void notify(int) const;
 
 protected:
 	Subject();

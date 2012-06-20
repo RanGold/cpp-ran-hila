@@ -2,7 +2,6 @@
 #define OBSERVER_H
 
 class Subject;
-enum Action;
 
 class Observer {
 public:
@@ -10,7 +9,7 @@ public:
 	virtual ~Observer() {}
 	
 	void clearSubject();
-    virtual void update(const Subject*, Action) = 0;
+    virtual void update(const Subject*, int) = 0;
 
 protected:
 	Subject* _subject;

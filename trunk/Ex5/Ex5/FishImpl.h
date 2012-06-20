@@ -6,7 +6,7 @@
 
 using namespace std;
 
-enum Action;
+enum AquariumAction;
 
 class FishImpl {
 public:
@@ -22,7 +22,7 @@ public:
 	void setLocation(int Location);
 	int getLocation() const;
 
-	virtual void update(size_t subjectHashCode, Action action);
+	virtual void update(size_t subjectHashCode, int action);
 
 	virtual string id() const = 0;
 	virtual void feed() = 0;
@@ -36,7 +36,7 @@ protected:
 	int _transparency;
 	long _location;
 	typedef void (FishImpl::*actionFunction)();
-	map<size_t, map<Action, actionFunction>> _actionFunctions;
+	map<size_t, map<AquariumAction, actionFunction>> _actionFunctions;
 
 	static const int InitialSpeed;
 };
